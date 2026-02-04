@@ -23,7 +23,7 @@ struct Cell[T: Movable & Copyable](Movable): # Sostituisce CollectionElement
         self.data = existing.data^
 
 struct MPMCQueue[T: Movable & Copyable]: 
-    comptime CellPointer = LegacyUnsafePointer[mut=True, type=Cell[T], origin=Origin[True].external]
+    comptime CellPointer = UnsafePointer[mut=True, Cell[T],Origin[True].external]
     var buffer: Self.CellPointer
     var size: Int
     var mask: Int
@@ -70,9 +70,8 @@ struct MPMCQueue[T: Movable & Copyable]:
         
         cell_ptr[].data = item.copy()
         var seq_ptr = UnsafePointer(to=cell_ptr[].sequence)
-        # Specifichiamo il tipo [DType.int64] (o quello che usi per T) per aiutare il compilatore
-        # Specifichiamo sia il tipo che l'address space per non lasciare dubbi al compilatore
-        Atomic[DType.int64].store(seq_ptr, pos + 1)
+        # Sia in push e pop mi da problemi con lo store, ho provaot anche diversi metodi
+        Atomic[DType.int64].store(UnsafePointer(to=cell_ptr[].sequence), pos + 1)
     fn pop(mut self) -> T:
         """Estrae un dato trasferendone la proprietà al consumatore."""
         # 1. Prenota la posizione
