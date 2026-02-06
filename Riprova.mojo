@@ -16,7 +16,7 @@ struct Cell[T: Movable & Copyable & Defaultable](Movable):
         self.data = existing.data^
 
 struct MPMCQueue[T: Movable & Copyable & Defaultable]:
-    comptime CellPointer = UnsafePointer[mut=True, Cell[T], Origin[True].external]
+    comptime CellPointer = UnsafePointer[Cell[Self.T], MutExternalOrigin]
 
     var buffer: Self.CellPointer
     var size: Int
@@ -33,7 +33,7 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable]:
         for i in range(self.size):
             (self.buffer + i).init_pointee_move(Cell[Self.T](i))
 
-    fn push(mut self, item: T) -> Bool:
+    fn push(mut self, item: Self.T) -> Bool:
         var pw: Int
         var seq: Int
         var bk: Int = 1
@@ -55,7 +55,7 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable]:
             elif pw > seq:
                 return False
 
-    fn pop(mut self) -> T:
+    fn pop(mut self) -> Self.T:
         var pr: Int
         var seq: Int
         var bk: Int = 1
@@ -88,8 +88,8 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable]:
 
 fn test_streaming():
     var queue = MPMCQueue[Int](size=1024)
-    var data_to_send: Int = 42
-    queue.push(data_to_send)
+    _ = queue.push(42)
+
     var received_data = queue.pop()
     if received_data == 42:
         print("Successo! Dato trasferito.")
