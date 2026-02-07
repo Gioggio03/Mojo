@@ -55,7 +55,7 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable]:
                     Atomic[DType.uint64].store[ordering=Consistency.RELEASE](UnsafePointer(to=cell_ptr[].sequence.value), pw + 1)
                     return True
                 for _ in range(bk):
-                    #fence(ordering=Consistency.SEQUENTIAL) # I am not sure of this, I suppose however that this for loop is compiled out
+                    #fence[ordering=Consistency.SEQUENTIAL]() # I am not sure of this, I suppose however that this for loop is compiled out
                     pass
                 bk <<= 1
                 bk &= Self.BACKOFF_MAX
@@ -79,7 +79,7 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable]:
                     Atomic[DType.uint64].store[ordering=Consistency.RELEASE](UnsafePointer(to=cell_ptr[].sequence.value), pr + self.mask + 1)
                     return Optional(item^)
                 for _ in range(bk):
-                    #fence(ordering=Consistency.SEQUENTIAL) # I am not sure of this, I suppose however that this for loop is compiled out
+                    #fence[ordering=Consistency.SEQUENTIAL]() # I am not sure of this, I suppose however that this for loop is compiled out
                     return Optional[Self.T](None)
                 bk <<= 1
                 bk &= Self.BACKOFF_MAX
