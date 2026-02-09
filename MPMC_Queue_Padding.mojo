@@ -1,7 +1,18 @@
 from os.atomic import Atomic, Consistency, fence
 from time import sleep
 from builtin.simd import Scalar
+from sys.info import size_of
 from sys.terminate import exit
+
+struct PaddedAtomicU64:
+    comptime CACHE_LINE_SIZE_BYTES = 64
+    comptime PAD_BYTES = Self.CACHE_LINE_SIZE_BYTES - size_of[Atomic[DType.uint64]]()
+    var atomicVal: Atomic[DType.uint64]
+    var pad: InlineArray[UInt8, Self.PAD_BYTES]
+
+    fn __init__(out self, initial: UInt64):
+        self.atomicVal = Atomic[DType.uint64](initial)
+        self.pad = InlineArray[UInt8, Self.PAD_BYTES](uninitialized=True)
 
 struct Cell[T: Movable & Copyable & Defaultable](Movable):
     var sequence: Atomic[DType.uint64]
@@ -24,8 +35,8 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable]:
     var buffer: Self.CellPointer
     var size: Int
     var mask: Int
-    var enqueue_pos: Atomic[DType.uint64]
-    var dequeue_pos: Atomic[DType.uint64]
+    var enqueue_pos: PaddedAtomicU64
+    var dequeue_pos: PaddedAtomicU64
 
     fn __init__(out self, size: Int):
         if not ((size >= 2) and (size & (size - 1)) == 0):
@@ -34,8 +45,8 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable]:
         self.size = size
         self.mask = size - 1
         self.buffer = alloc[Cell[Self.T]](self.size)
-        self.enqueue_pos = Atomic[DType.uint64](0)
-        self.dequeue_pos = Atomic[DType.uint64](0)
+        self.enqueue_pos = PaddedAtomicU64(0)
+        self.dequeue_pos = PaddedAtomicU64(0)
         for i in range(self.size):
             (self.buffer + i).init_pointee_move(Cell[Self.T](i))
 
@@ -45,12 +56,12 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable]:
         var bk: UInt64 = Self.BACKOFF_MIN
 
         while True:
-            pw = self.enqueue_pos.load[ordering=Consistency.MONOTONIC]()
+            pw = self.enqueue_pos.atomicVal.load[ordering=Consistency.MONOTONIC]()
             var cell_ptr = self.buffer + (pw & self.mask)
             seq = cell_ptr[].sequence.load[ordering=Consistency.ACQUIRE]()
 
             if pw == seq:
-                if self.enqueue_pos.compare_exchange[failure_ordering=Consistency.MONOTONIC, success_ordering=Consistency.MONOTONIC](pw, pw + 1):
+                if self.enqueue_pos.atomicVal.compare_exchange[failure_ordering=Consistency.MONOTONIC, success_ordering=Consistency.MONOTONIC](pw, pw + 1):
                     cell_ptr[].data = item^
                     Atomic[DType.uint64].store[ordering=Consistency.RELEASE](UnsafePointer(to=cell_ptr[].sequence.value), pw + 1)
                     return True
@@ -69,14 +80,14 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable]:
         var bk: UInt64 = Self.BACKOFF_MIN
 
         while True:
-            pr = self.dequeue_pos.load[ordering=Consistency.MONOTONIC]()
+            pr = self.dequeue_pos.atomicVal.load[ordering=Consistency.MONOTONIC]()
             var cell_ptr = self.buffer + (pr & self.mask)
             seq = cell_ptr[].sequence.load[ordering=Consistency.ACQUIRE]()
             # Usa confronto diretto invece di differenza per evitare problemi con unsigned
             var expected_seq = pr + 1
             if seq == expected_seq:
                 # Elemento pronto per essere estratto
-                if self.dequeue_pos.compare_exchange[failure_ordering=Consistency.MONOTONIC, success_ordering=Consistency.MONOTONIC](pr, pr + 1):
+                if self.dequeue_pos.atomicVal.compare_exchange[failure_ordering=Consistency.MONOTONIC, success_ordering=Consistency.MONOTONIC](pr, pr + 1):
                     var item = cell_ptr[].data.copy()
                     Atomic[DType.uint64].store[ordering=Consistency.RELEASE](UnsafePointer(to=cell_ptr[].sequence.value), pr + self.mask + 1)
                     return Optional(item^)
