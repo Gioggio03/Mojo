@@ -5,7 +5,7 @@ from memory import memset_zero
 from sys.info import size_of
 
 # Trait of messages that can be sent through the Communicator
-comptime MessageTrait = ImplicitlyCopyable & Writable & Defaultable
+comptime MessageTrait = ImplicitlyCopyable & Writable
 
 # Wrapper of messages to include an end-of-stream flag
 struct MessageWrapper[T: MessageTrait](ImplicitlyCopyable, Defaultable):
