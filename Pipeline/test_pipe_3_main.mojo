@@ -1,11 +1,13 @@
-# Test della pipeline con stage concreti
-# Usa la libreria divisa in Communicator3, Stage3, Pipeline3
+# Trivial test of the pipeline with 3 stages:
+#   - FirstStage: source, generates numbers from 1 to 1000
+#   - SecondStage: transform, increments the input and converts it to a string
+#   - ThirdStage: sink, prints the input string
 from collections import Optional
 from Communicator3 import MessageTrait
 from Stage3 import StageKind, StageTrait
 from Pipeline3 import Pipeline
 
-# FirstStage - Source: genera numeri da 1 a 1000
+# FirstStage - Source: generetes numbers from 1 to 1000
 struct FirstStage(StageTrait):
     comptime kind = StageKind.SOURCE
     comptime InType = Int
@@ -13,57 +15,57 @@ struct FirstStage(StageTrait):
     comptime name = "FirstStage"
     var count: Int
 
-    # costruttore
+    # costructor
     fn __init__ (out self):
         self.count = 0
 
-    # implementazione concreta di generate_stream
-    fn generate_stream(mut self) -> Optional[Int]:
+    # next_element implementation
+    fn next_element(mut self) -> Optional[Int]:
         if self.count > 1000:
             return None
         else:
             self.count = self.count + 1
             return self.count
 
-# SecondStage - Transform: incrementa e converte in stringa
+# SecondStage - increaments the input and converts it to a string
 struct SecondStage(StageTrait):
     comptime kind = StageKind.TRANSFORM
     comptime InType = Int
     comptime OutType = String
     comptime name = "SecondStage"
 
-    # costruttore
+    # costrutor
     fn __init__ (out self):
         pass
 
-    # implementazione concreta di compute
-    fn compute(mut self, mut input: Int) -> Optional[String]:
+    # compute implementation
+    fn compute(mut self, var input: Int) -> Optional[String]:
         input = input + 1
         return String("Valore " + String(input))
 
-# ThirdStage - Sink: stampa il risultato
+# ThirdStage - prints the input string
 struct ThirdStage(StageTrait):
     comptime kind = StageKind.SINK
     comptime InType = String
     comptime OutType = String
     comptime name = "ThirdStage"
 
-    # costruttore
+    # constructor
     fn __init__ (out self):
         pass
 
-    # implementazione concreta di drain_sink
-    fn drain_sink(mut self, mut input: Self.InType) raises:
+    # consume_element implementation
+    fn consume_element(mut self, var input: Self.InType) raises:
         print(input)
 
 # main
 def main():
-    # crea gli stage
+    # creating the stages
     first_stage = FirstStage()
     second_stage = SecondStage()
     third_stage = ThirdStage()
 
-    # crea e avvia la pipeline
+    # creating the pipeline and running it
     pipeline = Pipeline((first_stage, second_stage, third_stage))
     pipeline.run()
     _ = pipeline

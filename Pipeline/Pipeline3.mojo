@@ -1,26 +1,29 @@
-# Pipeline3: Orchestratore della pipeline
-# Estratto da test_pipe_3.mojo del prof
+# Implementation of the Pipeline parallel pattern
 from runtime.asyncrt import create_task
 from runtime.asyncrt import TaskGroup
 from collections import Optional
 from Communicator3 import MessageTrait, MessageWrapper, Communicator
 from Stage3 import StageKind, StageTrait
 
-# executor_task: eseguito come task concorrente
+# Executor_task, the function that will be run by each task of the pipeline
+#    it executes the logic of each stage and communicates with the other stages through the Communicators
 async
-fn executor_task[Stage: StageTrait, In: MessageTrait, Out: MessageTrait](index: Int, mut s: Stage, mut inComm: Communicator[In], mut outComm: Communicator[Out]):
+fn executor_task[Stage: StageTrait, In: MessageTrait, Out: MessageTrait](index: Int,
+                                                                         mut s: Stage,
+                                                                         mut inComm: Communicator[In],
+                                                                         mut outComm: Communicator[Out]):
     try:
         var end_of_stream = False
         @parameter
         if Stage.kind == StageKind.SOURCE:
             while (not end_of_stream):
-                output = s.generate_stream()
+                output = s.next_element()
                 output_1 = rebind[Optional[Out]](output)
                 if output_1 == None:
                     end_of_stream = True
-                    outComm.push(MessageWrapper[Out](data = Out(), eos = True))
+                    outComm.push(MessageWrapper[Out](eos = True))
                 else:
-                    outComm.push(MessageWrapper[Out](data = output_1.value(), eos = False))
+                    outComm.push(MessageWrapper[Out](data = output_1.take(), eos = False))
         elif Stage.kind == StageKind.SINK:
             while (not end_of_stream):
                 input = inComm.pop()
@@ -28,33 +31,33 @@ fn executor_task[Stage: StageTrait, In: MessageTrait, Out: MessageTrait](index: 
                 if input_1.eos:
                     end_of_stream = True
                 else:
-                    s.drain_sink(input_1.data)
+                    s.consume_element(input_1.data.take())
         elif Stage.kind == StageKind.TRANSFORM:
             while (not end_of_stream):
                 input = inComm.pop()
                 input_2 = rebind[MessageWrapper[Stage.InType]](input)
                 if input_2.eos:
                     end_of_stream = True
-                    outComm.push(MessageWrapper[Out](data = Out(), eos = True))
+                    outComm.push(MessageWrapper[Out](eos = True))
                 else:
-                    output = s.compute(input_2.data)
+                    output = s.compute(input_2.data.take())
                     output_2 = rebind[Optional[Out]](output)
                     if (output_2 != None):
-                        outComm.push(MessageWrapper[Out](data = output_2.value(), eos = False))
+                        outComm.push(MessageWrapper[Out](data = output_2.take(), eos = False))
         else:
             raise String("Error: Stage ") + String(Stage.name) + String(" has an undefined kind")
     except e:
-        print("Executor_task raised a problem -> ", Stage.name , " -> ", e)
+        print("Error: executor_task in stage ", Stage.name, " raised a problem -> ", e)
 
-# Pipeline
+# Pipeline parallel pattern
 struct Pipeline[*Ts: StageTrait]:
     comptime N = Variadic.size[StageTrait](Self.Ts)
     var stages: Tuple[*Self.Ts]
     var tg: TaskGroup
 
-    # costruttore
-    fn __init__(out self, stages: Tuple[*Self.Ts]):
-        self.stages = stages
+    # constructor
+    fn __init__(out self, var stages: Tuple[*Self.Ts]):
+        self.stages = stages^
         self.tg = TaskGroup()
 
     # _run_from
