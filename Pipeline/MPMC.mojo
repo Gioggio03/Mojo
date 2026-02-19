@@ -32,7 +32,8 @@ struct Cell[T: Copyable & Defaultable](Movable):
         self.sequence = Atomic[DType.uint64](val)
         self.data = existing.data^
 
-# Lock-free multi-producer multi-consumer queue implementation using the algorithm by Dmitry Vyukov (https://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue)
+# Lock-free MPMC queue implementation based the algorithm by Dmitry Vyukov
+#    (https://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue)
 struct MPMCQueue[T: Copyable & Defaultable](Movable):
     comptime CellPointer = UnsafePointer[Cell[Self.T], MutExternalOrigin]
     comptime BACKOFF_MIN = 128
@@ -117,7 +118,7 @@ struct MPMCQueue[T: Copyable & Defaultable](Movable):
         for i in range(self.size):
             (self.buffer + i).destroy_pointee()
         self.buffer.free()
-        print("MPMCQueue deallocated correctly!")
+        print("MPMCQueue destroyed!")
 
 # Test function to verify the basic functionality of the MPMCQueue
 fn test_streaming():

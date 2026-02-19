@@ -22,7 +22,7 @@ trait StageTrait(ImplicitlyCopyable):
         raise String("Error: Stage ") + String(Self.name) + String(" does not implement the next_element() method")
 
     # compute (stage TRANSFORM)
-    #    can generate one or zero output elements for the input element
+    #    generate one or zero output elements for the input element
     fn compute(mut self, var input: Self.InType) raises -> Optional[Self.OutType]:
         raise String("Error: Stage ") + String(Self.name) + String(" does not implement the compute() method")
 

@@ -4,18 +4,23 @@ from runtime.asyncrt import TaskGroup
 from collections import Optional
 from Communicator import MessageTrait, MessageWrapper, Communicator
 from Stage import StageKind, StageTrait
+from sys.terminate import exit
 
 # Executor_task, the function that will be run by each task of the pipeline
 #    it executes the logic of each stage and communicates with the other stages through the Communicators
 async
-fn executor_task[Stage: StageTrait, In: MessageTrait, Out: MessageTrait](index: Int,
-                                                                         mut s: Stage,
-                                                                         mut inComm: UnsafePointer[mut=True, Communicator[In]],
-                                                                         mut outComm: UnsafePointer[mut=True, Communicator[Out]]):
+fn executor_task[Stage: StageTrait,
+                 In: MessageTrait,
+                 Out: MessageTrait, //, 
+                 idx: Int, 
+                 len: Int](mut s: Stage,
+                           mut inComm: UnsafePointer[mut=True, Communicator[In]],
+                           mut outComm: UnsafePointer[mut=True, Communicator[Out]]):
     try:
         var end_of_stream = False
         @parameter
         if Stage.kind == StageKind.SOURCE:
+            constrained[idx == 0]() # Source stage must be the first stage of the pipeline
             while (not end_of_stream):
                 output = s.next_element()
                 output_1 = rebind[Optional[Out]](output)
@@ -28,6 +33,7 @@ fn executor_task[Stage: StageTrait, In: MessageTrait, Out: MessageTrait](index: 
             inComm.destroy_pointee()
             inComm.free()
         elif Stage.kind == StageKind.SINK:
+            constrained[idx == len - 1]() # Sink stage must be the last stage of the pipeline
             while (not end_of_stream):
                 input = inComm[].pop()
                 input_1 = rebind[MessageWrapper[Stage.InType]](input)
@@ -72,19 +78,19 @@ struct Pipeline[*Ts: StageTrait]:
         self.tg = TaskGroup()
 
     # _run_from
-    fn _run_from[idx: Int, M: MessageTrait](mut self, mut in_comm: UnsafePointer[mut=True, Communicator[M]]):
+    fn _run_from[idx: Int, len: Int, M: MessageTrait](mut self, mut in_comm: UnsafePointer[mut=True, Communicator[M]]):
         comm = Communicator[Self.Ts[idx].OutType]()
         out_comm = alloc[Communicator[Self.Ts[idx].OutType]](1)
         out_comm.init_pointee_move(comm^)
-        self.tg.create_task(executor_task(idx, self.stages[idx], in_comm, out_comm))
+        self.tg.create_task(executor_task[idx, len](self.stages[idx], in_comm, out_comm))
         @parameter
         if idx + 1 < Self.N:
-            self._run_from[idx + 1, Self.Ts[idx].OutType](out_comm)
+            self._run_from[idx + 1, len, Self.Ts[idx].OutType](out_comm)
 
     # run
     fn run(mut self):
         comm = Communicator[Self.Ts[0].InType]()
         first_comm = alloc[Communicator[Self.Ts[0].InType]](1)
         first_comm.init_pointee_move(comm^)
-        self._run_from[0](first_comm)
+        self._run_from[0, Self.N](first_comm)
         self.tg.wait()

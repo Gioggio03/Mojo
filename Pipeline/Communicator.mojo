@@ -1,7 +1,6 @@
 # Implementaton of the Communicator using a lock-free MPMC queue
 from MPMC import MPMCQueue
 from collections import Optional
-from memory import memset_zero
 from sys.info import size_of
 
 # Trait of messages that can be sent through the Communicator
@@ -41,11 +40,11 @@ struct Communicator[T: MessageTrait](Movable):
     fn __del__(deinit self):
         self.queue.destroy_pointee()
         self.queue.free()
-        print("Destroying communicator")
+        print("Communicator destroyed!")
 
     # move constructor
     fn __moveinit__(out self, deinit existing: Self):
-        # NOTE -> Mojo will not call the destructor of existing, so we don't need to worry about double-free
+        # NOTE -> Mojo will not call the destructor of existing
         self.queue = existing.queue
 
     # pop (continuous retry until a message is available)

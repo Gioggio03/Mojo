@@ -1,6 +1,6 @@
 # Trivial test of the pipeline with 3 stages:
 #   - FirstStage: source, generates numbers from 1 to 1000
-#   - SecondStage: transform, increments the input and converts it to a string
+#   - SecondStage: transform, increments each input and converts it to a string
 #   - ThirdStage: sink, prints the input string
 from collections import Optional
 from Communicator import MessageTrait
@@ -21,7 +21,7 @@ struct FirstStage(StageTrait):
 
     # next_element implementation
     fn next_element(mut self) -> Optional[Int]:
-        if self.count > 1000:
+        if self.count > 1000000:
             return None
         else:
             self.count = self.count + 1
@@ -55,7 +55,7 @@ struct ThirdStage(StageTrait):
         pass
 
     # consume_element implementation
-    fn consume_element(mut self, var input: Self.InType) raises:
+    fn consume_element(mut self, var input: Self.InType):
         print(input)
 
 # main
