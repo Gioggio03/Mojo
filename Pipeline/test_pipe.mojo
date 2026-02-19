@@ -21,7 +21,7 @@ struct FirstStage(StageTrait):
 
     # next_element implementation
     fn next_element(mut self) -> Optional[Int]:
-        if self.count > 1000000:
+        if self.count > 1000:
             return None
         else:
             self.count = self.count + 1

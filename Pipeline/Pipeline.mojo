@@ -14,8 +14,8 @@ fn executor_task[Stage: StageTrait,
                  Out: MessageTrait, //, 
                  idx: Int, 
                  len: Int](mut s: Stage,
-                           mut inComm: UnsafePointer[mut=True, Communicator[In]],
-                           mut outComm: UnsafePointer[mut=True, Communicator[Out]]):
+                           inComm: UnsafePointer[mut=True, Communicator[In]],
+                           outComm: UnsafePointer[mut=True, Communicator[Out]]):
     try:
         var end_of_stream = False
         @parameter
@@ -78,7 +78,7 @@ struct Pipeline[*Ts: StageTrait]:
         self.tg = TaskGroup()
 
     # _run_from
-    fn _run_from[idx: Int, len: Int, M: MessageTrait](mut self, mut in_comm: UnsafePointer[mut=True, Communicator[M]]):
+    fn _run_from[idx: Int, len: Int, M: MessageTrait](mut self, in_comm: UnsafePointer[mut=True, Communicator[M]]):
         comm = Communicator[Self.Ts[idx].OutType]()
         out_comm = alloc[Communicator[Self.Ts[idx].OutType]](1)
         out_comm.init_pointee_move(comm^)
