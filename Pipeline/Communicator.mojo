@@ -1,5 +1,6 @@
 # Implementaton of the Communicator using a lock-free MPMC queue
-from MPMC import MPMCQueue
+#from MPMC import MPMCQueue
+from MPMC_V2 import MPMCQueue
 from collections import Optional
 from sys.info import size_of
 

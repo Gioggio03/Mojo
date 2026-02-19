@@ -1,4 +1,4 @@
-# Traits of the generic stage of the pipeline
+# Traits of a generic stage of the pipeline
 from collections import Optional
 from Communicator import MessageTrait
 
