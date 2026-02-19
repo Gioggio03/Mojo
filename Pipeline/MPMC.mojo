@@ -33,7 +33,7 @@ struct Cell[T: Copyable & Defaultable](Movable):
         self.data = existing.data^
 
 # Lock-free multi-producer multi-consumer queue implementation using the algorithm by Dmitry Vyukov (https://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue)
-struct MPMCQueue[T: Copyable & Defaultable]:
+struct MPMCQueue[T: Copyable & Defaultable](Movable):
     comptime CellPointer = UnsafePointer[Cell[Self.T], MutExternalOrigin]
     comptime BACKOFF_MIN = 128
     comptime BACKOFF_MAX = 1024
@@ -55,6 +55,14 @@ struct MPMCQueue[T: Copyable & Defaultable]:
         self.dequeue_pos = PaddedAtomicU64(0)
         for i in range(self.size):
             (self.buffer + i).init_pointee_move(Cell[Self.T](i))
+
+    # move constructor
+    fn __moveinit__(out self, deinit existing: Self):
+        self.buffer = existing.buffer
+        self.size = existing.size
+        self.mask = existing.mask
+        self.enqueue_pos = PaddedAtomicU64(0)
+        self.dequeue_pos = PaddedAtomicU64(0)
 
     # push method for producers, returns True if the item was pushed successfully, False if the queue is full
     fn push(mut self, item: Self.T) -> Bool:

@@ -34,9 +34,8 @@ struct Communicator[T: MessageTrait](Movable):
     # constructor
     fn __init__(out self):
         self.queue = alloc[MPMCQueue[MessageWrapper[Self.T]]](1)
-        # we build the MPMCQueue in-place since it is not movable
-        memset_zero(self.queue.bitcast[UInt8](), size_of[MPMCQueue[MessageWrapper[Self.T]]]())
-        self.queue[] = MPMCQueue[MessageWrapper[Self.T]](size=1024)
+        q = MPMCQueue[MessageWrapper[Self.T]](size=1024)
+        self.queue.init_pointee_move(q^)
 
     # destructor
     fn __del__(deinit self):

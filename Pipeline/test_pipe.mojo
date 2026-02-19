@@ -3,9 +3,9 @@
 #   - SecondStage: transform, increments the input and converts it to a string
 #   - ThirdStage: sink, prints the input string
 from collections import Optional
-from Communicator3 import MessageTrait
-from Stage3 import StageKind, StageTrait
-from Pipeline3 import Pipeline
+from Communicator import MessageTrait
+from Stage import StageKind, StageTrait
+from Pipeline import Pipeline
 
 # FirstStage - Source: generetes numbers from 1 to 1000
 struct FirstStage(StageTrait):

@@ -1,0 +1,3 @@
+Comandi Mojo utili:
+
+1) mojo build -O0 --debug-level=full source.mojo -o binary
