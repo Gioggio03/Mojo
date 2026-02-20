@@ -55,9 +55,7 @@ fn run_pipeline_10[Size: Int]():
     pipeline.run()
     _ = pipeline
 
-# ========================
-# Benchmark helper
-# ========================
+#esecuzione
 fn bench_and_print[Size: Int, N: Int]() raises:
     print("  N=", N, ", Size=", Size, "B", end="")
 
@@ -81,9 +79,7 @@ fn bench_and_print[Size: Int, N: Int]() raises:
         " | iters:", report.iters()
     )
 
-# ========================
-# Benchmark all sizes for a given N
-# ========================
+#varie dimensione payload
 fn bench_all_sizes[N: Int]() raises:
     bench_and_print[8, N]()
     bench_and_print[64, N]()
