@@ -1,4 +1,4 @@
-# Implementation of the Pipeline parallel pattern
+# Pipeline parallel pattern
 from runtime.asyncrt import create_task
 from runtime.asyncrt import TaskGroup
 from collections import Optional

@@ -1,6 +1,8 @@
-# Implementaton of the Communicator using a lock-free MPMC queue
-#from MPMC import MPMCQueue
-from MPMC_V2 import MPMCQueue
+# Communicator using a lock-free MPMC queue
+#from MPMC_naif import MPMCQueue # MPMC naif with locking
+# from MPMC import MPMCQueue # MPMC standard
+#from MPMC_padding import MPMCQueue # MPMC with padding
+from MPMC_padding_optional import MPMCQueue # MPMC with padding and optional as data field
 from collections import Optional
 from sys.info import size_of
 

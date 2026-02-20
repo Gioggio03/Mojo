@@ -1,4 +1,4 @@
-# Trivial test of the pipeline with 3 stages:
+# Trivial test of a pipeline with 3 stages:
 #   - FirstStage: source, generates numbers from 1 to 1000
 #   - SecondStage: transform, increments each input and converts it to a string
 #   - ThirdStage: sink, prints the input string

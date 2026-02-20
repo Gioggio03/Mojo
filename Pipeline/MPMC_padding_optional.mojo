@@ -1,4 +1,4 @@
-# Lock-free multi-producer multi-consumer queue implementation (with padding and optional data field)
+# MPMC queue without locks, with padding and optional data field
 from os.atomic import Atomic, Consistency, fence
 from time import sleep
 from sys.info import size_of
@@ -33,7 +33,7 @@ struct Cell[T: Copyable & Defaultable](Movable):
         self.sequence = Atomic[DType.uint64](val)
         self.data = existing.data^
 
-# Lock-free MPMC queue implementation based the algorithm by Dmitry Vyukov
+# MPMC queue implementation based the algorithm by Dmitry Vyukov
 #    (https://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue)
 struct MPMCQueue[T: Copyable & Defaultable](Movable):
     comptime CellPointer = UnsafePointer[Cell[Self.T], MutExternalOrigin]
@@ -65,6 +65,13 @@ struct MPMCQueue[T: Copyable & Defaultable](Movable):
         self.mask = existing.mask
         self.enqueue_pos = PaddedAtomicU64(0)
         self.dequeue_pos = PaddedAtomicU64(0)
+
+    # destructor
+    fn __del__(deinit self):
+        for i in range(self.size):
+            (self.buffer + i).destroy_pointee()
+        self.buffer.free()
+        print("MPMCQueue destroyed!")
 
     # push method for producers, returns True if the item was pushed successfully, False if the queue is full
     fn push(mut self, item: Self.T) -> Bool:
@@ -113,13 +120,6 @@ struct MPMCQueue[T: Copyable & Defaultable](Movable):
             elif seq < expected_seq:
                 # empty slot, the producer has not yet written the item, return None
                 return Optional[Self.T](None)
-
-    # destructor
-    fn __del__(deinit self):
-        for i in range(self.size):
-            (self.buffer + i).destroy_pointee()
-        self.buffer.free()
-        print("MPMCQueue destroyed!")
 
 # Test function to verify the basic functionality of the MPMCQueue
 fn test_streaming():
