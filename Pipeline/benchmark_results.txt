@@ -1,0 +1,158 @@
+================================================================================
+                    PIPELINE BENCHMARK RESULTS
+                    1000 messages per pipeline run
+                    benchmark.run() with max_batch_size=1
+                    Mojo Pipeline (Source -> N-2 Transform -> Sink)
+================================================================================
+
+Each test measures the end-to-end time to push 1000 Payload messages through
+the pipeline. Stages are pass-through (no computation). The benchmark framework
+runs multiple iterations (iters) and computes mean/min/max per iteration.
+
+Payload sizes: 8B, 64B, 512B, 4096B
+Stage counts:  N=2 (Source->Sink), N=3, N=5, N=10
+
+
+================================================================================
+ 1. MPMC_naif (BlockingSpinLock + List)
+================================================================================
+
+--- N=2 (Source -> Sink) ---
+  N=2,  Size=8B      -> mean:   0.548 ms  | min:   0.317 ms  | max:   1.842 ms  | iters: 3651
+  N=2,  Size=64B     -> mean:   1.061 ms  | min:   0.963 ms  | max:   1.233 ms  | iters: 1885
+  N=2,  Size=512B    -> mean:   0.929 ms  | min:   0.362 ms  | max:  14.324 ms  | iters: 2160
+  N=2,  Size=4096B   -> mean:  69.447 ms  | min:   0.444 ms  | max: 164.268 ms  | iters: 100
+
+--- N=3 (Source -> Transform -> Sink) ---
+  N=3,  Size=8B      -> mean:   1.538 ms  | min:   0.741 ms  | max:   5.111 ms  | iters: 1301
+  N=3,  Size=64B     -> mean:   1.644 ms  | min:   1.420 ms  | max:   2.073 ms  | iters: 1217
+  N=3,  Size=512B    -> mean:   8.038 ms  | min:   1.303 ms  | max:  19.810 ms  | iters: 249
+  N=3,  Size=4096B   -> mean: 107.990 ms  | min:   9.151 ms  | max: 137.591 ms  | iters: 100
+
+--- N=5 (Source -> 3xTransform -> Sink) ---
+  N=5,  Size=8B      -> mean:   1.883 ms  | min:   0.816 ms  | max:   5.067 ms  | iters: 1063
+  N=5,  Size=64B     -> mean:   2.148 ms  | min:   1.532 ms  | max:   2.830 ms  | iters: 932
+  N=5,  Size=512B    -> mean:  11.914 ms  | min:   1.513 ms  | max:  20.192 ms  | iters: 169
+  N=5,  Size=4096B   -> mean: 129.368 ms  | min:  41.330 ms  | max: 168.558 ms  | iters: 100
+
+--- N=10 (Source -> 8xTransform -> Sink) ---
+  N=10, Size=8B      -> mean:   2.059 ms  | min:   0.902 ms  | max:   5.567 ms  | iters: 972
+  N=10, Size=64B     -> mean:   2.195 ms  | min:   1.521 ms  | max:   3.968 ms  | iters: 912
+  N=10, Size=512B    -> mean:  13.366 ms  | min:   2.027 ms  | max:  21.447 ms  | iters: 150
+  N=10, Size=4096B   -> mean: 127.104 ms  | min:  38.711 ms  | max: 169.761 ms  | iters: 100
+
+
+================================================================================
+ 2. MPMC (lock-free, Vyukov algorithm, no padding)
+================================================================================
+
+--- N=2 (Source -> Sink) ---
+  N=2,  Size=8B      -> mean:   0.190 ms  | min:   0.056 ms  | max:   0.990 ms  | iters: 10502
+  N=2,  Size=64B     -> mean:   0.430 ms  | min:   0.408 ms  | max:   0.472 ms  | iters: 4657
+  N=2,  Size=512B    -> mean:   0.578 ms  | min:   0.197 ms  | max:   0.775 ms  | iters: 3460
+  N=2,  Size=4096B   -> mean:   1.666 ms  | min:   0.653 ms  | max:   2.306 ms  | iters: 1201
+
+--- N=3 (Source -> Transform -> Sink) ---
+  N=3,  Size=8B      -> mean:   0.341 ms  | min:   0.136 ms  | max:   2.922 ms  | iters: 5868
+  N=3,  Size=64B     -> mean:   0.782 ms  | min:   0.660 ms  | max:   1.525 ms  | iters: 2559
+  N=3,  Size=512B    -> mean:   0.820 ms  | min:   0.368 ms  | max:   1.957 ms  | iters: 2441
+  N=3,  Size=4096B   -> mean:   1.966 ms  | min:   1.663 ms  | max:   4.824 ms  | iters: 1018
+
+--- N=5 (Source -> 3xTransform -> Sink) ---
+  N=5,  Size=8B      -> mean:   0.532 ms  | min:   0.289 ms  | max:   1.062 ms  | iters: 3763
+  N=5,  Size=64B     -> mean:   0.889 ms  | min:   0.717 ms  | max:   1.688 ms  | iters: 2250
+  N=5,  Size=512B    -> mean:   0.853 ms  | min:   0.516 ms  | max:   1.686 ms  | iters: 2346
+  N=5,  Size=4096B   -> mean:   2.772 ms  | min:   1.872 ms  | max:   5.451 ms  | iters: 722
+
+--- N=10 (Source -> 8xTransform -> Sink) ---
+  N=10, Size=8B      -> mean:   0.703 ms  | min:   0.402 ms  | max:   1.217 ms  | iters: 2846
+  N=10, Size=64B     -> mean:   1.258 ms  | min:   0.804 ms  | max:   1.841 ms  | iters: 1591
+  N=10, Size=512B    -> mean:   1.191 ms  | min:   0.678 ms  | max:   2.446 ms  | iters: 1680
+  N=10, Size=4096B   -> mean:   3.674 ms  | min:   2.715 ms  | max:  15.014 ms  | iters: 545
+
+
+================================================================================
+ 3. MPMC_padding (lock-free, Vyukov + PaddedAtomicU64)
+================================================================================
+
+--- N=2 (Source -> Sink) ---
+  N=2,  Size=8B      -> mean:   0.109 ms  | min:   0.052 ms  | max:   2.703 ms  | iters: 18429
+  N=2,  Size=64B     -> mean:   0.386 ms  | min:   0.328 ms  | max:   0.820 ms  | iters: 5181
+  N=2,  Size=512B    -> mean:   0.557 ms  | min:   0.129 ms  | max:   0.972 ms  | iters: 3590
+  N=2,  Size=4096B   -> mean:   1.400 ms  | min:   0.531 ms  | max:   3.345 ms  | iters: 1429
+
+--- N=3 (Source -> Transform -> Sink) ---
+  N=3,  Size=8B      -> mean:   0.353 ms  | min:   0.120 ms  | max:   0.900 ms  | iters: 5664
+  N=3,  Size=64B     -> mean:   0.813 ms  | min:   0.509 ms  | max:   1.531 ms  | iters: 2459
+  N=3,  Size=512B    -> mean:   0.831 ms  | min:   0.428 ms  | max:   1.512 ms  | iters: 2406
+  N=3,  Size=4096B   -> mean:   1.828 ms  | min:   1.627 ms  | max:   4.359 ms  | iters: 1095
+
+--- N=5 (Source -> 3xTransform -> Sink) ---
+  N=5,  Size=8B      -> mean:   0.553 ms  | min:   0.267 ms  | max:   0.976 ms  | iters: 3618
+  N=5,  Size=64B     -> mean:   1.075 ms  | min:   0.659 ms  | max:   1.794 ms  | iters: 1861
+  N=5,  Size=512B    -> mean:   1.004 ms  | min:   0.555 ms  | max:   1.722 ms  | iters: 1993
+  N=5,  Size=4096B   -> mean:   3.381 ms  | min:   1.891 ms  | max:   6.410 ms  | iters: 592
+
+--- N=10 (Source -> 8xTransform -> Sink) ---
+  N=10, Size=8B      -> mean:   0.750 ms  | min:   0.455 ms  | max:   1.202 ms  | iters: 2667
+  N=10, Size=64B     -> mean:   1.270 ms  | min:   0.753 ms  | max:   1.891 ms  | iters: 1575
+  N=10, Size=512B    -> mean:   1.296 ms  | min:   0.565 ms  | max:   2.228 ms  | iters: 1543
+  N=10, Size=4096B   -> mean:   3.768 ms  | min:   2.642 ms  | max:  12.894 ms  | iters: 531
+
+
+================================================================================
+ 4. MPMC_padding_optional (lock-free, Vyukov + PaddedAtomicU64 + Optional data)
+================================================================================
+
+--- N=2 (Source -> Sink) ---
+  N=2,  Size=8B      -> mean:   0.113 ms  | min:   0.069 ms  | max:   2.016 ms  | iters: 17660
+  N=2,  Size=64B     -> mean:   0.516 ms  | min:   0.501 ms  | max:   0.572 ms  | iters: 3878
+  N=2,  Size=512B    -> mean:   0.415 ms  | min:   0.140 ms  | max:   1.340 ms  | iters: 4821
+  N=2,  Size=4096B   -> mean:   0.740 ms  | min:   0.625 ms  | max:   5.748 ms  | iters: 2703
+
+--- N=3 (Source -> Transform -> Sink) ---
+  N=3,  Size=8B      -> mean:   0.338 ms  | min:   0.134 ms  | max:   0.988 ms  | iters: 5912
+  N=3,  Size=64B     -> mean:   1.055 ms  | min:   0.830 ms  | max:   2.180 ms  | iters: 1896
+  N=3,  Size=512B    -> mean:   0.811 ms  | min:   0.421 ms  | max:   1.833 ms  | iters: 2466
+  N=3,  Size=4096B   -> mean:   2.366 ms  | min:   2.051 ms  | max:   8.311 ms  | iters: 846
+
+--- N=5 (Source -> 3xTransform -> Sink) ---
+  N=5,  Size=8B      -> mean:   0.593 ms  | min:   0.234 ms  | max:   1.013 ms  | iters: 3372
+  N=5,  Size=64B     -> mean:   1.293 ms  | min:   0.825 ms  | max:   2.087 ms  | iters: 1548
+  N=5,  Size=512B    -> mean:   0.997 ms  | min:   0.518 ms  | max:   1.525 ms  | iters: 2007
+  N=5,  Size=4096B   -> mean:   3.131 ms  | min:   2.082 ms  | max:   6.211 ms  | iters: 639
+
+--- N=10 (Source -> 8xTransform -> Sink) ---
+  N=10, Size=8B      -> mean:   0.784 ms  | min:   0.373 ms  | max:   1.142 ms  | iters: 2551
+  N=10, Size=64B     -> mean:   1.420 ms  | min:   0.914 ms  | max:   2.278 ms  | iters: 1409
+  N=10, Size=512B    -> mean:   1.194 ms  | min:   0.694 ms  | max:   2.569 ms  | iters: 1675
+  N=10, Size=4096B   -> mean:   3.490 ms  | min:   2.353 ms  | max:  13.089 ms  | iters: 573
+
+
+================================================================================
+                         SUMMARY - Mean times (ms)
+================================================================================
+
+                    MPMC_naif      MPMC         MPMC_padding   MPMC_pad_opt
+                    (locking)      (lock-free)  (+ padding)    (+ pad + opt)
+  --------------------------------------------------------------------------
+  N=2,  8B          0.548          0.190        0.109          0.113
+  N=2,  64B         1.061          0.430        0.386          0.516
+  N=2,  512B        0.929          0.578        0.557          0.415
+  N=2,  4096B      69.447          1.666        1.400          0.740
+  --------------------------------------------------------------------------
+  N=3,  8B          1.538          0.341        0.353          0.338
+  N=3,  64B         1.644          0.782        0.813          1.055
+  N=3,  512B        8.038          0.820        0.831          0.811
+  N=3,  4096B     107.990          1.966        1.828          2.366
+  --------------------------------------------------------------------------
+  N=5,  8B          1.883          0.532        0.553          0.593
+  N=5,  64B         2.148          0.889        1.075          1.293
+  N=5,  512B       11.914          0.853        1.004          0.997
+  N=5,  4096B     129.368          2.772        3.381          3.131
+  --------------------------------------------------------------------------
+  N=10, 8B          2.059          0.703        0.750          0.784
+  N=10, 64B         2.195          1.258        1.270          1.420
+  N=10, 512B       13.366          1.191        1.296          1.194
+  N=10, 4096B     127.104          3.674        3.768          3.490
+  --------------------------------------------------------------------------
