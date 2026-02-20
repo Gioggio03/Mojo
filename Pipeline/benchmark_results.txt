@@ -5,13 +5,6 @@
                     Mojo Pipeline (Source -> N-2 Transform -> Sink)
 ================================================================================
 
-Each test measures the end-to-end time to push 1000 Payload messages through
-the pipeline. Stages are pass-through (no computation). The benchmark framework
-runs multiple iterations (iters) and computes mean/min/max per iteration.
-
-Payload sizes: 8B, 64B, 512B, 4096B
-Stage counts:  N=2 (Source->Sink), N=3, N=5, N=10
-
 
 ================================================================================
  1. MPMC_naif (BlockingSpinLock + List)
