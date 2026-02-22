@@ -1,8 +1,8 @@
 # Synthetic benchmark of the pipeline pattern with different communicators and different numbers of stages N
 from benchmark import run, Unit
 from pipeline.pipeline import Pipeline
-from BenchStages import BenchSource, BenchTransform, BenchSink
-from Payload import Payload
+from benchStages import BenchSource, BenchTransform, BenchSink
+from payload import Payload
 
 # =========================
 # Pipeline runner functions

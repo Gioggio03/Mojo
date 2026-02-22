@@ -2,7 +2,7 @@
 from collections import Optional
 from pipeline.communicator import MessageTrait
 from pipeline.stage import StageKind, StageTrait
-from Payload import Payload
+from payload import Payload
 
 comptime NUM_MESSAGES: Int = 1000
 
