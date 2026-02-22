@@ -1,6 +1,6 @@
 # Traits used by a generic stage of the pipeline
 from collections import Optional
-from Communicator import MessageTrait
+from pipeline.communicator import MessageTrait
 
 # Types of stages supported by the Pipeline
 struct StageKind:

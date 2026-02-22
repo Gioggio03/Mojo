@@ -1,4 +1,4 @@
-# MPMC queue by Dmitry Vyukov with padding and optional data field
+# MPMC queue by Dmitry Vyukov with padding, optional data field and move-enabled push semantics
 from os.atomic import Atomic, Consistency, fence
 from time import sleep
 from sys.info import size_of
@@ -73,8 +73,8 @@ struct MPMCQueue[T: Copyable & Defaultable](Movable):
         self.buffer.free()
         # print("MPMCQueue destroyed!")
 
-    # push method for producers, returns True if the item was pushed successfully, False if the queue is full
-    fn push(mut self, item: Self.T) -> Bool:
+    # push method for producers, always return True because it spins forever until the item is pushed successfully
+    fn push(mut self, var item: Self.T) -> Bool:
         var pw: UInt64
         var seq: UInt64
         var bk: UInt64 = Self.BACKOFF_MIN
@@ -84,7 +84,7 @@ struct MPMCQueue[T: Copyable & Defaultable](Movable):
             seq = cell_ptr[].sequence.load[ordering=Consistency.ACQUIRE]()
             if pw == seq:
                 if self.enqueue_pos.atomicVal.compare_exchange[failure_ordering=Consistency.MONOTONIC, success_ordering=Consistency.MONOTONIC](pw, pw + 1):
-                    cell_ptr[].data = Optional(item.copy())
+                    cell_ptr[].data = Optional(item^)
                     Atomic[DType.uint64].store[ordering=Consistency.RELEASE](UnsafePointer(to=cell_ptr[].sequence.value), pw + 1)
                     return True
                 for _ in range(bk):
@@ -92,8 +92,8 @@ struct MPMCQueue[T: Copyable & Defaultable](Movable):
                     pass
                 bk <<= 1
                 bk &= Self.BACKOFF_MAX
-            elif pw > seq:
-                return False
+            # elif pw > seq:
+            #    return False
 
     # pop method for consumers, returns an Optional containing the item if popped successfully, or None if the queue is empty
     fn pop(mut self) -> Optional[Self.T]:

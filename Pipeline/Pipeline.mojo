@@ -2,8 +2,8 @@
 from runtime.asyncrt import create_task
 from runtime.asyncrt import TaskGroup
 from collections import Optional
-from Communicator import MessageTrait, MessageWrapper, Communicator
-from Stage import StageKind, StageTrait
+from pipeline.communicator import MessageTrait, MessageWrapper, Communicator
+from pipeline.stage import StageKind, StageTrait
 from sys.terminate import exit
 
 # Executor_task, the function that will be run by each task of the pipeline

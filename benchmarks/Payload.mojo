@@ -1,4 +1,4 @@
-# Payload struct with configurable size for benchmarking
+# Payload struct with configurable size, used for benchmarking
 # The Size parameter determines the number of bytes in the payload
 
 struct Payload[Size: Int](ImplicitlyCopyable, Writable, Defaultable):
@@ -16,6 +16,6 @@ struct Payload[Size: Int](ImplicitlyCopyable, Writable, Defaultable):
     fn __copyinit__(out self, existing: Self):
         self.data = existing.data.copy()
 
-    # Writable implementation
+    # writable implementation
     fn write_to[W: Writer](self, mut writer: W):
         writer.write("Payload[", String(Self.Size), "B]")

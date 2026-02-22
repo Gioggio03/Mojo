@@ -1,4 +1,4 @@
-# MPMC queue without locks, with padding
+# MPMC queue by Dmitry Vyukov with padding
 from os.atomic import Atomic, Consistency, fence
 from time import sleep
 from sys.info import size_of
@@ -70,7 +70,7 @@ struct MPMCQueue[T: Copyable & Defaultable](Movable):
         for i in range(self.size):
             (self.buffer + i).destroy_pointee()
         self.buffer.free()
-        print("MPMCQueue destroyed!")
+        # print("MPMCQueue destroyed!")
 
     # push method for producers, returns True if the item was pushed successfully, False if the queue is full
     fn push(mut self, item: Self.T) -> Bool:

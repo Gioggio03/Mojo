@@ -22,7 +22,8 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable](Movable):
 
     # destructor
     fn __del__(deinit self):
-        print("MPMCQueue destroyed!")
+        pass
+        # print("MPMCQueue destroyed!")
 
     # push method for producers, returns True if the item was pushed successfully, False if the queue is full
     fn push(mut self, item: Self.T) -> Bool:

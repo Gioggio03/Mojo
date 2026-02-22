@@ -1,8 +1,9 @@
-# Communicator using a lock-free MPMC queue
-#from MPMC_naif import MPMCQueue # MPMC naif with locking
-# from MPMC import MPMCQueue # MPMC standard
-#from MPMC_padding import MPMCQueue # MPMC with padding
-from MPMC_padding_optional import MPMCQueue # MPMC with padding and optional as data field
+# Communicator using a MPMC queue
+# from pipeline.MPMC_naif import MPMCQueue # MPMC naif with locking
+# from pipeline.MPMC import MPMCQueue # MPMC by Dmitry Vyukov standard
+# from pipeline.MPMC_padding import MPMCQueue # MPMC by Dmitry Vyukov with padding
+from pipeline.MPMC_padding_optional import MPMCQueue # MPMC by Dmitry Vyukov with padding and optional as data field
+# from pipeline.MPMC_padding_optional_v2 import MPMCQueue # MPMC by Dmitry Vyukov with padding, optional as data field and move-enabled push semantics
 from collections import Optional
 from sys.info import size_of
 
@@ -43,7 +44,7 @@ struct Communicator[T: MessageTrait](Movable):
     fn __del__(deinit self):
         self.queue.destroy_pointee()
         self.queue.free()
-        print("Communicator destroyed!")
+        # print("Communicator destroyed!")
 
     # move constructor
     fn __moveinit__(out self, deinit existing: Self):
@@ -61,3 +62,7 @@ struct Communicator[T: MessageTrait](Movable):
     fn push(mut self, msg: MessageWrapper[Self.T]):
         while not self.queue[].push(msg):
             pass
+
+    # push (to be used with MPMC with move-enabled push semantics)
+    #fn push(mut self, var msg: MessageWrapper[Self.T]):
+    #    _ = self.queue[].push(msg^)
