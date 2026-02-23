@@ -1,9 +1,14 @@
 ================================================================================
                     PIPELINE BENCHMARK RESULTS
                     1000 messages per pipeline run
-                    benchmark.run() with max_batch_size=1
+                    Compiled with -O3
                     Mojo Pipeline (Source -> N-2 Transform -> Sink)
+                    Heap-allocated Payload (UnsafePointer[UInt8])
 ================================================================================
+
+
+Payload sizes: 8B, 64B, 512B, 4096B
+Stage counts:  N=2 (Source->Sink), N=3, N=5, N=10
 
 
 ================================================================================
@@ -11,28 +16,28 @@
 ================================================================================
 
 --- N=2 (Source -> Sink) ---
-  N=2,  Size=8B      -> mean:   0.548 ms  | min:   0.317 ms  | max:   1.842 ms  | iters: 3651
-  N=2,  Size=64B     -> mean:   1.061 ms  | min:   0.963 ms  | max:   1.233 ms  | iters: 1885
-  N=2,  Size=512B    -> mean:   0.929 ms  | min:   0.362 ms  | max:  14.324 ms  | iters: 2160
-  N=2,  Size=4096B   -> mean:  69.447 ms  | min:   0.444 ms  | max: 164.268 ms  | iters: 100
+  N=2,  Size=8B      -> mean:   0.676 ms  | min:   0.521 ms  | max:   1.127 ms  | iters: 2959
+  N=2,  Size=64B     -> mean:   0.697 ms  | min:   0.581 ms  | max:   0.896 ms  | iters: 2868
+  N=2,  Size=512B    -> mean:   1.452 ms  | min:   1.394 ms  | max:   1.668 ms  | iters: 1378
+  N=2,  Size=4096B   -> mean:   7.447 ms  | min:   7.374 ms  | max:   7.922 ms  | iters: 269
 
 --- N=3 (Source -> Transform -> Sink) ---
-  N=3,  Size=8B      -> mean:   1.538 ms  | min:   0.741 ms  | max:   5.111 ms  | iters: 1301
-  N=3,  Size=64B     -> mean:   1.644 ms  | min:   1.420 ms  | max:   2.073 ms  | iters: 1217
-  N=3,  Size=512B    -> mean:   8.038 ms  | min:   1.303 ms  | max:  19.810 ms  | iters: 249
-  N=3,  Size=4096B   -> mean: 107.990 ms  | min:   9.151 ms  | max: 137.591 ms  | iters: 100
+  N=3,  Size=8B      -> mean:   1.992 ms  | min:   1.241 ms  | max:   5.643 ms  | iters: 1005
+  N=3,  Size=64B     -> mean:   1.888 ms  | min:   1.342 ms  | max:   5.767 ms  | iters: 1060
+  N=3,  Size=512B    -> mean:   2.926 ms  | min:   2.083 ms  | max:   6.754 ms  | iters: 684
+  N=3,  Size=4096B   -> mean:   8.838 ms  | min:   8.266 ms  | max:  11.046 ms  | iters: 227
 
 --- N=5 (Source -> 3xTransform -> Sink) ---
-  N=5,  Size=8B      -> mean:   1.883 ms  | min:   0.816 ms  | max:   5.067 ms  | iters: 1063
-  N=5,  Size=64B     -> mean:   2.148 ms  | min:   1.532 ms  | max:   2.830 ms  | iters: 932
-  N=5,  Size=512B    -> mean:  11.914 ms  | min:   1.513 ms  | max:  20.192 ms  | iters: 169
-  N=5,  Size=4096B   -> mean: 129.368 ms  | min:  41.330 ms  | max: 168.558 ms  | iters: 100
+  N=5,  Size=8B      -> mean:   2.354 ms  | min:   1.238 ms  | max:   6.018 ms  | iters: 850
+  N=5,  Size=64B     -> mean:   2.474 ms  | min:   1.276 ms  | max:   6.088 ms  | iters: 809
+  N=5,  Size=512B    -> mean:   3.246 ms  | min:   2.258 ms  | max:   6.801 ms  | iters: 617
+  N=5,  Size=4096B   -> mean:   9.359 ms  | min:   8.422 ms  | max:  11.477 ms  | iters: 214
 
 --- N=10 (Source -> 8xTransform -> Sink) ---
-  N=10, Size=8B      -> mean:   2.059 ms  | min:   0.902 ms  | max:   5.567 ms  | iters: 972
-  N=10, Size=64B     -> mean:   2.195 ms  | min:   1.521 ms  | max:   3.968 ms  | iters: 912
-  N=10, Size=512B    -> mean:  13.366 ms  | min:   2.027 ms  | max:  21.447 ms  | iters: 150
-  N=10, Size=4096B   -> mean: 127.104 ms  | min:  38.711 ms  | max: 169.761 ms  | iters: 100
+  N=10, Size=8B      -> mean:   3.008 ms  | min:   1.260 ms  | max:   6.518 ms  | iters: 665
+  N=10, Size=64B     -> mean:   3.032 ms  | min:   1.712 ms  | max:   6.312 ms  | iters: 660
+  N=10, Size=512B    -> mean:   3.617 ms  | min:   2.261 ms  | max:   6.809 ms  | iters: 553
+  N=10, Size=4096B   -> mean:   9.125 ms  | min:   7.002 ms  | max:  15.327 ms  | iters: 220
 
 
 ================================================================================
@@ -40,28 +45,28 @@
 ================================================================================
 
 --- N=2 (Source -> Sink) ---
-  N=2,  Size=8B      -> mean:   0.190 ms  | min:   0.056 ms  | max:   0.990 ms  | iters: 10502
-  N=2,  Size=64B     -> mean:   0.430 ms  | min:   0.408 ms  | max:   0.472 ms  | iters: 4657
-  N=2,  Size=512B    -> mean:   0.578 ms  | min:   0.197 ms  | max:   0.775 ms  | iters: 3460
-  N=2,  Size=4096B   -> mean:   1.666 ms  | min:   0.653 ms  | max:   2.306 ms  | iters: 1201
+  N=2,  Size=8B      -> mean:   0.499 ms  | min:   0.284 ms  | max:   0.911 ms  | iters: 4007
+  N=2,  Size=64B     -> mean:   0.457 ms  | min:   0.286 ms  | max:   0.918 ms  | iters: 4373
+  N=2,  Size=512B    -> mean:   0.815 ms  | min:   0.693 ms  | max:   1.206 ms  | iters: 2454
+  N=2,  Size=4096B   -> mean:   3.580 ms  | min:   3.409 ms  | max:   3.864 ms  | iters: 559
 
 --- N=3 (Source -> Transform -> Sink) ---
-  N=3,  Size=8B      -> mean:   0.341 ms  | min:   0.136 ms  | max:   2.922 ms  | iters: 5868
-  N=3,  Size=64B     -> mean:   0.782 ms  | min:   0.660 ms  | max:   1.525 ms  | iters: 2559
-  N=3,  Size=512B    -> mean:   0.820 ms  | min:   0.368 ms  | max:   1.957 ms  | iters: 2441
-  N=3,  Size=4096B   -> mean:   1.966 ms  | min:   1.663 ms  | max:   4.824 ms  | iters: 1018
+  N=3,  Size=8B      -> mean:   0.585 ms  | min:   0.424 ms  | max:   1.373 ms  | iters: 3417
+  N=3,  Size=64B     -> mean:   0.581 ms  | min:   0.469 ms  | max:   1.205 ms  | iters: 3442
+  N=3,  Size=512B    -> mean:   1.098 ms  | min:   0.880 ms  | max:   2.427 ms  | iters: 1823
+  N=3,  Size=4096B   -> mean:   4.552 ms  | min:   3.687 ms  | max:   9.730 ms  | iters: 440
 
 --- N=5 (Source -> 3xTransform -> Sink) ---
-  N=5,  Size=8B      -> mean:   0.532 ms  | min:   0.289 ms  | max:   1.062 ms  | iters: 3763
-  N=5,  Size=64B     -> mean:   0.889 ms  | min:   0.717 ms  | max:   1.688 ms  | iters: 2250
-  N=5,  Size=512B    -> mean:   0.853 ms  | min:   0.516 ms  | max:   1.686 ms  | iters: 2346
-  N=5,  Size=4096B   -> mean:   2.772 ms  | min:   1.872 ms  | max:   5.451 ms  | iters: 722
+  N=5,  Size=8B      -> mean:   1.033 ms  | min:   0.581 ms  | max:   1.795 ms  | iters: 1936
+  N=5,  Size=64B     -> mean:   0.978 ms  | min:   0.632 ms  | max:   1.637 ms  | iters: 2046
+  N=5,  Size=512B    -> mean:   1.751 ms  | min:   1.133 ms  | max:   2.600 ms  | iters: 1143
+  N=5,  Size=4096B   -> mean:   5.462 ms  | min:   4.896 ms  | max:   8.931 ms  | iters: 367
 
 --- N=10 (Source -> 8xTransform -> Sink) ---
-  N=10, Size=8B      -> mean:   0.703 ms  | min:   0.402 ms  | max:   1.217 ms  | iters: 2846
-  N=10, Size=64B     -> mean:   1.258 ms  | min:   0.804 ms  | max:   1.841 ms  | iters: 1591
-  N=10, Size=512B    -> mean:   1.191 ms  | min:   0.678 ms  | max:   2.446 ms  | iters: 1680
-  N=10, Size=4096B   -> mean:   3.674 ms  | min:   2.715 ms  | max:  15.014 ms  | iters: 545
+  N=10, Size=8B      -> mean:   1.417 ms  | min:   0.729 ms  | max:   2.831 ms  | iters: 1412
+  N=10, Size=64B     -> mean:   1.172 ms  | min:   0.740 ms  | max:   1.747 ms  | iters: 1707
+  N=10, Size=512B    -> mean:   1.788 ms  | min:   1.218 ms  | max:   2.670 ms  | iters: 1119
+  N=10, Size=4096B   -> mean:   8.113 ms  | min:   6.505 ms  | max:  10.998 ms  | iters: 247
 
 
 ================================================================================
@@ -69,28 +74,28 @@
 ================================================================================
 
 --- N=2 (Source -> Sink) ---
-  N=2,  Size=8B      -> mean:   0.109 ms  | min:   0.052 ms  | max:   2.703 ms  | iters: 18429
-  N=2,  Size=64B     -> mean:   0.386 ms  | min:   0.328 ms  | max:   0.820 ms  | iters: 5181
-  N=2,  Size=512B    -> mean:   0.557 ms  | min:   0.129 ms  | max:   0.972 ms  | iters: 3590
-  N=2,  Size=4096B   -> mean:   1.400 ms  | min:   0.531 ms  | max:   3.345 ms  | iters: 1429
+  N=2,  Size=8B      -> mean:   0.583 ms  | min:   0.265 ms  | max:   1.028 ms  | iters: 3429
+  N=2,  Size=64B     -> mean:   0.654 ms  | min:   0.523 ms  | max:   1.213 ms  | iters: 3059
+  N=2,  Size=512B    -> mean:   0.902 ms  | min:   0.838 ms  | max:   1.277 ms  | iters: 2217
+  N=2,  Size=4096B   -> mean:   4.319 ms  | min:   4.250 ms  | max:   5.255 ms  | iters: 464
 
 --- N=3 (Source -> Transform -> Sink) ---
-  N=3,  Size=8B      -> mean:   0.353 ms  | min:   0.120 ms  | max:   0.900 ms  | iters: 5664
-  N=3,  Size=64B     -> mean:   0.813 ms  | min:   0.509 ms  | max:   1.531 ms  | iters: 2459
-  N=3,  Size=512B    -> mean:   0.831 ms  | min:   0.428 ms  | max:   1.512 ms  | iters: 2406
-  N=3,  Size=4096B   -> mean:   1.828 ms  | min:   1.627 ms  | max:   4.359 ms  | iters: 1095
+  N=3,  Size=8B      -> mean:   0.729 ms  | min:   0.448 ms  | max:   1.325 ms  | iters: 2743
+  N=3,  Size=64B     -> mean:   0.637 ms  | min:   0.482 ms  | max:   1.429 ms  | iters: 3140
+  N=3,  Size=512B    -> mean:   1.620 ms  | min:   1.005 ms  | max:   2.681 ms  | iters: 1236
+  N=3,  Size=4096B   -> mean:   5.307 ms  | min:   3.750 ms  | max:   7.622 ms  | iters: 377
 
 --- N=5 (Source -> 3xTransform -> Sink) ---
-  N=5,  Size=8B      -> mean:   0.553 ms  | min:   0.267 ms  | max:   0.976 ms  | iters: 3618
-  N=5,  Size=64B     -> mean:   1.075 ms  | min:   0.659 ms  | max:   1.794 ms  | iters: 1861
-  N=5,  Size=512B    -> mean:   1.004 ms  | min:   0.555 ms  | max:   1.722 ms  | iters: 1993
-  N=5,  Size=4096B   -> mean:   3.381 ms  | min:   1.891 ms  | max:   6.410 ms  | iters: 592
+  N=5,  Size=8B      -> mean:   1.131 ms  | min:   0.667 ms  | max:   1.818 ms  | iters: 1769
+  N=5,  Size=64B     -> mean:   1.156 ms  | min:   0.768 ms  | max:   1.936 ms  | iters: 1731
+  N=5,  Size=512B    -> mean:   1.740 ms  | min:   1.300 ms  | max:   6.998 ms  | iters: 1150
+  N=5,  Size=4096B   -> mean:   5.502 ms  | min:   4.984 ms  | max:   7.400 ms  | iters: 364
 
 --- N=10 (Source -> 8xTransform -> Sink) ---
-  N=10, Size=8B      -> mean:   0.750 ms  | min:   0.455 ms  | max:   1.202 ms  | iters: 2667
-  N=10, Size=64B     -> mean:   1.270 ms  | min:   0.753 ms  | max:   1.891 ms  | iters: 1575
-  N=10, Size=512B    -> mean:   1.296 ms  | min:   0.565 ms  | max:   2.228 ms  | iters: 1543
-  N=10, Size=4096B   -> mean:   3.768 ms  | min:   2.642 ms  | max:  12.894 ms  | iters: 531
+  N=10, Size=8B      -> mean:   1.458 ms  | min:   0.706 ms  | max:   2.631 ms  | iters: 1372
+  N=10, Size=64B     -> mean:   1.433 ms  | min:   0.925 ms  | max:   1.857 ms  | iters: 1396
+  N=10, Size=512B    -> mean:   1.840 ms  | min:   1.039 ms  | max:   2.779 ms  | iters: 1087
+  N=10, Size=4096B   -> mean:   7.615 ms  | min:   6.492 ms  | max:  10.078 ms  | iters: 263
 
 
 ================================================================================
@@ -98,54 +103,83 @@
 ================================================================================
 
 --- N=2 (Source -> Sink) ---
-  N=2,  Size=8B      -> mean:   0.113 ms  | min:   0.069 ms  | max:   2.016 ms  | iters: 17660
-  N=2,  Size=64B     -> mean:   0.516 ms  | min:   0.501 ms  | max:   0.572 ms  | iters: 3878
-  N=2,  Size=512B    -> mean:   0.415 ms  | min:   0.140 ms  | max:   1.340 ms  | iters: 4821
-  N=2,  Size=4096B   -> mean:   0.740 ms  | min:   0.625 ms  | max:   5.748 ms  | iters: 2703
+  N=2,  Size=8B      -> mean:   0.640 ms  | min:   0.291 ms  | max:   1.253 ms  | iters: 3128
+  N=2,  Size=64B     -> mean:   0.840 ms  | min:   0.591 ms  | max:   1.439 ms  | iters: 2380
+  N=2,  Size=512B    -> mean:   0.937 ms  | min:   0.727 ms  | max:   1.875 ms  | iters: 2135
+  N=2,  Size=4096B   -> mean:   3.686 ms  | min:   3.220 ms  | max:   6.332 ms  | iters: 543
 
 --- N=3 (Source -> Transform -> Sink) ---
-  N=3,  Size=8B      -> mean:   0.338 ms  | min:   0.134 ms  | max:   0.988 ms  | iters: 5912
-  N=3,  Size=64B     -> mean:   1.055 ms  | min:   0.830 ms  | max:   2.180 ms  | iters: 1896
-  N=3,  Size=512B    -> mean:   0.811 ms  | min:   0.421 ms  | max:   1.833 ms  | iters: 2466
-  N=3,  Size=4096B   -> mean:   2.366 ms  | min:   2.051 ms  | max:   8.311 ms  | iters: 846
+  N=3,  Size=8B      -> mean:   0.816 ms  | min:   0.372 ms  | max:   1.482 ms  | iters: 2451
+  N=3,  Size=64B     -> mean:   0.876 ms  | min:   0.383 ms  | max:   1.533 ms  | iters: 2283
+  N=3,  Size=512B    -> mean:   0.850 ms  | min:   0.746 ms  | max:   2.277 ms  | iters: 2353
+  N=3,  Size=4096B   -> mean:   3.499 ms  | min:   3.422 ms  | max:   3.654 ms  | iters: 572
 
 --- N=5 (Source -> 3xTransform -> Sink) ---
-  N=5,  Size=8B      -> mean:   0.593 ms  | min:   0.234 ms  | max:   1.013 ms  | iters: 3372
-  N=5,  Size=64B     -> mean:   1.293 ms  | min:   0.825 ms  | max:   2.087 ms  | iters: 1548
-  N=5,  Size=512B    -> mean:   0.997 ms  | min:   0.518 ms  | max:   1.525 ms  | iters: 2007
-  N=5,  Size=4096B   -> mean:   3.131 ms  | min:   2.082 ms  | max:   6.211 ms  | iters: 639
+  N=5,  Size=8B      -> mean:   1.066 ms  | min:   0.626 ms  | max:   1.563 ms  | iters: 1876
+  N=5,  Size=64B     -> mean:   1.104 ms  | min:   0.725 ms  | max:   1.762 ms  | iters: 1812
+  N=5,  Size=512B    -> mean:   1.611 ms  | min:   1.169 ms  | max:   2.781 ms  | iters: 1242
+  N=5,  Size=4096B   -> mean:   5.028 ms  | min:   4.631 ms  | max:   7.248 ms  | iters: 398
 
 --- N=10 (Source -> 8xTransform -> Sink) ---
-  N=10, Size=8B      -> mean:   0.784 ms  | min:   0.373 ms  | max:   1.142 ms  | iters: 2551
-  N=10, Size=64B     -> mean:   1.420 ms  | min:   0.914 ms  | max:   2.278 ms  | iters: 1409
-  N=10, Size=512B    -> mean:   1.194 ms  | min:   0.694 ms  | max:   2.569 ms  | iters: 1675
-  N=10, Size=4096B   -> mean:   3.490 ms  | min:   2.353 ms  | max:  13.089 ms  | iters: 573
+  N=10, Size=8B      -> mean:   1.358 ms  | min:   0.893 ms  | max:   1.848 ms  | iters: 1473
+  N=10, Size=64B     -> mean:   1.363 ms  | min:   0.855 ms  | max:   1.758 ms  | iters: 1468
+  N=10, Size=512B    -> mean:   1.946 ms  | min:   1.343 ms  | max:   2.747 ms  | iters: 1028
+  N=10, Size=4096B   -> mean:   5.526 ms  | min:   4.794 ms  | max:   7.523 ms  | iters: 362
+
+
+================================================================================
+ 5. MPMC_padding_optional_v2 (lock-free, Vyukov + Padding + Optional + Move push)
+================================================================================
+
+--- N=2 (Source -> Sink) ---
+  N=2,  Size=8B      -> mean:   0.475 ms  | min:   0.231 ms  | max:   1.095 ms  | iters: 4209
+  N=2,  Size=64B     -> mean:   0.533 ms  | min:   0.471 ms  | max:   1.105 ms  | iters: 3751
+  N=2,  Size=512B    -> mean:   0.777 ms  | min:   0.658 ms  | max:   1.221 ms  | iters: 2573
+  N=2,  Size=4096B   -> mean:   3.977 ms  | min:   3.861 ms  | max:   5.637 ms  | iters: 503
+
+--- N=3 (Source -> Transform -> Sink) ---
+  N=3,  Size=8B      -> mean:   0.812 ms  | min:   0.410 ms  | max:   1.292 ms  | iters: 2465
+  N=3,  Size=64B     -> mean:   0.868 ms  | min:   0.458 ms  | max:   1.226 ms  | iters: 2305
+  N=3,  Size=512B    -> mean:   1.247 ms  | min:   0.849 ms  | max:   2.684 ms  | iters: 1604
+  N=3,  Size=4096B   -> mean:   4.509 ms  | min:   4.252 ms  | max:   6.686 ms  | iters: 444
+
+--- N=5 (Source -> 3xTransform -> Sink) ---
+  N=5,  Size=8B      -> mean:   1.110 ms  | min:   0.653 ms  | max:   1.681 ms  | iters: 1803
+  N=5,  Size=64B     -> mean:   1.162 ms  | min:   0.624 ms  | max:   1.733 ms  | iters: 1722
+  N=5,  Size=512B    -> mean:   1.577 ms  | min:   1.121 ms  | max:   2.555 ms  | iters: 1269
+  N=5,  Size=4096B   -> mean:   4.871 ms  | min:   4.383 ms  | max:   7.931 ms  | iters: 411
+
+--- N=10 (Source -> 8xTransform -> Sink) ---
+  N=10, Size=8B      -> mean:   1.351 ms  | min:   0.790 ms  | max:   2.000 ms  | iters: 1481
+  N=10, Size=64B     -> mean:   1.328 ms  | min:   0.762 ms  | max:   1.958 ms  | iters: 1507
+  N=10, Size=512B    -> mean:   1.832 ms  | min:   1.231 ms  | max:   3.572 ms  | iters: 1092
+  N=10, Size=4096B   -> mean:   5.061 ms  | min:   4.481 ms  | max:   8.435 ms  | iters: 396
 
 
 ================================================================================
                          SUMMARY - Mean times (ms)
 ================================================================================
 
-                    MPMC_naif      MPMC         MPMC_padding   MPMC_pad_opt
-                    (locking)      (lock-free)  (+ padding)    (+ pad + opt)
-  --------------------------------------------------------------------------
-  N=2,  8B          0.548          0.190        0.109          0.113
-  N=2,  64B         1.061          0.430        0.386          0.516
-  N=2,  512B        0.929          0.578        0.557          0.415
-  N=2,  4096B      69.447          1.666        1.400          0.740
-  --------------------------------------------------------------------------
-  N=3,  8B          1.538          0.341        0.353          0.338
-  N=3,  64B         1.644          0.782        0.813          1.055
-  N=3,  512B        8.038          0.820        0.831          0.811
-  N=3,  4096B     107.990          1.966        1.828          2.366
-  --------------------------------------------------------------------------
-  N=5,  8B          1.883          0.532        0.553          0.593
-  N=5,  64B         2.148          0.889        1.075          1.293
-  N=5,  512B       11.914          0.853        1.004          0.997
-  N=5,  4096B     129.368          2.772        3.381          3.131
-  --------------------------------------------------------------------------
-  N=10, 8B          2.059          0.703        0.750          0.784
-  N=10, 64B         2.195          1.258        1.270          1.420
-  N=10, 512B       13.366          1.191        1.296          1.194
-  N=10, 4096B     127.104          3.674        3.768          3.490
-  --------------------------------------------------------------------------
+                    MPMC_naif      MPMC         MPMC_pad       MPMC_pad_opt   MPMC_v2
+                    (locking)      (lock-free)  (+ padding)    (+ pad + opt)  (+ move push)
+  --------------------------------------------------------------------------------------
+  N=2,  8B          0.676          0.499        0.583          0.640          0.475
+  N=2,  64B         0.697          0.457        0.654          0.840          0.533
+  N=2,  512B        1.452          0.815        0.902          0.937          0.777
+  N=2,  4096B       7.447          3.580        4.319          3.686          3.977
+  --------------------------------------------------------------------------------------
+  N=3,  8B          1.992          0.585        0.729          0.816          0.812
+  N=3,  64B         1.888          0.581        0.637          0.876          0.868
+  N=3,  512B        2.926          1.098        1.620          0.850          1.247
+  N=3,  4096B       8.838          4.552        5.307          3.499          4.509
+  --------------------------------------------------------------------------------------
+  N=5,  8B          2.354          1.033        1.131          1.066          1.110
+  N=5,  64B         2.474          0.978        1.156          1.104          1.162
+  N=5,  512B        3.246          1.751        1.740          1.611          1.577
+  N=5,  4096B       9.359          5.462        5.502          5.028          4.871
+  --------------------------------------------------------------------------------------
+  N=10, 8B          3.008          1.417        1.458          1.358          1.351
+  N=10, 64B         3.032          1.172        1.433          1.363          1.328
+  N=10, 512B        3.617          1.788        1.840          1.946          1.832
+  N=10, 4096B       9.125          8.113        7.615          5.526          5.061
+  --------------------------------------------------------------------------------------
