@@ -1,0 +1,62 @@
+======================================================================
+  Pipeline Scalability Benchmark
+  Queue: MPMC_padding_optional_v2
+  Total computation time T = 100 ms per payload
+  Messages per run: 50
+======================================================================
+
+--- Payload Size: 8B ---
+  N= 2 , Size= 8 B, SleepPerStage= 50 ms  -> elapsed: 2556 ms  | throughput: 19.55641238021658 msg/s  | efficiency: 99 %
+  N= 3 , Size= 8 B, SleepPerStage= 33 ms  -> elapsed: 1722 ms  | throughput: 29.019906063527532 msg/s  | efficiency: 99 %
+  N= 4 , Size= 8 B, SleepPerStage= 25 ms  -> elapsed: 1333 ms  | throughput: 37.5088514043949 msg/s  | efficiency: 99 %
+  N= 5 , Size= 8 B, SleepPerStage= 20 ms  -> elapsed: 1087 ms  | throughput: 45.97593297284959 msg/s  | efficiency: 99 %
+  N= 6 , Size= 8 B, SleepPerStage= 16 ms  -> elapsed: 887 ms  | throughput: 56.31612643085269 msg/s  | efficiency: 99 %
+  N= 7 , Size= 8 B, SleepPerStage= 14 ms  -> elapsed: 791 ms  | throughput: 63.169693425892476 msg/s  | efficiency: 99 %
+  N= 8 , Size= 8 B, SleepPerStage= 12 ms  -> elapsed: 691 ms  | throughput: 72.30223329553098 msg/s  | efficiency: 99 %
+  N= 9 , Size= 8 B, SleepPerStage= 11 ms  -> elapsed: 645 ms  | throughput: 77.46151597243446 msg/s  | efficiency: 98 %
+  N= 10 , Size= 8 B, SleepPerStage= 10 ms  -> elapsed: 597 ms  | throughput: 83.62400843542801 msg/s  | efficiency: 98 %
+  N= 11 , Size= 8 B, SleepPerStage= 9 ms  -> elapsed: 548 ms  | throughput: 91.2273358113901 msg/s  | efficiency: 98 %
+  N= 12 , Size= 8 B, SleepPerStage= 8 ms  -> elapsed: 495 ms  | throughput: 100.88590027636583 msg/s  | efficiency: 99 %
+
+--- Payload Size: 64B ---
+  N= 2 , Size= 64 B, SleepPerStage= 50 ms  -> elapsed: 2556 ms  | throughput: 19.55844292067441 msg/s  | efficiency: 99 %
+  N= 3 , Size= 64 B, SleepPerStage= 33 ms  -> elapsed: 1723 ms  | throughput: 29.018252367568014 msg/s  | efficiency: 99 %
+  N= 4 , Size= 64 B, SleepPerStage= 25 ms  -> elapsed: 1332 ms  | throughput: 37.53364243589046 msg/s  | efficiency: 99 %
+  N= 5 , Size= 64 B, SleepPerStage= 20 ms  -> elapsed: 1087 ms  | throughput: 45.99452654831301 msg/s  | efficiency: 99 %
+  N= 6 , Size= 64 B, SleepPerStage= 16 ms  -> elapsed: 887 ms  | throughput: 56.34721533645165 msg/s  | efficiency: 99 %
+  N= 7 , Size= 64 B, SleepPerStage= 14 ms  -> elapsed: 792 ms  | throughput: 63.119341575890374 msg/s  | efficiency: 99 %
+  N= 8 , Size= 64 B, SleepPerStage= 12 ms  -> elapsed: 691 ms  | throughput: 72.25646390212877 msg/s  | efficiency: 99 %
+  N= 9 , Size= 64 B, SleepPerStage= 11 ms  -> elapsed: 645 ms  | throughput: 77.43402198150247 msg/s  | efficiency: 98 %
+  N= 10 , Size= 64 B, SleepPerStage= 10 ms  -> elapsed: 597 ms  | throughput: 83.6256258019175 msg/s  | efficiency: 98 %
+  N= 11 , Size= 64 B, SleepPerStage= 9 ms  -> elapsed: 547 ms  | throughput: 91.27523354260853 msg/s  | efficiency: 98 %
+  N= 12 , Size= 64 B, SleepPerStage= 8 ms  -> elapsed: 495 ms  | throughput: 100.9164287499627 msg/s  | efficiency: 99 %
+
+--- Payload Size: 512B ---
+  N= 2 , Size= 512 B, SleepPerStage= 50 ms  -> elapsed: 2557 ms  | throughput: 19.549133883677523 msg/s  | efficiency: 99 %
+  N= 3 , Size= 512 B, SleepPerStage= 33 ms  -> elapsed: 1723 ms  | throughput: 29.01626334168949 msg/s  | efficiency: 99 %
+  N= 4 , Size= 512 B, SleepPerStage= 25 ms  -> elapsed: 1332 ms  | throughput: 37.53070168088176 msg/s  | efficiency: 99 %
+  N= 5 , Size= 512 B, SleepPerStage= 20 ms  -> elapsed: 1087 ms  | throughput: 45.989590524763926 msg/s  | efficiency: 99 %
+  N= 6 , Size= 512 B, SleepPerStage= 16 ms  -> elapsed: 887 ms  | throughput: 56.34031891876978 msg/s  | efficiency: 99 %
+  N= 7 , Size= 512 B, SleepPerStage= 14 ms  -> elapsed: 791 ms  | throughput: 63.18667351301857 msg/s  | efficiency: 99 %
+  N= 8 , Size= 512 B, SleepPerStage= 12 ms  -> elapsed: 691 ms  | throughput: 72.31375574491028 msg/s  | efficiency: 99 %
+  N= 9 , Size= 512 B, SleepPerStage= 11 ms  -> elapsed: 645 ms  | throughput: 77.46986291021375 msg/s  | efficiency: 99 %
+  N= 10 , Size= 512 B, SleepPerStage= 10 ms  -> elapsed: 598 ms  | throughput: 83.5510068218829 msg/s  | efficiency: 98 %
+  N= 11 , Size= 512 B, SleepPerStage= 9 ms  -> elapsed: 547 ms  | throughput: 91.2434094155432 msg/s  | efficiency: 98 %
+  N= 12 , Size= 512 B, SleepPerStage= 8 ms  -> elapsed: 496 ms  | throughput: 100.75194887114252 msg/s  | efficiency: 99 %
+
+--- Payload Size: 4096B ---
+  N= 2 , Size= 4096 B, SleepPerStage= 50 ms  -> elapsed: 2557 ms  | throughput: 19.552942905576437 msg/s  | efficiency: 99 %
+  N= 3 , Size= 4096 B, SleepPerStage= 33 ms  -> elapsed: 1723 ms  | throughput: 29.016475041517296 msg/s  | efficiency: 99 %
+  N= 4 , Size= 4096 B, SleepPerStage= 25 ms  -> elapsed: 1332 ms  | throughput: 37.531849264562965 msg/s  | efficiency: 99 %
+  N= 5 , Size= 4096 B, SleepPerStage= 20 ms  -> elapsed: 1087 ms  | throughput: 45.98768973008937 msg/s  | efficiency: 99 %
+  N= 6 , Size= 4096 B, SleepPerStage= 16 ms  -> elapsed: 887 ms  | throughput: 56.33135758419684 msg/s  | efficiency: 99 %
+  N= 7 , Size= 4096 B, SleepPerStage= 14 ms  -> elapsed: 792 ms  | throughput: 63.10572479573475 msg/s  | efficiency: 99 %
+  N= 8 , Size= 4096 B, SleepPerStage= 12 ms  -> elapsed: 691 ms  | throughput: 72.25462981258772 msg/s  | efficiency: 99 %
+  N= 9 , Size= 4096 B, SleepPerStage= 11 ms  -> elapsed: 646 ms  | throughput: 77.3294694581306 msg/s  | efficiency: 98 %
+  N= 10 , Size= 4096 B, SleepPerStage= 10 ms  -> elapsed: 598 ms  | throughput: 83.55751075377225 msg/s  | efficiency: 98 %
+  N= 11 , Size= 4096 B, SleepPerStage= 9 ms  -> elapsed: 548 ms  | throughput: 91.23364314891795 msg/s  | efficiency: 98 %
+  N= 12 , Size= 4096 B, SleepPerStage= 8 ms  -> elapsed: 496 ms  | throughput: 100.73734335816575 msg/s  | efficiency: 99 %
+
+======================================================================
+  Benchmark complete!
+======================================================================
