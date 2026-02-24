@@ -1,7 +1,7 @@
-# Stage per il benchmark di scalabilità della pipeline.
-# Ogni stage simula un calcolo dormendo per SleepMs millisecondi per ogni elemento.
-# In questo modo possiamo misurare l'overhead della pipeline (code, task async)
-# isolandolo dal calcolo reale.
+# Stage for the pipeline scalability benchmark.
+# Each stage simulates computation by sleeping for SleepMs milliseconds for each element.
+# In this way, we can measure the pipeline overhead (queues, async tasks)
+# while isolating it from the actual computation.
 
 from collections import Optional
 from Communicator import MessageTrait
@@ -9,11 +9,10 @@ from Stage import StageKind, StageTrait
 from Payload import Payload
 from time import sleep
 
-# Numero di messaggi processati per ogni run del benchmark
+# Number of messages to process in the benchmark
 comptime NUM_MESSAGES: Int = 50
 
-
-# Source che genera NUM_MESSAGES payload, dormendo SleepMs per ognuno
+# Source generating NUM_MESSAGES payloads of size Size, sleeping SleepMs milliseconds for each message
 struct SleepSource[Size: Int, SleepMs: Int](StageTrait):
     comptime kind = StageKind.SOURCE
     comptime InType = Payload[Self.Size]
@@ -21,44 +20,45 @@ struct SleepSource[Size: Int, SleepMs: Int](StageTrait):
     comptime name = "SleepSource"
     var count: Int
 
+    # constructor
     fn __init__(out self):
         self.count = 0
 
+    # next_element
     fn next_element(mut self) -> Optional[Payload[Self.Size]]:
         if self.count >= NUM_MESSAGES:
             return None
         self.count += 1
-        # simula il calcolo con una sleep
         sleep(Self.SleepMs / 1000.0)
         return Payload[Self.Size](fill=1)
 
-
-# Transform che riceve un payload, dorme SleepMs, e lo inoltra invariato
+# Transform that receives a payload, sleeps SleepMs milliseconds, and forwards it unchanged
 struct SleepTransform[Size: Int, SleepMs: Int](StageTrait):
     comptime kind = StageKind.TRANSFORM
     comptime InType = Payload[Self.Size]
     comptime OutType = Payload[Self.Size]
     comptime name = "SleepTransform"
 
+    # constructor
     fn __init__(out self):
         pass
 
+    # compute
     fn compute(mut self, var input: Payload[Self.Size]) -> Optional[Payload[Self.Size]]:
-        # simula il calcolo con una sleep
         sleep(Self.SleepMs / 1000.0)
         return input
 
-
-# Sink che riceve un payload, dorme SleepMs, e lo scarta
+# Sink that receives a payload, sleeps SleepMs milliseconds, and discards it
 struct SleepSink[Size: Int, SleepMs: Int](StageTrait):
     comptime kind = StageKind.SINK
     comptime InType = Payload[Self.Size]
     comptime OutType = Payload[Self.Size]
     comptime name = "SleepSink"
 
+    # constructor
     fn __init__(out self):
         pass
 
+    # consume_element
     fn consume_element(mut self, var input: Payload[Self.Size]):
-        # simula il calcolo con una sleep
         sleep(Self.SleepMs / 1000.0)

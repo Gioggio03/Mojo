@@ -1,4 +1,5 @@
 # Communicator using a MPMC queue
+
 # from pipeline.MPMC_naif import MPMCQueue # MPMC naif with locking
 # from pipeline.MPMC import MPMCQueue # MPMC by Dmitry Vyukov standard
 # from pipeline.MPMC_padding import MPMCQueue # MPMC by Dmitry Vyukov with padding

@@ -1,15 +1,9 @@
+# Benchmark to measure the overhead of Pipeline with different numbers of stages (N) and different payload sizes (Size)
 
 from benchmark import run, Unit
 from Pipeline import Pipeline
 from BenchStages import BenchSource, BenchTransform, BenchSink
 from Payload import Payload
-
-# ========================
-# Pipeline runner functions
-# ========================
-# Poiché Pipeline utilizza parametri variadici comptime, abbiamo bisogno di funzioni
-# separate per ogni numero di stadi N.
-
 
 # N=2: Source -> Sink
 fn run_pipeline_2[Size: Int]():
@@ -55,12 +49,9 @@ fn run_pipeline_10[Size: Int]():
     pipeline.run()
     _ = pipeline
 
-# ========================
 # Benchmark helper
-# ========================
 fn bench_and_print[Size: Int, N: Int]() raises:
     print("  N=", N, ", Size=", Size, "B", end="")
-
     @parameter
     if N == 2:
         report = run[func2 = run_pipeline_2[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
@@ -73,7 +64,6 @@ fn bench_and_print[Size: Int, N: Int]() raises:
     else:
         print("  -> ERROR: unsupported N")
         return
-
     print(
         "  -> media:", report.mean(Unit.ms), "ms",
         " | min:", report.min(Unit.ms), "ms",
@@ -81,18 +71,14 @@ fn bench_and_print[Size: Int, N: Int]() raises:
         " | iters:", report.iters()
     )
 
-# ========================
 # Benchmark all sizes for a given N
-# ========================
 fn bench_all_sizes[N: Int]() raises:
     bench_and_print[8, N]()
     bench_and_print[64, N]()
     bench_and_print[512, N]()
     bench_and_print[4096, N]()
 
-# ========================
 # Main
-# ========================
 def main():
     print("=" * 60)
     print("  Pipeline Benchmark")

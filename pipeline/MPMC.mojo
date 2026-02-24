@@ -1,4 +1,5 @@
 # MPMC queue by Dmitry Vyukov standard
+
 from os.atomic import Atomic, Consistency, fence
 from time import sleep
 from builtin.simd import Scalar

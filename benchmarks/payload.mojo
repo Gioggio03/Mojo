@@ -4,6 +4,7 @@
 #   - copy  -> allocates new memory + copies all bytes   (O(Size))
 #   - move  -> just steals the pointer                   (O(1))
 
+# Payload struct
 struct Payload[Size: Int](ImplicitlyCopyable, Writable, Defaultable):
     var data_ptr: UnsafePointer[UInt8, MutExternalOrigin]
 
@@ -33,6 +34,6 @@ struct Payload[Size: Int](ImplicitlyCopyable, Writable, Defaultable):
     fn __del__(deinit self):
         self.data_ptr.free()
 
-    # Writable implementation
+    # writable implementation
     fn write_to[W: Writer](self, mut writer: W):
         writer.write("Payload[", String(Self.Size), "B]")

@@ -1,4 +1,5 @@
 # MPMC queue by Dmitry Vyukov with padding and optional data field
+
 from os.atomic import Atomic, Consistency, fence
 from time import sleep
 from sys.info import size_of

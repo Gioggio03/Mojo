@@ -2,6 +2,7 @@
 #   - FirstStage: source, generates numbers from 1 to 1000
 #   - SecondStage: transform, increments each input and converts it to a string
 #   - ThirdStage: sink, prints the input string
+
 from collections import Optional
 from pipeline.communicator import MessageTrait
 from pipeline.stage import StageKind, StageTrait
@@ -58,7 +59,7 @@ struct ThirdStage(StageTrait):
     fn consume_element(mut self, var input: Self.InType):
         print(input)
 
-# main
+# Main
 def main():
     # creating the stages
     first_stage = FirstStage()

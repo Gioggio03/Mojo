@@ -1,4 +1,5 @@
 # Stages used in benchmark_pipe
+
 from collections import Optional
 from pipeline.communicator import MessageTrait
 from pipeline.stage import StageKind, StageTrait

@@ -1,20 +1,12 @@
-# Benchmark di scalabilità della pipeline con calcolo simulato (sleep).
-#
-# L'idea: dato un tempo totale T di calcolo distribuito su N stadi,
-# ogni stadio dorme T/N ms per payload. Il throughput ideale è N payload per T.
-# Le deviazioni dall'ideale misurano l'overhead di comunicazione e gestione task.
+# Scalability benchmark of the pipeline with simulated computation (sleep).
+# The idea: given a total computation time T ms distributed across N stages,
+# each stage sleeps for T/N ms per payload. The ideal throughput is N/T messages
+# per second. Deviations from this ideal measure are due to communication and task
+# management overhead.
 
 from time import perf_counter_ns
 from Pipeline import Pipeline
 from ScalabilityStages import SleepSource, SleepTransform, SleepSink, NUM_MESSAGES
-
-# ======================================
-# Funzioni che costruiscono e lanciano
-# una pipeline con un numero fisso di stadi.
-# Servono perché Pipeline usa tuple variadic
-# comptime, quindi ogni configurazione è un
-# tipo diverso a tempo di compilazione.
-# ======================================
 
 # N=2: Source -> Sink
 fn run_pipeline_2[Size: Int, T_ms: Int]():
@@ -170,19 +162,14 @@ fn run_pipeline_12[Size: Int, T_ms: Int]():
     pipeline.run()
     _ = pipeline
 
-
-# ======================================
-# Funzione che esegue una singola
-# configurazione e ne misura il tempo
-# ======================================
+# Function to run a single pipeline configuration (N) and measure its performance
 fn bench_config[Size: Int, N: Int, T_ms: Int]():
     comptime SleepMs = T_ms // N
     comptime num_msgs = NUM_MESSAGES
 
-    # misuriamo il tempo con perf_counter_ns (nanosecondi)
+    # measure starting time in nanoseconds
     start = perf_counter_ns()
 
-    # dispatch comptime: chiama la run_pipeline giusta in base a N
     @parameter
     if N == 2:
         run_pipeline_2[Size, T_ms]()
@@ -207,10 +194,13 @@ fn bench_config[Size: Int, N: Int, T_ms: Int]():
     elif N == 12:
         run_pipeline_12[Size, T_ms]()
 
+    # measure ending time in nanoseconds
     end = perf_counter_ns()
+
+    # measure elapsed time in milliseconds
     elapsed_ms = Float64(end - start) / 1_000_000.0
 
-    # throughput: quanti messaggi al secondo
+    # throughput in messages per second
     throughput = Float64(num_msgs) / (elapsed_ms / 1000.0)
 
     # tempo ideale: il primo messaggio attraversa tutti gli N stadi (= T_ms),
@@ -224,23 +214,15 @@ fn bench_config[Size: Int, N: Int, T_ms: Int]():
           " | throughput:", throughput, "msg/s",
           " | efficiency:", Int(speedup * 100), "%")
 
-
-# ======================================
-# Loop comptime che testa tutti gli N
-# da 2 a 12 per una data dimensione
-# di payload
-# ======================================
+# Function to run all N configurations for a given payload size and T_ms
 fn bench_all_N[Size: Int, T_ms: Int]():
     @parameter
     for n in range(2, 13):
         bench_config[Size, n, T_ms]()
 
-
-# ======================================
 # Main
-# ======================================
 def main():
-    # T = tempo totale di calcolo simulato per payload (in millisecondi)
+    # T = overall computation time per payload (ms)
     comptime T_ms = 100
 
     print("=" * 70)

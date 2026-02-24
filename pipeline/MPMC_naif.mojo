@@ -1,4 +1,5 @@
 # Naif MPMC queue with locking
+
 from collections import List
 from utils.lock import BlockingSpinLock, BlockingScopedLock
 
