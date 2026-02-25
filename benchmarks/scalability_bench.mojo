@@ -1,12 +1,20 @@
-# Scalability benchmark of the pipeline with simulated computation (sleep).
-# The idea: given a total computation time T ms distributed across N stages,
-# each stage sleeps for T/N ms per payload. The ideal throughput is N/T messages
-# per second. Deviations from this ideal measure are due to communication and task
-# management overhead.
+# Scalability benchmark for the pipeline with simulated computation (sleep).
+#
+# For a fixed total computation time T distributed across N stages,
+# each stage sleeps T/N ms per payload. Ideal throughput is N/T msg/s.
+# Deviations from ideal measure the communication and async task overhead.
 
-from time import perf_counter_ns
+from benchmark import run, Unit
 from Pipeline import Pipeline
 from ScalabilityStages import SleepSource, SleepTransform, SleepSink, NUM_MESSAGES
+
+# ======================================
+# Functions that build and run a pipeline
+# with a fixed number of stages.
+# Needed because Pipeline uses variadic
+# comptime tuples, so each configuration
+# is a different type at compile time.
+# ======================================
 
 # N=2: Source -> Sink
 fn run_pipeline_2[Size: Int, T_ms: Int]():
@@ -162,74 +170,91 @@ fn run_pipeline_12[Size: Int, T_ms: Int]():
     pipeline.run()
     _ = pipeline
 
-# Function to run a single pipeline configuration (N) and measure its performance
-fn bench_config[Size: Int, N: Int, T_ms: Int]():
+
+# ======================================
+# Runs a single pipeline configuration
+# using the benchmark package for proper
+# statistical timing with repetitions.
+# ======================================
+fn bench_config[Size: Int, N: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // N
     comptime num_msgs = NUM_MESSAGES
 
-    # measure starting time in nanoseconds
-    start = perf_counter_ns()
-
+    # use the benchmark package to run with multiple iterations
     @parameter
     if N == 2:
-        run_pipeline_2[Size, T_ms]()
+        report = run[func2 = run_pipeline_2[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        
     elif N == 3:
-        run_pipeline_3[Size, T_ms]()
+        report = run[func2 = run_pipeline_3[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 4:
-        run_pipeline_4[Size, T_ms]()
+        report = run[func2 = run_pipeline_4[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 5:
-        run_pipeline_5[Size, T_ms]()
+        report = run[func2 = run_pipeline_5[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 6:
-        run_pipeline_6[Size, T_ms]()
+        report = run[func2 = run_pipeline_6[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 7:
-        run_pipeline_7[Size, T_ms]()
+        report = run[func2 = run_pipeline_7[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 8:
-        run_pipeline_8[Size, T_ms]()
+        report = run[func2 = run_pipeline_8[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 9:
-        run_pipeline_9[Size, T_ms]()
+        report = run[func2 = run_pipeline_9[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 10:
-        run_pipeline_10[Size, T_ms]()
+        report = run[func2 = run_pipeline_10[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 11:
-        run_pipeline_11[Size, T_ms]()
+        report = run[func2 = run_pipeline_11[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 12:
-        run_pipeline_12[Size, T_ms]()
+        report = run[func2 = run_pipeline_12[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+    else:
+        print("  -> ERROR: unsupported N")
+        return
 
-    # measure ending time in nanoseconds
-    end = perf_counter_ns()
+    # compute B, E(N), S(N) from the benchmark mean time
+    mean_s = report.mean(Unit.ms) / 1000.0
 
-    # measure elapsed time in milliseconds
-    elapsed_ms = Float64(end - start) / 1_000_000.0
+    # use actual T = SleepMs * N (not T_ms) to account for integer division rounding
+    # e.g. T_ms=100, N=3: SleepMs=33, actual total = 33*3 = 99ms, not 100ms
+    comptime actual_T_s = Float64(SleepMs * N) / 1000.0
 
-    # throughput in messages per second
-    throughput = Float64(num_msgs) / (elapsed_ms / 1000.0)
+    # B = measured throughput (messages per second)
+    B = Float64(num_msgs) / mean_s
 
-    # tempo ideale: il primo messaggio attraversa tutti gli N stadi (= T_ms),
-    # poi ogni messaggio successivo esce dopo SleepMs (il collo di bottiglia è uno stadio)
-    ideal_ms = Float64(T_ms) + Float64(num_msgs - 1) * Float64(SleepMs)
-    # efficienza: quanto siamo vicini al caso ideale (100% = nessun overhead)
-    speedup = ideal_ms / elapsed_ms
+    # E(N) = (B/N) * T  -> efficiency (1.0 = ideal, < 1.0 = overhead)
+    E = (B / Float64(N)) * actual_T_s
+
+    # S(N) = B * T -> scalability (how many times faster than sequential)
+    S = B * actual_T_s
 
     print("  N=", N, ", Size=", Size, "B, SleepPerStage=", SleepMs, "ms",
-          " -> elapsed:", Int(elapsed_ms), "ms",
-          " | throughput:", throughput, "msg/s",
-          " | efficiency:", Int(speedup * 100), "%")
+          " -> mean:", report.mean(Unit.ms), "ms",
+          " | iters:", report.iters(),
+          " | B:", B, "msg/s",
+          " | E(N):", E,
+          " | S(N):", S)
 
-# Function to run all N configurations for a given payload size and T_ms
-fn bench_all_N[Size: Int, T_ms: Int]():
+
+# ======================================
+# Comptime loop that tests all N values
+# from 2 to 12 for a given payload size
+# ======================================
+fn bench_all_N[Size: Int, T_ms: Int]() raises:
     @parameter
     for n in range(2, 13):
         bench_config[Size, n, T_ms]()
 
+
+# ======================================
 # Main
+# ======================================
 def main():
-    # T = overall computation time per payload (ms)
+    # T = total simulated computation time per payload (in milliseconds)
     comptime T_ms = 100
 
     print("=" * 70)
     print("  Pipeline Scalability Benchmark")
     print("  Queue: MPMC_padding_optional_v2")
-    print("  Tempo totale di calcolo T =", T_ms, "ms per payload")
-    print("  Messaggi per run:", NUM_MESSAGES)
+    print("  Total computation time T =", T_ms, "ms per payload")
+    print("  Messages per run:", NUM_MESSAGES)
     print("=" * 70)
 
     print("\n--- Payload Size: 8B ---")
@@ -245,5 +270,5 @@ def main():
     bench_all_N[4096, T_ms]()
 
     print("\n" + "=" * 70)
-    print("  Benchmark completato!")
+    print("  Benchmark complete!")
     print("=" * 70)
