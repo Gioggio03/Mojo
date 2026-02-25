@@ -1,0 +1,375 @@
+======================================================================
+  Pipeline Scalability Benchmark (Multi-T)
+  Queue: MPMC_padding_optional_v2
+  Payload Size: 64 B
+  Messages per run: 50
+======================================================================
+
+--- T = 100 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 50 ms  -> mean: 2557.1443222000003 ms  | iters: 5  | B: 19.55306142321418 msg/s  | E(N): 0.9776530711607091  | S(N): 1.9553061423214182
+  N= 3 , Size= 64 B, SleepPerStage= 33 ms  -> mean: 1722.9563952 ms  | iters: 5  | B: 29.019887061155732 msg/s  | E(N): 0.9576562730181392  | S(N): 2.8729688190544174
+  N= 4 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1332.102786 ms  | iters: 5  | B: 37.53464111439821 msg/s  | E(N): 0.9383660278599554  | S(N): 3.7534641114398215
+  N= 5 , Size= 64 B, SleepPerStage= 20 ms  -> mean: 1087.2634622 ms  | iters: 5  | B: 45.98701394676554 msg/s  | E(N): 0.919740278935311  | S(N): 4.598701394676555
+  N= 6 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 887.3634978 ms  | iters: 5  | B: 56.34669458904128 msg/s  | E(N): 0.9015471134246605  | S(N): 5.409282680547963
+  N= 7 , Size= 64 B, SleepPerStage= 14 ms  -> mean: 791.4372999999999 ms  | iters: 5  | B: 63.176198544091875 msg/s  | E(N): 0.8844667796172863  | S(N): 6.191267457321004
+  N= 8 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 691.5148844 ms  | iters: 5  | B: 72.30502354751629 msg/s  | E(N): 0.8676602825701955  | S(N): 6.941282260561564
+  N= 9 , Size= 64 B, SleepPerStage= 11 ms  -> mean: 645.6460423999999 ms  | iters: 5  | B: 77.44181287650994 msg/s  | E(N): 0.8518599416416094  | S(N): 7.666739474774484
+  N= 10 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 597.7779144 ms  | iters: 5  | B: 83.64310355993307 msg/s  | E(N): 0.8364310355993307  | S(N): 8.364310355993307
+  N= 11 , Size= 64 B, SleepPerStage= 9 ms  -> mean: 547.9807438 ms  | iters: 5  | B: 91.24408214287327 msg/s  | E(N): 0.8211967392858595  | S(N): 9.033164132144455
+  N= 12 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 495.86493579999996 ms  | iters: 5  | B: 100.83390937762695 msg/s  | E(N): 0.8066712750210157  | S(N): 9.680055300252187
+
+--- T = 50 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1281.823057 ms  | iters: 5  | B: 39.006943842171815 msg/s  | E(N): 0.9751735960542954  | S(N): 1.9503471921085909
+  N= 3 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 839.0415868 ms  | iters: 5  | B: 59.59180186847921 msg/s  | E(N): 0.9534688298956674  | S(N): 2.8604064896870023
+  N= 4 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 643.1214742 ms  | iters: 5  | B: 77.7458100931813 msg/s  | E(N): 0.9329497211181756  | S(N): 3.7317988844727026
+  N= 5 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 547.3903328 ms  | iters: 5  | B: 91.34249730761778 msg/s  | E(N): 0.9134249730761778  | S(N): 4.567124865380889
+  N= 6 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 447.43936299999996 ms  | iters: 5  | B: 111.74698547923688 msg/s  | E(N): 0.893975883833895  | S(N): 5.363855303003371
+  N= 7 , Size= 64 B, SleepPerStage= 7 ms  -> mean: 399.4450372 ms  | iters: 5  | B: 125.1736668215639 msg/s  | E(N): 0.8762156677509474  | S(N): 6.133509674256631
+  N= 8 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 349.8207986 ms  | iters: 5  | B: 142.93032375462653 msg/s  | E(N): 0.8575819425277592  | S(N): 6.860655540222074
+  N= 9 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 297.5895528 ms  | iters: 5  | B: 168.01665088560193 msg/s  | E(N): 0.8400832544280097  | S(N): 7.560749289852087
+  N= 10 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 303.1048502 ms  | iters: 5  | B: 164.95941904924356 msg/s  | E(N): 0.8247970952462179  | S(N): 8.247970952462179
+  N= 11 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 248.0611178 ms  | iters: 5  | B: 201.56322943087213 msg/s  | E(N): 0.8062529177234885  | S(N): 8.868782094958373
+  N= 12 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 252.2132458 ms  | iters: 5  | B: 198.24494086900174 msg/s  | E(N): 0.792979763476007  | S(N): 9.515757161712084
+
+--- T = 25 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 619.0588116 ms  | iters: 5  | B: 80.7677704655743 msg/s  | E(N): 0.9692132455868916  | S(N): 1.9384264911737832
+  N= 3 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 423.0100426 ms  | iters: 5  | B: 118.20050345064786 msg/s  | E(N): 0.9456040276051829  | S(N): 2.8368120828155488
+  N= 4 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 325.1414482 ms  | iters: 5  | B: 153.77922524735806 msg/s  | E(N): 0.9226753514841484  | S(N): 3.6907014059365935
+  N= 5 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 277.2278702 ms  | iters: 5  | B: 180.35704694455356 msg/s  | E(N): 0.9017852347227677  | S(N): 4.5089261736138395
+  N= 6 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 227.63845700000002 ms  | iters: 5  | B: 219.6465424117683 msg/s  | E(N): 0.8785861696470733  | S(N): 5.27151701788244
+  N= 7 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 176.32969366666669 ms  | iters: 6  | B: 283.55972814493686 msg/s  | E(N): 0.8506791844348107  | S(N): 5.954754291043674
+  N= 8 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 179.3025971666667 ms  | iters: 6  | B: 278.858202781768 msg/s  | E(N): 0.8365746083453041  | S(N): 6.6925968667624325
+  N= 9 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 124.0436768888889 ms  | iters: 9  | B: 403.0838270360777 msg/s  | E(N): 0.8061676540721553  | S(N): 7.255508886649398
+  N= 10 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 126.347631875 ms  | iters: 8  | B: 395.7335745672439 msg/s  | E(N): 0.7914671491344879  | S(N): 7.914671491344879
+  N= 11 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 128.468019875 ms  | iters: 8  | B: 389.20192004710776 msg/s  | E(N): 0.7784038400942155  | S(N): 8.56244224103637
+  N= 12 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 130.456031125 ms  | iters: 8  | B: 383.2708964761555 msg/s  | E(N): 0.7665417929523111  | S(N): 9.198501515427731
+
+--- T = 10 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 261.7794362 ms  | iters: 5  | B: 191.0004877610016 msg/s  | E(N): 0.955002438805008  | S(N): 1.910004877610016
+  N= 3 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 163.4563735714286 ms  | iters: 7  | B: 305.8920182035641 msg/s  | E(N): 0.9176760546106922  | S(N): 2.7530281638320764
+  N= 4 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 113.6254108888889 ms  | iters: 9  | B: 440.04241312617654 msg/s  | E(N): 0.8800848262523531  | S(N): 3.5203393050094123
+  N= 5 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 115.88453244444446 ms  | iters: 9  | B: 431.46396628877295 msg/s  | E(N): 0.862927932577546  | S(N): 4.314639662887729
+  N= 6 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 61.75416882352941 ms  | iters: 17  | B: 809.6619378504068 msg/s  | E(N): 0.8096619378504069  | S(N): 4.857971627102441
+  N= 7 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 62.8626345 ms  | iters: 16  | B: 795.3850550122903 msg/s  | E(N): 0.7953850550122903  | S(N): 5.567695385086032
+  N= 8 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 64.101926625 ms  | iters: 16  | B: 780.0077569041397 msg/s  | E(N): 0.7800077569041397  | S(N): 6.240062055233118
+  N= 9 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 64.97842 ms  | iters: 16  | B: 769.4862386620051 msg/s  | E(N): 0.769486238662005  | S(N): 6.925376147958046
+  N= 10 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 65.9783148125 ms  | iters: 16  | B: 757.8247510881739 msg/s  | E(N): 0.7578247510881739  | S(N): 7.578247510881739
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.20415343070014288 ms  | iters: 4899  | B: 244913.83675760587 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.20373070014259523 ms  | iters: 4909  | B: 245422.0201717463 msg/s  | E(N): 0.0  | S(N): 0.0
+
+--- T = 5 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 109.1266875 ms  | iters: 10  | B: 458.18306360669106 msg/s  | E(N): 0.9163661272133822  | S(N): 1.8327322544267644
+  N= 3 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 58.531230166666674 ms  | iters: 18  | B: 854.244816957133 msg/s  | E(N): 0.8542448169571331  | S(N): 2.562734450871399
+  N= 4 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 59.577287705882355 ms  | iters: 17  | B: 839.2459933194183 msg/s  | E(N): 0.8392459933194183  | S(N): 3.356983973277673
+  N= 5 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 60.62025041176471 ms  | iters: 17  | B: 824.806886483867 msg/s  | E(N): 0.8248068864838669  | S(N): 4.124034432419335
+  N= 6 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.12458457007599352 ms  | iters: 8027  | B: 401333.8085888263 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 7 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.13218918307997357 ms  | iters: 7565  | B: 378245.7749946933 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 8 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.14721974061533932 ms  | iters: 6793  | B: 339628.36635232007 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 9 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.15905163008905854 ms  | iters: 6288  | B: 314363.3295176117 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 10 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.17091644932490174 ms  | iters: 5851  | B: 292540.5962825325 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.1823748072574763 ms  | iters: 5484  | B: 274160.67357050104 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.19825972125297384 ms  | iters: 5044  | B: 252194.44314763966 msg/s  | E(N): 0.0  | S(N): 0.0
+
+======================================================================
+  Benchmark complete!
+======================================================================
+======================================================================
+  Pipeline Scalability Benchmark (Multi-T)
+  Queue: MPMC
+  Payload Size: 64 B
+  Messages per run: 50
+======================================================================
+
+--- T = 100 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 50 ms  -> mean: 2556.8380260000004 ms  | iters: 5  | B: 19.5554037805913 msg/s  | E(N): 0.9777701890295649  | S(N): 1.9555403780591298
+  N= 3 , Size= 64 B, SleepPerStage= 33 ms  -> mean: 1723.1776441999998 ms  | iters: 5  | B: 29.016161025703727 msg/s  | E(N): 0.957533313848223  | S(N): 2.872599941544669
+  N= 4 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1332.0314896 ms  | iters: 5  | B: 37.536650139565886 msg/s  | E(N): 0.9384162534891471  | S(N): 3.7536650139565886
+  N= 5 , Size= 64 B, SleepPerStage= 20 ms  -> mean: 1087.0935788000002 ms  | iters: 5  | B: 45.994200476460385 msg/s  | E(N): 0.9198840095292078  | S(N): 4.5994200476460385
+  N= 6 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 887.4354380000001 ms  | iters: 5  | B: 56.34212682861104 msg/s  | E(N): 0.9014740292577768  | S(N): 5.40884417554666
+  N= 7 , Size= 64 B, SleepPerStage= 14 ms  -> mean: 791.4850574 ms  | iters: 5  | B: 63.17238655679515 msg/s  | E(N): 0.8844134117951322  | S(N): 6.190893882565925
+  N= 8 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 691.5787884 ms  | iters: 5  | B: 72.29834234169812 msg/s  | E(N): 0.8675801081003774  | S(N): 6.94064086480302
+  N= 9 , Size= 64 B, SleepPerStage= 11 ms  -> mean: 645.7574246 ms  | iters: 5  | B: 77.4284554776453 msg/s  | E(N): 0.8517130102540984  | S(N): 7.665417092286885
+  N= 10 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 597.9350852 ms  | iters: 5  | B: 83.62111747176664 msg/s  | E(N): 0.8362111747176665  | S(N): 8.362111747176664
+  N= 11 , Size= 64 B, SleepPerStage= 9 ms  -> mean: 548.1402221999999 ms  | iters: 5  | B: 91.21753517616611 msg/s  | E(N): 0.8209578165854949  | S(N): 9.030535982440446
+  N= 12 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 496.08735260000003 ms  | iters: 5  | B: 100.78870130018306 msg/s  | E(N): 0.8063096104014644  | S(N): 9.675715324817574
+
+--- T = 50 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1281.9463582 ms  | iters: 5  | B: 39.00319204479487 msg/s  | E(N): 0.9750798011198718  | S(N): 1.9501596022397436
+  N= 3 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 839.2643628 ms  | iters: 5  | B: 59.575983702188005 msg/s  | E(N): 0.9532157392350081  | S(N): 2.859647217705024
+  N= 4 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 643.1340582 ms  | iters: 5  | B: 77.74428886559004 msg/s  | E(N): 0.9329314663870805  | S(N): 3.731725865548322
+  N= 5 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 547.244908 ms  | iters: 5  | B: 91.36677065252839 msg/s  | E(N): 0.9136677065252838  | S(N): 4.568338532626419
+  N= 6 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 447.6101852 ms  | iters: 5  | B: 111.70433929616487 msg/s  | E(N): 0.893634714369319  | S(N): 5.361808286215914
+  N= 7 , Size= 64 B, SleepPerStage= 7 ms  -> mean: 399.5404158 ms  | iters: 5  | B: 125.14378526609123 msg/s  | E(N): 0.8760064968626387  | S(N): 6.132045478038471
+  N= 8 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 349.7632944 ms  | iters: 5  | B: 142.95382277254762 msg/s  | E(N): 0.8577229366352858  | S(N): 6.861783493082286
+  N= 9 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 297.8040784 ms  | iters: 5  | B: 167.89561871896782 msg/s  | E(N): 0.839478093594839  | S(N): 7.5553028423535515
+  N= 10 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 303.03066060000003 ms  | iters: 5  | B: 164.9998053035297 msg/s  | E(N): 0.8249990265176486  | S(N): 8.249990265176486
+  N= 11 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 248.42532179999998 ms  | iters: 5  | B: 201.2677276121375 msg/s  | E(N): 0.8050709104485498  | S(N): 8.85578001493405
+  N= 12 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 252.17245659999998 ms  | iters: 5  | B: 198.27700722807649 msg/s  | E(N): 0.7931080289123059  | S(N): 9.517296346947672
+
+--- T = 25 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 618.841676 ms  | iters: 5  | B: 80.7961097952944 msg/s  | E(N): 0.9695533175435328  | S(N): 1.9391066350870656
+  N= 3 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 423.1648628 ms  | iters: 5  | B: 118.15725830627731 msg/s  | E(N): 0.9452580664502185  | S(N): 2.8357741993506558
+  N= 4 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 325.0997832 ms  | iters: 5  | B: 153.7989336930447 msg/s  | E(N): 0.9227936021582681  | S(N): 3.6911744086330724
+  N= 5 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 277.1729862 ms  | iters: 5  | B: 180.39276007915663 msg/s  | E(N): 0.9019638003957833  | S(N): 4.509819001978916
+  N= 6 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 227.8642726 ms  | iters: 5  | B: 219.42887065833065 msg/s  | E(N): 0.8777154826333226  | S(N): 5.2662928957999355
+  N= 7 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 176.26968366666665 ms  | iters: 6  | B: 283.6562644235074 msg/s  | E(N): 0.8509687932705223  | S(N): 5.9567815528936565
+  N= 8 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 178.91289583333332 ms  | iters: 6  | B: 279.4656012195879 msg/s  | E(N): 0.8383968036587637  | S(N): 6.707174429270109
+  N= 9 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 124.35658277777777 ms  | iters: 9  | B: 402.06958797950244 msg/s  | E(N): 0.8041391759590047  | S(N): 7.237252583631044
+  N= 10 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 126.222119125 ms  | iters: 8  | B: 396.1270841165653 msg/s  | E(N): 0.7922541682331306  | S(N): 7.922541682331306
+  N= 11 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 128.395386625 ms  | iters: 8  | B: 389.4220915120049 msg/s  | E(N): 0.7788441830240097  | S(N): 8.567286013264107
+  N= 12 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 130.323172625 ms  | iters: 8  | B: 383.66162358457234 msg/s  | E(N): 0.7673232471691447  | S(N): 9.207878966029737
+
+--- T = 10 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 262.0251886 ms  | iters: 5  | B: 190.82134915024733 msg/s  | E(N): 0.9541067457512367  | S(N): 1.9082134915024733
+  N= 3 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 163.65908428571427 ms  | iters: 7  | B: 305.5131355416271 msg/s  | E(N): 0.9165394066248812  | S(N): 2.7496182198746437
+  N= 4 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 113.85779266666665 ms  | iters: 9  | B: 439.1442942019914 msg/s  | E(N): 0.8782885884039828  | S(N): 3.5131543536159313
+  N= 5 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 115.60855388888889 ms  | iters: 9  | B: 432.4939489170921 msg/s  | E(N): 0.8649878978341842  | S(N): 4.324939489170921
+  N= 6 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 61.885891941176475 ms  | iters: 17  | B: 807.9385855426597 msg/s  | E(N): 0.8079385855426597  | S(N): 4.847631513255958
+  N= 7 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 62.897877375 ms  | iters: 16  | B: 794.9393856631717 msg/s  | E(N): 0.7949393856631718  | S(N): 5.5645756996422024
+  N= 8 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 63.9902614375 ms  | iters: 16  | B: 781.3688970287386 msg/s  | E(N): 0.7813688970287387  | S(N): 6.2509511762299095
+  N= 9 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 64.9275106875 ms  | iters: 16  | B: 770.089588689962 msg/s  | E(N): 0.7700895886899619  | S(N): 6.930806298209658
+  N= 10 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 66.1255995625 ms  | iters: 16  | B: 756.1368113228441 msg/s  | E(N): 0.7561368113228442  | S(N): 7.561368113228441
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.14546096727272725 ms  | iters: 6875  | B: 343734.8241075157 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.14215326282871357 ms  | iters: 7035  | B: 351733.0450602959 msg/s  | E(N): 0.0  | S(N): 0.0
+
+--- T = 5 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 109.5594897 ms  | iters: 10  | B: 456.3730639574164 msg/s  | E(N): 0.9127461279148328  | S(N): 1.8254922558296656
+  N= 3 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 58.39565122222223 ms  | iters: 18  | B: 856.2281429095991 msg/s  | E(N): 0.8562281429095991  | S(N): 2.5686844287287975
+  N= 4 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 59.61809805882353 ms  | iters: 17  | B: 838.6715045935613 msg/s  | E(N): 0.8386715045935613  | S(N): 3.3546860183742453
+  N= 5 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 60.75967023529411 ms  | iters: 17  | B: 822.9142753140877 msg/s  | E(N): 0.8229142753140878  | S(N): 4.114571376570439
+  N= 6 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.09432746821354461 ms  | iters: 10602  | B: 530068.2923748867 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 7 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.09817075301855306 ms  | iters: 10187  | B: 509316.6596221445 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 8 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.10792501057630045 ms  | iters: 9266  | B: 463284.6430406525 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 9 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.11525820444854212 ms  | iters: 8677  | B: 433808.59730747296 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 10 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.12261909857773419 ms  | iters: 8156  | B: 407766.82082932274 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.12827097408927654 ms  | iters: 7796  | B: 389799.79964290303 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.13819328395744093 ms  | iters: 7237  | B: 361812.0835408932 msg/s  | E(N): 0.0  | S(N): 0.0
+
+======================================================================
+  Benchmark complete!
+======================================================================
+======================================================================
+  Pipeline Scalability Benchmark (Multi-T)
+  Queue: MPMC_naif
+  Payload Size: 64 B
+  Messages per run: 50
+======================================================================
+
+--- T = 100 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 50 ms  -> mean: 2556.8943706 ms  | iters: 5  | B: 19.554972851016533 msg/s  | E(N): 0.9777486425508267  | S(N): 1.9554972851016534
+  N= 3 , Size= 64 B, SleepPerStage= 33 ms  -> mean: 1723.1600974 ms  | iters: 5  | B: 29.01645649492626 msg/s  | E(N): 0.9575430643325666  | S(N): 2.8726291929977
+  N= 4 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1332.1570576 ms  | iters: 5  | B: 37.5331119666021 msg/s  | E(N): 0.9383277991650525  | S(N): 3.75331119666021
+  N= 5 , Size= 64 B, SleepPerStage= 20 ms  -> mean: 1087.3229802 ms  | iters: 5  | B: 45.984496704744615 msg/s  | E(N): 0.9196899340948923  | S(N): 4.598449670474461
+  N= 6 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 887.3591864 ms  | iters: 5  | B: 56.34696835995927 msg/s  | E(N): 0.9015514937593483  | S(N): 5.40930896255609
+  N= 7 , Size= 64 B, SleepPerStage= 14 ms  -> mean: 791.6762044 ms  | iters: 5  | B: 63.157133840967575 msg/s  | E(N): 0.884199873773546  | S(N): 6.1893991164148225
+  N= 8 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 691.6522926 ms  | iters: 5  | B: 72.29065895530293 msg/s  | E(N): 0.8674879074636351  | S(N): 6.939903259709081
+  N= 9 , Size= 64 B, SleepPerStage= 11 ms  -> mean: 645.7450018 ms  | iters: 5  | B: 77.42994504119444 msg/s  | E(N): 0.851729395453139  | S(N): 7.66556455907825
+  N= 10 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 597.7460062 ms  | iters: 5  | B: 83.64756850131172 msg/s  | E(N): 0.8364756850131173  | S(N): 8.364756850131172
+  N= 11 , Size= 64 B, SleepPerStage= 9 ms  -> mean: 548.0308299999999 ms  | iters: 5  | B: 91.23574306941819 msg/s  | E(N): 0.8211216876247638  | S(N): 9.0323385638724
+  N= 12 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 496.2571608 ms  | iters: 5  | B: 100.75421364075962 msg/s  | E(N): 0.806033709126077  | S(N): 9.672404509512923
+
+--- T = 50 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1281.8216518 ms  | iters: 5  | B: 39.006986603625734 msg/s  | E(N): 0.9751746650906434  | S(N): 1.9503493301812869
+  N= 3 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 839.1943658 ms  | iters: 5  | B: 59.58095292064459 msg/s  | E(N): 0.9532952467303134  | S(N): 2.8598857401909403
+  N= 4 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 643.3158618 ms  | iters: 5  | B: 77.72231802290686 msg/s  | E(N): 0.9326678162748824  | S(N): 3.7306712650995295
+  N= 5 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 547.247507 ms  | iters: 5  | B: 91.36633673143439 msg/s  | E(N): 0.9136633673143439  | S(N): 4.56831683657172
+  N= 6 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 447.2690724 ms  | iters: 5  | B: 111.78953137024459 msg/s  | E(N): 0.8943162509619568  | S(N): 5.36589750577174
+  N= 7 , Size= 64 B, SleepPerStage= 7 ms  -> mean: 399.528507 ms  | iters: 5  | B: 125.1475154437478 msg/s  | E(N): 0.8760326081062346  | S(N): 6.132228256743643
+  N= 8 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 349.44933580000003 ms  | iters: 5  | B: 143.08225793457066 msg/s  | E(N): 0.858493547607424  | S(N): 6.867948380859392
+  N= 9 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 297.9048728 ms  | iters: 5  | B: 167.83881220220175 msg/s  | E(N): 0.8391940610110088  | S(N): 7.552746549099078
+  N= 10 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 302.8308866 ms  | iters: 5  | B: 165.10865374853083 msg/s  | E(N): 0.8255432687426542  | S(N): 8.255432687426541
+  N= 11 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 248.0886506 ms  | iters: 5  | B: 201.54086000740253 msg/s  | E(N): 0.80616344002961  | S(N): 8.86779784032571
+  N= 12 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 252.86604419999998 ms  | iters: 5  | B: 197.73315218413973 msg/s  | E(N): 0.7909326087365589  | S(N): 9.491191304838708
+
+--- T = 25 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 618.7850209999999 ms  | iters: 5  | B: 80.803507362212 msg/s  | E(N): 0.9696420883465441  | S(N): 1.9392841766930882
+  N= 3 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 422.987359 ms  | iters: 5  | B: 118.20684220494637 msg/s  | E(N): 0.9456547376395709  | S(N): 2.836964212918713
+  N= 4 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 325.34623419999997 ms  | iters: 5  | B: 153.68243042045944 msg/s  | E(N): 0.9220945825227567  | S(N): 3.6883783300910267
+  N= 5 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 277.2535014 ms  | iters: 5  | B: 180.34037351205117 msg/s  | E(N): 0.9017018675602559  | S(N): 4.5085093378012795
+  N= 6 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 227.55848780000002 ms  | iters: 5  | B: 219.72373117519018 msg/s  | E(N): 0.8788949247007608  | S(N): 5.273369548204564
+  N= 7 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 175.63033633333336 ms  | iters: 6  | B: 284.68885867817113 msg/s  | E(N): 0.8540665760345134  | S(N): 5.978466032241594
+  N= 8 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 178.9232291666667 ms  | iters: 6  | B: 279.44946127383537 msg/s  | E(N): 0.8383483838215061  | S(N): 6.706787070572049
+  N= 9 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 124.131543 ms  | iters: 9  | B: 402.798505453203 msg/s  | E(N): 0.8055970109064059  | S(N): 7.250373098157653
+  N= 10 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 125.916031125 ms  | iters: 8  | B: 397.09002541831825 msg/s  | E(N): 0.7941800508366365  | S(N): 7.941800508366365
+  N= 11 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 128.43111675 ms  | iters: 8  | B: 389.3137525022728 msg/s  | E(N): 0.7786275050045456  | S(N): 8.56490255505
+  N= 12 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 130.7971555 ms  | iters: 8  | B: 382.2713101738669 msg/s  | E(N): 0.7645426203477338  | S(N): 9.174511444172806
+
+--- T = 10 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 261.76369880000004 ms  | iters: 5  | B: 191.01197083176297 msg/s  | E(N): 0.9550598541588149  | S(N): 1.9101197083176298
+  N= 3 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 163.43484814285713 ms  | iters: 7  | B: 305.9323061645665 msg/s  | E(N): 0.9177969184936995  | S(N): 2.7533907554810986
+  N= 4 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 113.63322966666667 ms  | iters: 9  | B: 440.01213506533884 msg/s  | E(N): 0.8800242701306777  | S(N): 3.520097080522711
+  N= 5 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 115.86670055555555 ms  | iters: 9  | B: 431.5303686068638 msg/s  | E(N): 0.8630607372137277  | S(N): 4.3153036860686385
+  N= 6 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 61.88741617647059 ms  | iters: 17  | B: 807.9186866911056 msg/s  | E(N): 0.8079186866911056  | S(N): 4.847512120146633
+  N= 7 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 62.83609775 ms  | iters: 16  | B: 795.7209596135368 msg/s  | E(N): 0.7957209596135368  | S(N): 5.570046717294757
+  N= 8 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 63.92922825 ms  | iters: 16  | B: 782.11486934382 msg/s  | E(N): 0.78211486934382  | S(N): 6.25691895475056
+  N= 9 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 65.1205469375 ms  | iters: 16  | B: 767.8068190672282 msg/s  | E(N): 0.767806819067228  | S(N): 6.910261371605053
+  N= 10 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 66.269483375 ms  | iters: 16  | B: 754.4950926667761 msg/s  | E(N): 0.7544950926667761  | S(N): 7.544950926667761
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.15309769167176976 ms  | iters: 6532  | B: 326588.85613505094 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.15890121544327931 ms  | iters: 6294  | B: 314660.90338275465 msg/s  | E(N): 0.0  | S(N): 0.0
+
+--- T = 5 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 109.4426878 ms  | iters: 10  | B: 456.8601247382742 msg/s  | E(N): 0.9137202494765484  | S(N): 1.8274404989530968
+  N= 3 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 58.67835155555555 ms  | iters: 18  | B: 852.1030103011832 msg/s  | E(N): 0.8521030103011832  | S(N): 2.5563090309035497
+  N= 4 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 59.60579017647059 ms  | iters: 17  | B: 838.8446802226525 msg/s  | E(N): 0.8388446802226526  | S(N): 3.3553787208906103
+  N= 5 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 60.40771447058823 ms  | iters: 17  | B: 827.7088520596882 msg/s  | E(N): 0.8277088520596882  | S(N): 4.138544260298441
+  N= 6 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.11201069537462202 ms  | iters: 8929  | B: 446385.94406341284 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 7 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.12161759868661072 ms  | iters: 8223  | B: 411124.7100745845 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 8 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.12240357478580172 ms  | iters: 8170  | B: 408484.80191446 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 9 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.12821537012820514 ms  | iters: 7800  | B: 389968.8465587549 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 10 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.13494319174200511 ms  | iters: 7411  | B: 370526.2885406912 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.139972622393282 ms  | iters: 7145  | B: 357212.71163667034 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.1443736226360618 ms  | iters: 6927  | B: 346323.6503113897 msg/s  | E(N): 0.0  | S(N): 0.0
+
+======================================================================
+  Benchmark complete!
+======================================================================
+======================================================================
+  Pipeline Scalability Benchmark (Multi-T)
+  Queue: MPMC_padding
+  Payload Size: 64 B
+  Messages per run: 50
+======================================================================
+
+--- T = 100 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 50 ms  -> mean: 2556.8218884000003 ms  | iters: 5  | B: 19.555527206194576 msg/s  | E(N): 0.9777763603097288  | S(N): 1.9555527206194576
+  N= 3 , Size= 64 B, SleepPerStage= 33 ms  -> mean: 1722.7462378 ms  | iters: 5  | B: 29.02342719021203 msg/s  | E(N): 0.9577730972769971  | S(N): 2.873319291830991
+  N= 4 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1332.0910114 ms  | iters: 5  | B: 37.5349728900663 msg/s  | E(N): 0.9383743222516575  | S(N): 3.75349728900663
+  N= 5 , Size= 64 B, SleepPerStage= 20 ms  -> mean: 1087.349545 ms  | iters: 5  | B: 45.9833732675172 msg/s  | E(N): 0.919667465350344  | S(N): 4.598337326751721
+  N= 6 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 887.2872955999999 ms  | iters: 5  | B: 56.351533768089276 msg/s  | E(N): 0.9016245402894284  | S(N): 5.409747241736571
+  N= 7 , Size= 64 B, SleepPerStage= 14 ms  -> mean: 791.5051912 ms  | iters: 5  | B: 63.17077961825502 msg/s  | E(N): 0.8843909146555702  | S(N): 6.190736402588992
+  N= 8 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 691.5318244 ms  | iters: 5  | B: 72.30325233893892 msg/s  | E(N): 0.867639028067267  | S(N): 6.941112224538136
+  N= 9 , Size= 64 B, SleepPerStage= 11 ms  -> mean: 645.6144762 ms  | iters: 5  | B: 77.44559925962825 msg/s  | E(N): 0.8519015918559109  | S(N): 7.667114326703198
+  N= 10 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 597.9620874 ms  | iters: 5  | B: 83.61734138932634 msg/s  | E(N): 0.8361734138932635  | S(N): 8.361734138932635
+  N= 11 , Size= 64 B, SleepPerStage= 9 ms  -> mean: 547.8820608 ms  | iters: 5  | B: 91.26051677434297 msg/s  | E(N): 0.8213446509690867  | S(N): 9.034791160659955
+  N= 12 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 495.80139339999994 ms  | iters: 5  | B: 100.84683235180276 msg/s  | E(N): 0.806774658814422  | S(N): 9.681295905773066
+
+--- T = 50 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1281.8026106 ms  | iters: 5  | B: 39.00756605308789 msg/s  | E(N): 0.9751891513271973  | S(N): 1.9503783026543946
+  N= 3 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 838.8565376 ms  | iters: 5  | B: 59.604947638665216 msg/s  | E(N): 0.9536791622186436  | S(N): 2.8610374866559303
+  N= 4 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 643.1814304000001 ms  | iters: 5  | B: 77.73856277054605 msg/s  | E(N): 0.9328627532465527  | S(N): 3.7314510129862106
+  N= 5 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 546.9979264 ms  | iters: 5  | B: 91.40802475992713 msg/s  | E(N): 0.9140802475992713  | S(N): 4.570401237996356
+  N= 6 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 447.2275858 ms  | iters: 5  | B: 111.7999014093911 msg/s  | E(N): 0.8943992112751289  | S(N): 5.3663952676507725
+  N= 7 , Size= 64 B, SleepPerStage= 7 ms  -> mean: 399.18046 ms  | iters: 5  | B: 125.25663205057684 msg/s  | E(N): 0.8767964243540379  | S(N): 6.137574970478266
+  N= 8 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 349.6712554 ms  | iters: 5  | B: 142.99145047768775 msg/s  | E(N): 0.8579487028661266  | S(N): 6.8635896229290125
+  N= 9 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 297.2612428 ms  | iters: 5  | B: 168.20221677415392 msg/s  | E(N): 0.8410110838707695  | S(N): 7.569099754836927
+  N= 10 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 302.7452428 ms  | iters: 5  | B: 165.15536144371742 msg/s  | E(N): 0.8257768072185873  | S(N): 8.257768072185872
+  N= 11 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 248.020109 ms  | iters: 5  | B: 201.59655683402673 msg/s  | E(N): 0.8063862273361069  | S(N): 8.870248500697176
+  N= 12 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 252.19369179999998 ms  | iters: 5  | B: 198.26031191792086 msg/s  | E(N): 0.7930412476716834  | S(N): 9.516494972060201
+
+--- T = 25 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 618.6432654 ms  | iters: 5  | B: 80.82202263637541 msg/s  | E(N): 0.9698642716365049  | S(N): 1.9397285432730098
+  N= 3 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 423.115417 ms  | iters: 5  | B: 118.17106631215 msg/s  | E(N): 0.9453685304972  | S(N): 2.8361055914916
+  N= 4 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 324.8964254 ms  | iters: 5  | B: 153.8951988728159 msg/s  | E(N): 0.9233711932368955  | S(N): 3.693484772947582
+  N= 5 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 276.9589464 ms  | iters: 5  | B: 180.53217146409537 msg/s  | E(N): 0.9026608573204769  | S(N): 4.513304286602384
+  N= 6 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 227.3039244 ms  | iters: 5  | B: 219.96980532554326 msg/s  | E(N): 0.8798792213021731  | S(N): 5.279275327813038
+  N= 7 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 175.7724003333333 ms  | iters: 6  | B: 284.4587654556712 msg/s  | E(N): 0.8533762963670137  | S(N): 5.9736340745690955
+  N= 8 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 178.4945435 ms  | iters: 6  | B: 280.12060772042594 msg/s  | E(N): 0.8403618231612778  | S(N): 6.722894585290223
+  N= 9 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 123.90057655555557 ms  | iters: 9  | B: 403.54937313451956 msg/s  | E(N): 0.8070987462690391  | S(N): 7.263888716421351
+  N= 10 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 126.028000875 ms  | iters: 8  | B: 396.73723024133466 msg/s  | E(N): 0.7934744604826693  | S(N): 7.934744604826693
+  N= 11 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 128.309680875 ms  | iters: 8  | B: 389.68220993948444 msg/s  | E(N): 0.7793644198789688  | S(N): 8.573008618668657
+  N= 12 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 130.01075825 ms  | iters: 8  | B: 384.58355810719996 msg/s  | E(N): 0.7691671162143999  | S(N): 9.2300053945728
+
+--- T = 10 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 261.6081548 ms  | iters: 5  | B: 191.12554055597045 msg/s  | E(N): 0.9556277027798522  | S(N): 1.9112554055597044
+  N= 3 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 163.16236899999998 ms  | iters: 7  | B: 306.4432093407519 msg/s  | E(N): 0.9193296280222556  | S(N): 2.7579888840667666
+  N= 4 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 113.35220077777778 ms  | iters: 9  | B: 441.1030368790359 msg/s  | E(N): 0.8822060737580719  | S(N): 3.5288242950322877
+  N= 5 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 115.18905855555555 ms  | iters: 9  | B: 434.0690047039933 msg/s  | E(N): 0.8681380094079866  | S(N): 4.340690047039933
+  N= 6 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 61.450994529411766 ms  | iters: 17  | B: 813.6564816061508 msg/s  | E(N): 0.8136564816061508  | S(N): 4.881938889636905
+  N= 7 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 62.6069474375 ms  | iters: 16  | B: 798.6334112506379 msg/s  | E(N): 0.7986334112506379  | S(N): 5.590433878754466
+  N= 8 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 63.9385395 ms  | iters: 16  | B: 782.0009714172467 msg/s  | E(N): 0.7820009714172467  | S(N): 6.256007771337973
+  N= 9 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 64.659705 ms  | iters: 16  | B: 773.2791233736684 msg/s  | E(N): 0.7732791233736683  | S(N): 6.959512110363015
+  N= 10 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 66.007882 ms  | iters: 16  | B: 757.4852954681988 msg/s  | E(N): 0.7574852954681989  | S(N): 7.5748529546819885
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.14806476828546047 ms  | iters: 6754  | B: 337690.05671628 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.15204562657746692 ms  | iters: 6577  | B: 328848.65632439026 msg/s  | E(N): 0.0  | S(N): 0.0
+
+--- T = 5 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 108.9680204 ms  | iters: 10  | B: 458.8502187748287 msg/s  | E(N): 0.9177004375496575  | S(N): 1.835400875099315
+  N= 3 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 57.950847333333336 ms  | iters: 18  | B: 862.8001539373523 msg/s  | E(N): 0.8628001539373523  | S(N): 2.588400461812057
+  N= 4 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 59.328469235294115 ms  | iters: 17  | B: 842.765718456382 msg/s  | E(N): 0.842765718456382  | S(N): 3.371062873825528
+  N= 5 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 60.355095588235294 ms  | iters: 17  | B: 828.4304666024958 msg/s  | E(N): 0.8284304666024959  | S(N): 4.142152333012479
+  N= 6 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.0965396283425041 ms  | iters: 10359  | B: 517922.0270313201 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 7 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.09927109678379989 ms  | iters: 10074  | B: 503671.2761307935 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 8 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.10471620795811519 ms  | iters: 9550  | B: 477481.002940817 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 9 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.11334200850051003 ms  | iters: 8823  | B: 441142.70305854874 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 10 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.12334360101134682 ms  | iters: 8108  | B: 405371.6576298135 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.1307326783006536 ms  | iters: 7650  | B: 382459.84592323634 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.14056367659873506 ms  | iters: 7115  | B: 355710.6729837056 msg/s  | E(N): 0.0  | S(N): 0.0
+
+======================================================================
+  Benchmark complete!
+======================================================================
+======================================================================
+  Pipeline Scalability Benchmark (Multi-T)
+  Queue: MPMC_padding_optional
+  Payload Size: 64 B
+  Messages per run: 50
+======================================================================
+
+--- T = 100 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 50 ms  -> mean: 2557.4598274 ms  | iters: 5  | B: 19.55064922792226 msg/s  | E(N): 0.977532461396113  | S(N): 1.955064922792226
+  N= 3 , Size= 64 B, SleepPerStage= 33 ms  -> mean: 1722.9453048 ms  | iters: 5  | B: 29.02007385881818 msg/s  | E(N): 0.9576624373409999  | S(N): 2.872987312023
+  N= 4 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1332.1106128 ms  | iters: 5  | B: 37.53442058006251 msg/s  | E(N): 0.9383605145015628  | S(N): 3.753442058006251
+  N= 5 , Size= 64 B, SleepPerStage= 20 ms  -> mean: 1087.0914728 ms  | iters: 5  | B: 45.994289580081045 msg/s  | E(N): 0.919885791601621  | S(N): 4.5994289580081045
+  N= 6 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 887.3137168 ms  | iters: 5  | B: 56.349855810095605 msg/s  | E(N): 0.9015976929615297  | S(N): 5.409586157769178
+  N= 7 , Size= 64 B, SleepPerStage= 14 ms  -> mean: 791.4844558 ms  | iters: 5  | B: 63.17243457354075 msg/s  | E(N): 0.8844140840295704  | S(N): 6.190898588206993
+  N= 8 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 691.5608906 ms  | iters: 5  | B: 72.30021344414064 msg/s  | E(N): 0.8676025613296877  | S(N): 6.940820490637502
+  N= 9 , Size= 64 B, SleepPerStage= 11 ms  -> mean: 645.6904074 ms  | iters: 5  | B: 77.43649189606963 msg/s  | E(N): 0.851801410856766  | S(N): 7.666212697710893
+  N= 10 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 597.7059268 ms  | iters: 5  | B: 83.65317752107657 msg/s  | E(N): 0.8365317752107657  | S(N): 8.365317752107657
+  N= 11 , Size= 64 B, SleepPerStage= 9 ms  -> mean: 547.8518428 ms  | iters: 5  | B: 91.26555045330588 msg/s  | E(N): 0.821389954079753  | S(N): 9.035289494877283
+  N= 12 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 495.78005279999996 ms  | iters: 5  | B: 100.85117325236608 msg/s  | E(N): 0.8068093860189287  | S(N): 9.681712632227145
+
+--- T = 50 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 25 ms  -> mean: 1282.0045554 ms  | iters: 5  | B: 39.00142147654025 msg/s  | E(N): 0.9750355369135063  | S(N): 1.9500710738270126
+  N= 3 , Size= 64 B, SleepPerStage= 16 ms  -> mean: 839.0106958 ms  | iters: 5  | B: 59.59399594104674 msg/s  | E(N): 0.9535039350567479  | S(N): 2.8605118051702436
+  N= 4 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 643.1545068 ms  | iters: 5  | B: 77.74181704606846 msg/s  | E(N): 0.9329018045528216  | S(N): 3.7316072182112863
+  N= 5 , Size= 64 B, SleepPerStage= 10 ms  -> mean: 547.2107957999999 ms  | iters: 5  | B: 91.37246630323153 msg/s  | E(N): 0.9137246630323154  | S(N): 4.5686233151615765
+  N= 6 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 447.37330140000006 ms  | iters: 5  | B: 111.76348665316218 msg/s  | E(N): 0.8941078932252974  | S(N): 5.3646473593517845
+  N= 7 , Size= 64 B, SleepPerStage= 7 ms  -> mean: 399.516975 ms  | iters: 5  | B: 125.15112780877459 msg/s  | E(N): 0.8760578946614221  | S(N): 6.1324052626299554
+  N= 8 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 349.68714639999996 ms  | iters: 5  | B: 142.9849524489128 msg/s  | E(N): 0.8579097146934768  | S(N): 6.863277717547814
+  N= 9 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 297.7449016 ms  | iters: 5  | B: 167.92898797364327 msg/s  | E(N): 0.8396449398682163  | S(N): 7.556804458813947
+  N= 10 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 302.7802104 ms  | iters: 5  | B: 165.13628791639152 msg/s  | E(N): 0.8256814395819577  | S(N): 8.256814395819577
+  N= 11 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 248.15201459999997 ms  | iters: 5  | B: 201.4893978620152 msg/s  | E(N): 0.8059575914480609  | S(N): 8.865533505928669
+  N= 12 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 252.08074059999998 ms  | iters: 5  | B: 198.34914750325837 msg/s  | E(N): 0.7933965900130335  | S(N): 9.520759080156402
+
+--- T = 25 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 12 ms  -> mean: 618.8597032 ms  | iters: 5  | B: 80.79375622852801 msg/s  | E(N): 0.9695250747423362  | S(N): 1.9390501494846724
+  N= 3 , Size= 64 B, SleepPerStage= 8 ms  -> mean: 423.0018056 ms  | iters: 5  | B: 118.2028051371514 msg/s  | E(N): 0.9456224410972113  | S(N): 2.8368673232916337
+  N= 4 , Size= 64 B, SleepPerStage= 6 ms  -> mean: 324.80906799999997 ms  | iters: 5  | B: 153.93658898710305 msg/s  | E(N): 0.9236195339226183  | S(N): 3.6944781356904732
+  N= 5 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 277.19379680000003 ms  | iters: 5  | B: 180.3792169132697 msg/s  | E(N): 0.9018960845663484  | S(N): 4.509480422831742
+  N= 6 , Size= 64 B, SleepPerStage= 4 ms  -> mean: 227.5668518 ms  | iters: 5  | B: 219.71565544151892 msg/s  | E(N): 0.8788626217660757  | S(N): 5.273175730596454
+  N= 7 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 175.83476833333336 ms  | iters: 6  | B: 284.3578688898093 msg/s  | E(N): 0.853073606669428  | S(N): 5.971515246685996
+  N= 8 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 178.83184500000002 ms  | iters: 6  | B: 279.5922616578719 msg/s  | E(N): 0.8387767849736157  | S(N): 6.710214279788926
+  N= 9 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 124.10032377777777 ms  | iters: 9  | B: 402.8998352134302 msg/s  | E(N): 0.8057996704268603  | S(N): 7.252197033841743
+  N= 10 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 126.35472475 ms  | iters: 8  | B: 395.7113602117201 msg/s  | E(N): 0.7914227204234402  | S(N): 7.914227204234402
+  N= 11 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 128.182496 ms  | iters: 8  | B: 390.06885932381914 msg/s  | E(N): 0.7801377186476383  | S(N): 8.58151490512402
+  N= 12 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 130.152092125 ms  | iters: 8  | B: 384.16593374449377 msg/s  | E(N): 0.7683318674889876  | S(N): 9.219982409867852
+
+--- T = 10 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 5 ms  -> mean: 261.74799440000004 ms  | iters: 5  | B: 191.0234311999756 msg/s  | E(N): 0.955117155999878  | S(N): 1.910234311999756
+  N= 3 , Size= 64 B, SleepPerStage= 3 ms  -> mean: 163.38559971428572 ms  | iters: 7  | B: 306.024521667978 msg/s  | E(N): 0.9180735650039338  | S(N): 2.7542206950118016
+  N= 4 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 113.11253422222222 ms  | iters: 9  | B: 442.0376604927744 msg/s  | E(N): 0.8840753209855489  | S(N): 3.5363012839421955
+  N= 5 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 115.74057233333332 ms  | iters: 9  | B: 432.00062857819466 msg/s  | E(N): 0.8640012571563894  | S(N): 4.320006285781947
+  N= 6 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 61.82792276470588 ms  | iters: 17  | B: 808.6960998233991 msg/s  | E(N): 0.8086960998233992  | S(N): 4.852176598940395
+  N= 7 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 62.8759466875 ms  | iters: 16  | B: 795.2166549237851 msg/s  | E(N): 0.7952166549237851  | S(N): 5.566516584466496
+  N= 8 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 63.810674 ms  | iters: 16  | B: 783.5679654472856 msg/s  | E(N): 0.7835679654472856  | S(N): 6.268543723578285
+  N= 9 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 64.897900875 ms  | iters: 16  | B: 770.4409437880759 msg/s  | E(N): 0.7704409437880758  | S(N): 6.9339684940926825
+  N= 10 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 66.0297755 ms  | iters: 16  | B: 757.2341359846059 msg/s  | E(N): 0.757234135984606  | S(N): 7.572341359846059
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.2060422468067573 ms  | iters: 4854  | B: 242668.67972418273 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.2066581035123967 ms  | iters: 4840  | B: 241945.5087905647 msg/s  | E(N): 0.0  | S(N): 0.0
+
+--- T = 5 ms ---
+  N= 2 , Size= 64 B, SleepPerStage= 2 ms  -> mean: 108.7891822 ms  | iters: 10  | B: 459.6045212296853 msg/s  | E(N): 0.9192090424593706  | S(N): 1.8384180849187413
+  N= 3 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 58.13881044444444 ms  | iters: 18  | B: 860.0107160393035 msg/s  | E(N): 0.8600107160393035  | S(N): 2.5800321481179105
+  N= 4 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 59.32847005882353 ms  | iters: 17  | B: 842.7657067580801 msg/s  | E(N): 0.8427657067580802  | S(N): 3.3710628270323206
+  N= 5 , Size= 64 B, SleepPerStage= 1 ms  -> mean: 60.50055311764706 ms  | iters: 17  | B: 826.4387253249059 msg/s  | E(N): 0.8264387253249059  | S(N): 4.13219362662453
+  N= 6 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.12993605599584254 ms  | iters: 7697  | B: 384804.66116040805 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 7 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.1354951944181005 ms  | iters: 7381  | B: 369016.777419529 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 8 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.14899000804529203 ms  | iters: 6712  | B: 335592.9746966677 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 9 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.16100584207984545 ms  | iters: 6212  | B: 310547.7376106898 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 10 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.17473554472396924 ms  | iters: 5724  | B: 286146.7028874136 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 11 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.18959279772511847 ms  | iters: 5275  | B: 263723.09813420556 msg/s  | E(N): 0.0  | S(N): 0.0
+  N= 12 , Size= 64 B, SleepPerStage= 0 ms  -> mean: 0.19882561073558647 ms  | iters: 5030  | B: 251476.6574337037 msg/s  | E(N): 0.0  | S(N): 0.0
+
+======================================================================
+  Benchmark complete!
+======================================================================
