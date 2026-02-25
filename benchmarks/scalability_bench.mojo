@@ -247,27 +247,30 @@ fn bench_all_N[Size: Int, T_ms: Int]() raises:
 # Main
 # ======================================
 def main():
-    # T = total simulated computation time per payload (in milliseconds)
-    comptime T_ms = 100
+    # Fixed payload size (size has negligible impact at these sleep levels)
+    comptime Size = 64
 
     print("=" * 70)
-    print("  Pipeline Scalability Benchmark")
-    print("  Queue: MPMC_padding_optional_v2")
-    print("  Total computation time T =", T_ms, "ms per payload")
+    print("  Pipeline Scalability Benchmark (Multi-T)")
+    print("  Queue: MPMC_padding_optional")
+    print("  Payload Size:", Size, "B")
     print("  Messages per run:", NUM_MESSAGES)
     print("=" * 70)
 
-    print("\n--- Payload Size: 8B ---")
-    bench_all_N[8, T_ms]()
+    print("\n--- T = 100 ms ---")
+    bench_all_N[Size, 100]()
 
-    print("\n--- Payload Size: 64B ---")
-    bench_all_N[64, T_ms]()
+    print("\n--- T = 50 ms ---")
+    bench_all_N[Size, 50]()
 
-    print("\n--- Payload Size: 512B ---")
-    bench_all_N[512, T_ms]()
+    print("\n--- T = 25 ms ---")
+    bench_all_N[Size, 25]()
 
-    print("\n--- Payload Size: 4096B ---")
-    bench_all_N[4096, T_ms]()
+    print("\n--- T = 10 ms ---")
+    bench_all_N[Size, 10]()
+
+    print("\n--- T = 5 ms ---")
+    bench_all_N[Size, 5]()
 
     print("\n" + "=" * 70)
     print("  Benchmark complete!")
