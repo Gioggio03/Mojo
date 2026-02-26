@@ -1,5 +1,4 @@
 # Scalability benchmark for the pipeline with simulated computation (sleep).
-#
 # For a fixed total computation time T distributed across N stages,
 # each stage sleeps T/N ms per payload. Ideal throughput is N/T msg/s.
 # Deviations from ideal measure the communication and async task overhead.
@@ -7,14 +6,6 @@
 from benchmark import run, Unit
 from Pipeline import Pipeline
 from ScalabilityStages import SleepSource, SleepTransform, SleepSink, NUM_MESSAGES
-
-# ======================================
-# Functions that build and run a pipeline
-# with a fixed number of stages.
-# Needed because Pipeline uses variadic
-# comptime tuples, so each configuration
-# is a different type at compile time.
-# ======================================
 
 # N=2: Source -> Sink
 fn run_pipeline_2[Size: Int, T_ms: Int]():
@@ -170,12 +161,7 @@ fn run_pipeline_12[Size: Int, T_ms: Int]():
     pipeline.run()
     _ = pipeline
 
-
-# ======================================
-# Runs a single pipeline configuration
-# using the benchmark package for proper
-# statistical timing with repetitions.
-# ======================================
+# Benchmark configuration function that runs the appropriate pipeline based on N and T_ms, and computes B, E(N), S(N) from the benchmark results.
 fn bench_config[Size: Int, N: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // N
     comptime num_msgs = NUM_MESSAGES
@@ -232,22 +218,15 @@ fn bench_config[Size: Int, N: Int, T_ms: Int]() raises:
           " | E(N):", E,
           " | S(N):", S)
 
-
-# ======================================
-# Comptime loop that tests all N values
-# from 2 to 12 for a given payload size
-# ======================================
+# Benchmark all N for a given Size and T_ms
 fn bench_all_N[Size: Int, T_ms: Int]() raises:
     @parameter
     for n in range(2, 13):
         bench_config[Size, n, T_ms]()
 
-
-# ======================================
 # Main
-# ======================================
 def main():
-    # Fixed payload size (size has negligible impact at these sleep levels)
+    # fixed payload size (size has negligible impact at these sleep levels)
     comptime Size = 64
 
     print("=" * 70)
