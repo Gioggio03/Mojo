@@ -170,7 +170,6 @@ fn bench_config[Size: Int, N: Int, T_ms: Int]() raises:
     @parameter
     if N == 2:
         report = run[func2 = run_pipeline_2[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
-        
     elif N == 3:
         report = run[func2 = run_pipeline_3[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 4:
