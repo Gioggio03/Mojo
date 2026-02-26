@@ -1,4 +1,5 @@
 # Scalability benchmark for the pipeline with simulated computation (sleep).
+#
 # For a fixed total computation time T distributed across N stages,
 # each stage sleeps T/N ms per payload. Ideal throughput is N/T msg/s.
 # Deviations from ideal measure the communication and async task overhead.
@@ -6,6 +7,14 @@
 from benchmark import run, Unit
 from Pipeline import Pipeline
 from ScalabilityStages import SleepSource, SleepTransform, SleepSink, NUM_MESSAGES
+
+# ======================================
+# Functions that build and run a pipeline
+# with a fixed number of stages.
+# Needed because Pipeline uses variadic
+# comptime tuples, so each configuration
+# is a different type at compile time.
+# ======================================
 
 # N=2: Source -> Sink
 fn run_pipeline_2[Size: Int, T_ms: Int]():
@@ -161,7 +170,12 @@ fn run_pipeline_12[Size: Int, T_ms: Int]():
     pipeline.run()
     _ = pipeline
 
-# Benchmark configuration function that runs the appropriate pipeline based on N and T_ms, and computes B, E(N), S(N) from the benchmark results.
+
+# ======================================
+# Runs a single pipeline configuration
+# using the benchmark package for proper
+# statistical timing with repetitions.
+# ======================================
 fn bench_config[Size: Int, N: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // N
     comptime num_msgs = NUM_MESSAGES
@@ -218,38 +232,63 @@ fn bench_config[Size: Int, N: Int, T_ms: Int]() raises:
           " | E(N):", E,
           " | S(N):", S)
 
-# Benchmark all N for a given Size and T_ms
+
+# ======================================
+# Comptime loop that tests all N values
+# from 2 to 12 for a given payload size
+# ======================================
 fn bench_all_N[Size: Int, T_ms: Int]() raises:
     @parameter
     for n in range(2, 13):
         bench_config[Size, n, T_ms]()
 
-# Main
-def main():
-    # fixed payload size (size has negligible impact at these sleep levels)
-    comptime Size = 64
 
+# ======================================
+# Runs all N for a given Size and T_ms,
+# printing a header for easy parsing
+# ======================================
+fn bench_size_t[Size: Int, T_ms: Int]() raises:
+    print("\n--- Size=" + String(Size) + "B, T=" + String(T_ms) + "ms ---")
+    bench_all_N[Size, T_ms]()
+
+
+# ======================================
+# Main
+# ======================================
+def main():
     print("=" * 70)
-    print("  Pipeline Scalability Benchmark (Multi-T)")
-    print("  Queue: MPMC_padding_optional")
-    print("  Payload Size:", Size, "B")
+    print("  Pipeline Scalability Benchmark")
+    print("  Queue: MPMC_padding_optional_v2")
     print("  Messages per run:", NUM_MESSAGES)
     print("=" * 70)
 
-    print("\n--- T = 100 ms ---")
-    bench_all_N[Size, 100]()
+    # Size=8B
+    bench_size_t[8, 100]()
+    bench_size_t[8, 50]()
+    bench_size_t[8, 25]()
+    bench_size_t[8, 10]()
+    bench_size_t[8, 5]()
 
-    print("\n--- T = 50 ms ---")
-    bench_all_N[Size, 50]()
+    # Size=64B
+    bench_size_t[64, 100]()
+    bench_size_t[64, 50]()
+    bench_size_t[64, 25]()
+    bench_size_t[64, 10]()
+    bench_size_t[64, 5]()
 
-    print("\n--- T = 25 ms ---")
-    bench_all_N[Size, 25]()
+    # Size=512B
+    bench_size_t[512, 100]()
+    bench_size_t[512, 50]()
+    bench_size_t[512, 25]()
+    bench_size_t[512, 10]()
+    bench_size_t[512, 5]()
 
-    print("\n--- T = 10 ms ---")
-    bench_all_N[Size, 10]()
-
-    print("\n--- T = 5 ms ---")
-    bench_all_N[Size, 5]()
+    # Size=4096B
+    bench_size_t[4096, 100]()
+    bench_size_t[4096, 50]()
+    bench_size_t[4096, 25]()
+    bench_size_t[4096, 10]()
+    bench_size_t[4096, 5]()
 
     print("\n" + "=" * 70)
     print("  Benchmark complete!")
