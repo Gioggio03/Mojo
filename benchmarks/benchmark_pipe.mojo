@@ -1,8 +1,8 @@
 
 from benchmark import run, Unit
-from Pipeline import Pipeline
-from BenchStages import BenchSource, BenchTransform, BenchSink, NUM_MESSAGES
-from Payload import Payload
+from pipeline import Pipeline
+from benchStages import BenchSource, BenchTransform, BenchSink, NUM_MESSAGES
+from payload import Payload
 
 # ========================
 # Pipeline runner functions

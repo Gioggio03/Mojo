@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # run_benchmarks.sh — Builds and runs all benchmarks, then generates plots.
-# Usage: ./run_benchmarks.sh
+# Usage: cd benchmarks && ./run_benchmarks.sh
 set -euo pipefail
 
 QUEUES=("MPMC_padding_optional_v2" "MPMC" "MPMC_naif" "MPMC_padding" "MPMC_padding_optional")
 RESULTS_DIR="results"
-PLOTS_DIR="plots"
-COMMUNICATOR="Communicator.mojo"
+PLOTS_DIR="Plots"
+COMMUNICATOR="../pipeline/communicator.mojo"
 
 # The Python interpreter: use venv if available, else python3
 if [ -f .venv/bin/python ]; then
@@ -17,12 +17,12 @@ fi
 
 mkdir -p "$RESULTS_DIR" "$PLOTS_DIR"
 
-# ─── Helper: set the active queue in Communicator.mojo ─────────────
+# ─── Helper: set the active queue in communicator.mojo ─────────────
 set_queue() {
     local target="$1"
     # Comment all queue imports, then uncomment the target
-    sed -i 's/^from \(MPMC\)/# from \1/' "$COMMUNICATOR"
-    sed -i "s|^# from ${target} import|from ${target} import|" "$COMMUNICATOR"
+    sed -i 's/^from pipeline\.\(MPMC\)/# from pipeline.\1/' "$COMMUNICATOR"
+    sed -i "s|^# from pipeline\.${target} import|from pipeline.${target} import|" "$COMMUNICATOR"
 }
 
 # ─── 1. Scalability benchmark (V2 only) ───────────────────────────
@@ -31,7 +31,7 @@ echo " 1/3  Scalability Benchmark (V2 only)"
 echo "=========================================="
 set_queue "MPMC_padding_optional_v2"
 echo "Building scalability_bench.mojo..."
-mojo build scalability_bench.mojo
+mojo build -I .. scalability_bench.mojo -o scalability_bench
 echo "Running scalability benchmark..."
 ./scalability_bench > "$RESULTS_DIR/scalability_results.txt"
 echo "Done. Results in $RESULTS_DIR/scalability_results.txt"
@@ -48,7 +48,7 @@ for queue in "${QUEUES[@]}"; do
     echo "--- Queue: $queue ---"
     set_queue "$queue"
     echo "  Building benchmark_pipe.mojo..."
-    mojo build benchmark_pipe.mojo
+    mojo build -I .. benchmark_pipe.mojo -o benchmark_pipe
     echo "  Running benchmark..."
     # Inject a parseable queue header into the results file
     echo "" >> "$RESULTS_DIR/benchmark_results.txt"

@@ -4,9 +4,9 @@
 # isolated from actual computation.
 
 from collections import Optional
-from Communicator import MessageTrait
-from Stage import StageKind, StageTrait
-from Payload import Payload
+from pipeline.communicator import MessageTrait
+from pipeline.stage import StageKind, StageTrait
+from payload import Payload
 from time import sleep
 
 # Number of messages processed per benchmark run

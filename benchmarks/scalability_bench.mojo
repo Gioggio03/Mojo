@@ -5,8 +5,8 @@
 # Deviations from ideal measure the communication and async task overhead.
 
 from benchmark import run, Unit
-from Pipeline import Pipeline
-from ScalabilityStages import SleepSource, SleepTransform, SleepSink, NUM_MESSAGES
+from pipeline import Pipeline
+from scalabilityStages import SleepSource, SleepTransform, SleepSink, NUM_MESSAGES
 
 # ======================================
 # Functions that build and run a pipeline
