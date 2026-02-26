@@ -1,10 +1,10 @@
 # Communicator using a MPMC queue
 
-# from pipeline.MPMC_naif import MPMCQueue # MPMC naif with locking
+from pipeline.MPMC_naif import MPMCQueue # MPMC naif with locking
 # from pipeline.MPMC import MPMCQueue # MPMC by Dmitry Vyukov standard
 # from pipeline.MPMC_padding import MPMCQueue # MPMC by Dmitry Vyukov with padding
 # from pipeline.MPMC_padding_optional import MPMCQueue # MPMC by Dmitry Vyukov with padding and optional as data field
-from pipeline.MPMC_padding_optional_v2 import MPMCQueue # MPMC by Dmitry Vyukov with padding, optional as data field and move-enabled push semantics
+# from pipeline.MPMC_padding_optional_v2 import MPMCQueue # MPMC by Dmitry Vyukov with padding, optional as data field and move-enabled push semantics
 from collections import Optional
 from sys.info import size_of
 
@@ -59,6 +59,11 @@ struct Communicator[T: MessageTrait](Movable):
             if result:
                 return result.take()
 
-    # push (it completes when the message is successfully pushed into the queue)
-    fn push(mut self, var msg: MessageWrapper[Self.T]):
-        _ = self.queue[].push(msg^)
+    # push -> ALERT: to be used with MPMC_Padding_optional_v2 only!
+    # fn push(mut self, var msg: MessageWrapper[Self.T]):
+    #    _ = self.queue[].push(msg^)
+
+    # push (always good for all MPMC variants)
+    fn push(mut self, msg: MessageWrapper[Self.T]):
+        while not self.queue[].push(msg):
+            pass

@@ -1,14 +1,11 @@
+# This benchmark measures the overhead of the Pipeline framework itself, without any user computation.
+# The source produces empty payloads, the transforms do nothing, and the sink just consumes the messages.
+# This isolates the framework overhead and lets us see how it scales with the number of stages and message sizes.
 
 from benchmark import run, Unit
 from pipeline import Pipeline
 from benchStages import BenchSource, BenchTransform, BenchSink, NUM_MESSAGES
 from payload import Payload
-
-# ========================
-# Pipeline runner functions
-# ========================
-# Since Pipeline uses variadic comptime tuples, we need separate
-# functions for each stage count N.
 
 # N=2: Source -> Sink
 fn run_pipeline_2[Size: Int]():
@@ -153,10 +150,7 @@ fn run_pipeline_12[Size: Int]():
     pipeline.run()
     _ = pipeline
 
-
-# ========================
-# Benchmark helper
-# ========================
+# Function bench_and_print: runs the given pipeline and prints the results in a nice format
 fn bench_and_print[Size: Int, N: Int]() raises:
     print("  N=", N, ", Size=", Size, "B", end="")
 
@@ -194,20 +188,14 @@ fn bench_and_print[Size: Int, N: Int]() raises:
         " | iters:", report.iters()
     )
 
-
-# ========================
-# Benchmark all sizes for a given N
-# ========================
+# Function bench_all_sizes: runs benchmarks for all sizes for a given N
 fn bench_all_sizes[N: Int]() raises:
     bench_and_print[8, N]()
     bench_and_print[64, N]()
     bench_and_print[512, N]()
     bench_and_print[4096, N]()
 
-
-# ========================
 # Main
-# ========================
 def main():
     print("=" * 70)
     print("  Pipeline Benchmark (Zero Computation)")
