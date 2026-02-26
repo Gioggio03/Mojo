@@ -53,7 +53,7 @@ for queue in "${QUEUES[@]}"; do
     # Inject a parseable queue header into the results file
     echo "" >> "$RESULTS_DIR/benchmark_results.txt"
     echo "  Queue: $queue" >> "$RESULTS_DIR/benchmark_results.txt"
-    ./benchmark_pipe >> "$RESULTS_DIR/benchmark_results.txt"
+    ./benchmark_pipe >> "$RESULTS_DIR/benchmark_results.txt" 2>> "$RESULTS_DIR/errors.log"
     echo "  Done."
 done
 
