@@ -1,9 +1,14 @@
-# Benchmark to measure the overhead of Pipeline with different numbers of stages (N) and different payload sizes (Size)
 
 from benchmark import run, Unit
 from Pipeline import Pipeline
-from BenchStages import BenchSource, BenchTransform, BenchSink
+from BenchStages import BenchSource, BenchTransform, BenchSink, NUM_MESSAGES
 from Payload import Payload
+
+# ========================
+# Pipeline runner functions
+# ========================
+# Since Pipeline uses variadic comptime tuples, we need separate
+# functions for each stage count N.
 
 # N=2: Source -> Sink
 fn run_pipeline_2[Size: Int]():
@@ -13,7 +18,7 @@ fn run_pipeline_2[Size: Int]():
     pipeline.run()
     _ = pipeline
 
-# N=3: Source -> Transform -> Sink
+# N=3: Source -> T1 -> Sink
 fn run_pipeline_3[Size: Int]():
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
@@ -22,7 +27,17 @@ fn run_pipeline_3[Size: Int]():
     pipeline.run()
     _ = pipeline
 
-# N=5: Source -> T1 -> T2 -> T3 -> Sink
+# N=4: Source -> T1 -> T2 -> Sink
+fn run_pipeline_4[Size: Int]():
+    source = BenchSource[Size]()
+    t1 = BenchTransform[Size]()
+    t2 = BenchTransform[Size]()
+    sink = BenchSink[Size]()
+    pipeline = Pipeline((source, t1, t2, sink))
+    pipeline.run()
+    _ = pipeline
+
+# N=5: Source -> T1..T3 -> Sink
 fn run_pipeline_5[Size: Int]():
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
@@ -33,7 +48,61 @@ fn run_pipeline_5[Size: Int]():
     pipeline.run()
     _ = pipeline
 
-# N=10: Source -> T1 -> T2 -> ... -> T8 -> Sink
+# N=6: Source -> T1..T4 -> Sink
+fn run_pipeline_6[Size: Int]():
+    source = BenchSource[Size]()
+    t1 = BenchTransform[Size]()
+    t2 = BenchTransform[Size]()
+    t3 = BenchTransform[Size]()
+    t4 = BenchTransform[Size]()
+    sink = BenchSink[Size]()
+    pipeline = Pipeline((source, t1, t2, t3, t4, sink))
+    pipeline.run()
+    _ = pipeline
+
+# N=7: Source -> T1..T5 -> Sink
+fn run_pipeline_7[Size: Int]():
+    source = BenchSource[Size]()
+    t1 = BenchTransform[Size]()
+    t2 = BenchTransform[Size]()
+    t3 = BenchTransform[Size]()
+    t4 = BenchTransform[Size]()
+    t5 = BenchTransform[Size]()
+    sink = BenchSink[Size]()
+    pipeline = Pipeline((source, t1, t2, t3, t4, t5, sink))
+    pipeline.run()
+    _ = pipeline
+
+# N=8: Source -> T1..T6 -> Sink
+fn run_pipeline_8[Size: Int]():
+    source = BenchSource[Size]()
+    t1 = BenchTransform[Size]()
+    t2 = BenchTransform[Size]()
+    t3 = BenchTransform[Size]()
+    t4 = BenchTransform[Size]()
+    t5 = BenchTransform[Size]()
+    t6 = BenchTransform[Size]()
+    sink = BenchSink[Size]()
+    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, sink))
+    pipeline.run()
+    _ = pipeline
+
+# N=9: Source -> T1..T7 -> Sink
+fn run_pipeline_9[Size: Int]():
+    source = BenchSource[Size]()
+    t1 = BenchTransform[Size]()
+    t2 = BenchTransform[Size]()
+    t3 = BenchTransform[Size]()
+    t4 = BenchTransform[Size]()
+    t5 = BenchTransform[Size]()
+    t6 = BenchTransform[Size]()
+    t7 = BenchTransform[Size]()
+    sink = BenchSink[Size]()
+    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, sink))
+    pipeline.run()
+    _ = pipeline
+
+# N=10: Source -> T1..T8 -> Sink
 fn run_pipeline_10[Size: Int]():
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
@@ -49,54 +118,107 @@ fn run_pipeline_10[Size: Int]():
     pipeline.run()
     _ = pipeline
 
+# N=11: Source -> T1..T9 -> Sink
+fn run_pipeline_11[Size: Int]():
+    source = BenchSource[Size]()
+    t1 = BenchTransform[Size]()
+    t2 = BenchTransform[Size]()
+    t3 = BenchTransform[Size]()
+    t4 = BenchTransform[Size]()
+    t5 = BenchTransform[Size]()
+    t6 = BenchTransform[Size]()
+    t7 = BenchTransform[Size]()
+    t8 = BenchTransform[Size]()
+    t9 = BenchTransform[Size]()
+    sink = BenchSink[Size]()
+    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, t9, sink))
+    pipeline.run()
+    _ = pipeline
+
+# N=12: Source -> T1..T10 -> Sink
+fn run_pipeline_12[Size: Int]():
+    source = BenchSource[Size]()
+    t1 = BenchTransform[Size]()
+    t2 = BenchTransform[Size]()
+    t3 = BenchTransform[Size]()
+    t4 = BenchTransform[Size]()
+    t5 = BenchTransform[Size]()
+    t6 = BenchTransform[Size]()
+    t7 = BenchTransform[Size]()
+    t8 = BenchTransform[Size]()
+    t9 = BenchTransform[Size]()
+    t10 = BenchTransform[Size]()
+    sink = BenchSink[Size]()
+    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, sink))
+    pipeline.run()
+    _ = pipeline
+
+
+# ========================
 # Benchmark helper
+# ========================
 fn bench_and_print[Size: Int, N: Int]() raises:
     print("  N=", N, ", Size=", Size, "B", end="")
+
     @parameter
     if N == 2:
         report = run[func2 = run_pipeline_2[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 3:
         report = run[func2 = run_pipeline_3[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+    elif N == 4:
+        report = run[func2 = run_pipeline_4[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 5:
         report = run[func2 = run_pipeline_5[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+    elif N == 6:
+        report = run[func2 = run_pipeline_6[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+    elif N == 7:
+        report = run[func2 = run_pipeline_7[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+    elif N == 8:
+        report = run[func2 = run_pipeline_8[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+    elif N == 9:
+        report = run[func2 = run_pipeline_9[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 10:
         report = run[func2 = run_pipeline_10[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+    elif N == 11:
+        report = run[func2 = run_pipeline_11[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+    elif N == 12:
+        report = run[func2 = run_pipeline_12[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     else:
         print("  -> ERROR: unsupported N")
         return
+
     print(
-        "  -> media:", report.mean(Unit.ms), "ms",
+        "   -> mean:", report.mean(Unit.ms), "ms",
         " | min:", report.min(Unit.ms), "ms",
         " | max:", report.max(Unit.ms), "ms",
         " | iters:", report.iters()
     )
 
+
+# ========================
 # Benchmark all sizes for a given N
+# ========================
 fn bench_all_sizes[N: Int]() raises:
     bench_and_print[8, N]()
     bench_and_print[64, N]()
     bench_and_print[512, N]()
     bench_and_print[4096, N]()
 
+
+# ========================
 # Main
+# ========================
 def main():
-    print("=" * 60)
-    print("  Pipeline Benchmark")
-    print("  Messages per run: 1000")
-    print("=" * 60)
+    print("=" * 70)
+    print("  Pipeline Benchmark (Zero Computation)")
+    print("  Messages per run:", NUM_MESSAGES)
+    print("=" * 70)
 
-    print("\n--- N=2 (Source -> Sink) ---")
-    bench_all_sizes[2]()
+    @parameter
+    for n in range(2, 13):
+        print("\n--- N=" + String(n) + " ---")
+        bench_all_sizes[n]()
 
-    print("\n--- N=3 (Source -> Transform -> Sink) ---")
-    bench_all_sizes[3]()
-
-    print("\n--- N=5 (Source -> 3×Transform -> Sink) ---")
-    bench_all_sizes[5]()
-
-    print("\n--- N=10 (Source -> 8×Transform -> Sink) ---")
-    bench_all_sizes[10]()
-
-    print("\n" + "=" * 60)
+    print("\n" + "=" * 70)
     print("  Benchmark complete!")
-    print("=" * 60)
+    print("=" * 70)
