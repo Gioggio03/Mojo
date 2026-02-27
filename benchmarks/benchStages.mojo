@@ -1,8 +1,8 @@
 # Stages used in benchmark_pipe
 
 from collections import Optional
-from pipeline.communicator import MessageTrait
-from pipeline.stage import StageKind, StageTrait
+from MoStream.communicator import MessageTrait
+from MoStream.stage import StageKind, StageTrait
 from payload import Payload
 
 comptime NUM_MESSAGES: Int = 1000

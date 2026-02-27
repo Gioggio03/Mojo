@@ -3,7 +3,7 @@
 # This isolates the framework overhead and lets us see how it scales with the number of stages and message sizes.
 
 from benchmark import run, Unit
-from pipeline import Pipeline
+from MoStream import Pipeline
 from benchStages import BenchSource, BenchTransform, BenchSink, NUM_MESSAGES
 from payload import Payload
 

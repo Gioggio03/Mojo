@@ -4,7 +4,7 @@
 # Deviations from ideal measure the communication and async task overhead.
 
 from benchmark import run, Unit
-from pipeline import Pipeline
+from MoStream import Pipeline
 from scalabilityStages import SleepSource, SleepTransform, SleepSink, NUM_MESSAGES
 
 # N=2: Source -> Sink

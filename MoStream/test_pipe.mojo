@@ -4,9 +4,9 @@
 #   - ThirdStage: sink, prints the input string
 
 from collections import Optional
-from pipeline.communicator import MessageTrait
-from pipeline.stage import StageKind, StageTrait
-from pipeline.pipeline import Pipeline
+from MoStream.communicator import MessageTrait
+from MoStream.stage import StageKind, StageTrait
+from MoStream.pipeline import Pipeline
 
 # FirstStage - Source: generetes numbers from 1 to 1000
 struct FirstStage(StageTrait):

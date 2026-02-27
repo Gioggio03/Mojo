@@ -4,8 +4,8 @@
 # isolated from actual computation.
 
 from collections import Optional
-from pipeline.communicator import MessageTrait
-from pipeline.stage import StageKind, StageTrait
+from MoStream.communicator import MessageTrait
+from MoStream.stage import StageKind, StageTrait
 from payload import Payload
 from time import sleep
 
