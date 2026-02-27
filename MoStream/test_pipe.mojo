@@ -68,5 +68,6 @@ def main():
 
     # creating the pipeline and running it
     pipeline = Pipeline((first_stage, second_stage, third_stage))
+    pipeline.setPinning(enabled=False)
     pipeline.run()
     _ = pipeline

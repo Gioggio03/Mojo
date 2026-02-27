@@ -8,7 +8,7 @@ from benchStages import BenchSource, BenchTransform, BenchSink, NUM_MESSAGES
 from payload import Payload
 
 # N=2: Source -> Sink
-fn run_pipeline_2[Size: Int]():
+fn run_pipeline_2[Size: Int]() raises:
     source = BenchSource[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, sink))
@@ -16,7 +16,7 @@ fn run_pipeline_2[Size: Int]():
     _ = pipeline
 
 # N=3: Source -> T1 -> Sink
-fn run_pipeline_3[Size: Int]():
+fn run_pipeline_3[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     sink = BenchSink[Size]()
@@ -25,7 +25,7 @@ fn run_pipeline_3[Size: Int]():
     _ = pipeline
 
 # N=4: Source -> T1 -> T2 -> Sink
-fn run_pipeline_4[Size: Int]():
+fn run_pipeline_4[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
@@ -35,7 +35,7 @@ fn run_pipeline_4[Size: Int]():
     _ = pipeline
 
 # N=5: Source -> T1..T3 -> Sink
-fn run_pipeline_5[Size: Int]():
+fn run_pipeline_5[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
@@ -46,7 +46,7 @@ fn run_pipeline_5[Size: Int]():
     _ = pipeline
 
 # N=6: Source -> T1..T4 -> Sink
-fn run_pipeline_6[Size: Int]():
+fn run_pipeline_6[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
@@ -58,7 +58,7 @@ fn run_pipeline_6[Size: Int]():
     _ = pipeline
 
 # N=7: Source -> T1..T5 -> Sink
-fn run_pipeline_7[Size: Int]():
+fn run_pipeline_7[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
@@ -71,7 +71,7 @@ fn run_pipeline_7[Size: Int]():
     _ = pipeline
 
 # N=8: Source -> T1..T6 -> Sink
-fn run_pipeline_8[Size: Int]():
+fn run_pipeline_8[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
@@ -85,7 +85,7 @@ fn run_pipeline_8[Size: Int]():
     _ = pipeline
 
 # N=9: Source -> T1..T7 -> Sink
-fn run_pipeline_9[Size: Int]():
+fn run_pipeline_9[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
@@ -100,7 +100,7 @@ fn run_pipeline_9[Size: Int]():
     _ = pipeline
 
 # N=10: Source -> T1..T8 -> Sink
-fn run_pipeline_10[Size: Int]():
+fn run_pipeline_10[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
@@ -116,7 +116,7 @@ fn run_pipeline_10[Size: Int]():
     _ = pipeline
 
 # N=11: Source -> T1..T9 -> Sink
-fn run_pipeline_11[Size: Int]():
+fn run_pipeline_11[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
@@ -133,7 +133,7 @@ fn run_pipeline_11[Size: Int]():
     _ = pipeline
 
 # N=12: Source -> T1..T10 -> Sink
-fn run_pipeline_12[Size: Int]():
+fn run_pipeline_12[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
@@ -156,27 +156,27 @@ fn bench_and_print[Size: Int, N: Int]() raises:
 
     @parameter
     if N == 2:
-        report = run[func2 = run_pipeline_2[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_2[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 3:
-        report = run[func2 = run_pipeline_3[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_3[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 4:
-        report = run[func2 = run_pipeline_4[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_4[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 5:
-        report = run[func2 = run_pipeline_5[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_5[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 6:
-        report = run[func2 = run_pipeline_6[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_6[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 7:
-        report = run[func2 = run_pipeline_7[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_7[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 8:
-        report = run[func2 = run_pipeline_8[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_8[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 9:
-        report = run[func2 = run_pipeline_9[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_9[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 10:
-        report = run[func2 = run_pipeline_10[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_10[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 11:
-        report = run[func2 = run_pipeline_11[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_11[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     elif N == 12:
-        report = run[func2 = run_pipeline_12[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
+        report = run[func1 = run_pipeline_12[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
     else:
         print("  -> ERROR: unsupported N")
         return

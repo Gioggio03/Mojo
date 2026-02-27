@@ -138,5 +138,5 @@ fn test_streaming():
         print("Failure! Data mismatch")
 
 # Main
-fn main():
+def main():
     test_streaming()

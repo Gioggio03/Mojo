@@ -1,24 +1,33 @@
-# MoStream parallel pattern
+# MoStream pipeline implementation
 
-from runtime.asyncrt import create_task
-from runtime.asyncrt import TaskGroup
+from runtime.asyncrt import create_task, TaskGroup
 from collections import Optional
 from MoStream.communicator import MessageTrait, MessageWrapper, Communicator
 from MoStream.stage import StageKind, StageTrait
-from sys.terminate import exit
+from os import getenv
+from sys.ffi import OwnedDLHandle, c_int
+from python import Python
 
 # Executor_task, the function that will be run by each task of the pipeline
-#    it executes the logic of each stage and communicates with the other stages through the Communicators
+#    it executes the logic of a stage and communicates with the other stages through the Communicators
 async
 fn executor_task[Stage: StageTrait,
                  In: MessageTrait,
-                 Out: MessageTrait, //, 
-                 idx: Int, 
-                 len: Int](mut s: Stage,
-                           inComm: UnsafePointer[mut=True, Communicator[In]],
-                           outComm: UnsafePointer[mut=True, Communicator[Out]]):
+                 Out: MessageTrait, //,
+                 idx: Int,
+                 len: Int]
+                 (mut s: Stage,
+                 inComm: UnsafePointer[mut=True, Communicator[In]],
+                 outComm: UnsafePointer[mut=True, Communicator[Out]],
+                 libFuncC: OwnedDLHandle,
+                 cpu_id: Int):
     try:
         var end_of_stream = False
+        # pinning of the underlying thread if pinning isenabled
+        if (cpu_id >= 0):
+            r = libFuncC.call["pin_thread_to_cpu_checked", c_int](c_int(cpu_id))
+            if (r < 0):
+                print("Warning: failed to pin thread of stage", Stage.name, "to CPU core", cpu_id)
         @parameter
         if Stage.kind == StageKind.SOURCE:
             constrained[idx == 0]() # Source stage must be the first stage of the pipeline
@@ -63,30 +72,49 @@ fn executor_task[Stage: StageTrait,
             inComm.destroy_pointee()
             inComm.free()
         else:
-            raise String("Error: Stage ") + String(Stage.name) + String(" has an undefined kind")
+            raise String("Error: Stage") + String(Stage.name) + String("has an undefined kind")
     except e:
-        print("Error: executor_task in stage ", Stage.name, " raised a problem -> ", e)
+        print("Error: executor_task in stage", Stage.name, "raised a problem -> ", e)
 
-# Pipeline parallel pattern
+# Pipeline
 struct Pipeline[*Ts: StageTrait]:
     comptime N = Variadic.size[StageTrait](Self.Ts)
     var stages: Tuple[*Self.Ts]
+    var cpu_ids: List[Int]
+    var num_cpus: Int
+    var libFuncC: OwnedDLHandle
     var tg: TaskGroup
+    var pinning_enabled: Bool
 
     # constructor
-    fn __init__(out self, var stages: Tuple[*Self.Ts]):
+    fn __init__(out self, var stages: Tuple[*Self.Ts]) raises:
         self.stages = stages^
+        self.cpu_ids = List[Int]()
+        mp = Python.import_module("multiprocessing")
+        self.num_cpus = Int(py=mp.cpu_count())
+        path_lib = getenv("MOSTREAM_HOME", ".")
+        if path_lib == ".":
+            print("Warning: MOSTREAM_HOME environment variable not set, using current directory as default")
+        path_lib += "/MoStream/lib/libFuncC.so"
+        self.libFuncC = OwnedDLHandle(path_lib)
+        if not self.libFuncC.check_symbol("pin_thread_to_cpu_checked"):
+            raise "Error: symbol pin_thread_to_cpu_checked not found in libFuncC.so"
         self.tg = TaskGroup()
+        self.pinning_enabled = False
+        mapping_str = getenv("MOSTREAM_PINNING", "")
+        self.parse_mapping_string(mapping_str)
 
     # _run_from
-    fn _run_from[idx: Int, len: Int, M: MessageTrait](mut self, in_comm: UnsafePointer[mut=True, Communicator[M]]):
+    fn _run_from[idx: Int, length: Int, M: MessageTrait](mut self, in_comm: UnsafePointer[mut=True, Communicator[M]]):
         comm = Communicator[Self.Ts[idx].OutType]()
         out_comm = alloc[Communicator[Self.Ts[idx].OutType]](1)
         out_comm.init_pointee_move(comm^)
-        self.tg.create_task(executor_task[idx, len](self.stages[idx], in_comm, out_comm))
+        var cpu_id: Int # identifier of the CPU core assigned to the task running this stage
+        cpu_id = self.cpu_ids[idx % len(self.cpu_ids)] if self.pinning_enabled else -1
+        self.tg.create_task(executor_task[idx, length](self.stages[idx], in_comm, out_comm, self.libFuncC, cpu_id))
         @parameter
         if idx + 1 < Self.N:
-            self._run_from[idx + 1, len, Self.Ts[idx].OutType](out_comm)
+            self._run_from[idx + 1, length, Self.Ts[idx].OutType](out_comm)
 
     # run
     fn run(mut self):
@@ -95,3 +123,18 @@ struct Pipeline[*Ts: StageTrait]:
         first_comm.init_pointee_move(comm^)
         self._run_from[0, Self.N](first_comm)
         self.tg.wait()
+
+    # Method to parse the cpus list
+    fn parse_mapping_string(mut self, s: String) raises:
+        if (s == ""):
+            for i in range(0, self.num_cpus):
+                self.cpu_ids.append(i)
+        else:
+            # split the string by commas
+            var parts = s.split(",")
+            for part in parts:
+                self.cpu_ids.append(Int(part))
+
+    # Method to enable/disable pinning for the pipeline threads
+    fn setPinning(mut self, enabled: Bool):
+        self.pinning_enabled = enabled

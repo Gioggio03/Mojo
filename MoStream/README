@@ -1,4 +1,0 @@
-Comandi Mojo utili:
-
-Per compilare un programma Mojo e poi debuggarlo con gdb
-1) mojo build -O0 --debug-level=full source.mojo -o binary

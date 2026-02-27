@@ -8,7 +8,7 @@ from MoStream import Pipeline
 from scalabilityStages import SleepSource, SleepTransform, SleepSink, NUM_MESSAGES
 
 # N=2: Source -> Sink
-fn run_pipeline_2[Size: Int, T_ms: Int]():
+fn run_pipeline_2[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 2
     source = SleepSource[Size, SleepMs]()
     sink = SleepSink[Size, SleepMs]()
@@ -17,7 +17,7 @@ fn run_pipeline_2[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=3: Source -> T1 -> Sink
-fn run_pipeline_3[Size: Int, T_ms: Int]():
+fn run_pipeline_3[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 3
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -27,7 +27,7 @@ fn run_pipeline_3[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=4: Source -> T1 -> T2 -> Sink
-fn run_pipeline_4[Size: Int, T_ms: Int]():
+fn run_pipeline_4[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 4
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -38,7 +38,7 @@ fn run_pipeline_4[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=5: Source -> T1..T3 -> Sink
-fn run_pipeline_5[Size: Int, T_ms: Int]():
+fn run_pipeline_5[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 5
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -50,7 +50,7 @@ fn run_pipeline_5[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=6: Source -> T1..T4 -> Sink
-fn run_pipeline_6[Size: Int, T_ms: Int]():
+fn run_pipeline_6[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 6
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -63,7 +63,7 @@ fn run_pipeline_6[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=7: Source -> T1..T5 -> Sink
-fn run_pipeline_7[Size: Int, T_ms: Int]():
+fn run_pipeline_7[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 7
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -77,7 +77,7 @@ fn run_pipeline_7[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=8: Source -> T1..T6 -> Sink
-fn run_pipeline_8[Size: Int, T_ms: Int]():
+fn run_pipeline_8[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 8
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -92,7 +92,7 @@ fn run_pipeline_8[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=9: Source -> T1..T7 -> Sink
-fn run_pipeline_9[Size: Int, T_ms: Int]():
+fn run_pipeline_9[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 9
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -108,7 +108,7 @@ fn run_pipeline_9[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=10: Source -> T1..T8 -> Sink
-fn run_pipeline_10[Size: Int, T_ms: Int]():
+fn run_pipeline_10[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 10
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -125,7 +125,7 @@ fn run_pipeline_10[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=11: Source -> T1..T9 -> Sink
-fn run_pipeline_11[Size: Int, T_ms: Int]():
+fn run_pipeline_11[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 11
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -143,7 +143,7 @@ fn run_pipeline_11[Size: Int, T_ms: Int]():
     _ = pipeline
 
 # N=12: Source -> T1..T10 -> Sink
-fn run_pipeline_12[Size: Int, T_ms: Int]():
+fn run_pipeline_12[Size: Int, T_ms: Int]() raises:
     comptime SleepMs = T_ms // 12
     source = SleepSource[Size, SleepMs]()
     t1 = SleepTransform[Size, SleepMs]()
@@ -169,27 +169,27 @@ fn bench_config[Size: Int, N: Int, T_ms: Int]() raises:
     # use the benchmark package to run with multiple iterations
     @parameter
     if N == 2:
-        report = run[func2 = run_pipeline_2[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_2[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 3:
-        report = run[func2 = run_pipeline_3[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_3[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 4:
-        report = run[func2 = run_pipeline_4[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_4[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 5:
-        report = run[func2 = run_pipeline_5[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_5[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 6:
-        report = run[func2 = run_pipeline_6[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_6[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 7:
-        report = run[func2 = run_pipeline_7[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_7[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 8:
-        report = run[func2 = run_pipeline_8[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_8[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 9:
-        report = run[func2 = run_pipeline_9[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_9[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 10:
-        report = run[func2 = run_pipeline_10[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_10[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 11:
-        report = run[func2 = run_pipeline_11[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_11[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     elif N == 12:
-        report = run[func2 = run_pipeline_12[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
+        report = run[func1 = run_pipeline_12[Size, T_ms]](max_iters=5, min_runtime_secs=1, max_runtime_secs=15, max_batch_size=1)
     else:
         print("  -> ERROR: unsupported N")
         return
