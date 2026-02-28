@@ -6,70 +6,70 @@
 ======================================================================
 
 --- N=2 ---
-  N= 2 , Size= 8 B   -> mean: 0.44915523422411857 ms  | min: 0.185326 ms  | max: 0.854743 ms  | iters: 4453
-  N= 2 , Size= 64 B   -> mean: 0.5038625176322418 ms  | min: 0.21235 ms  | max: 1.073026 ms  | iters: 3970
-  N= 2 , Size= 512 B   -> mean: 1.0451254451410659 ms  | min: 0.523546 ms  | max: 1.962381 ms  | iters: 1914
-  N= 2 , Size= 4096 B   -> mean: 4.154874342323652 ms  | min: 2.997928 ms  | max: 8.045192 ms  | iters: 482
+  N= 2 , Size= 8 B   -> mean: 0.6859109215215902 ms  | min: 0.274716 ms  | max: 4.333266 ms  | iters: 2918
+  N= 2 , Size= 64 B   -> mean: 0.7248825829710145 ms  | min: 0.316005 ms  | max: 4.295666 ms  | iters: 2760
+  N= 2 , Size= 512 B   -> mean: 1.1082311213296399 ms  | min: 0.628881 ms  | max: 5.782162 ms  | iters: 1805
+  N= 2 , Size= 4096 B   -> mean: 4.639127469907407 ms  | min: 3.293848 ms  | max: 10.693259 ms  | iters: 432
 
 --- N=3 ---
-  N= 3 , Size= 8 B   -> mean: 0.7664534957854406 ms  | min: 0.312075 ms  | max: 1.371921 ms  | iters: 2610
-  N= 3 , Size= 64 B   -> mean: 0.8728850017452008 ms  | min: 0.366491 ms  | max: 1.583146 ms  | iters: 2292
-  N= 3 , Size= 512 B   -> mean: 1.2182598952496955 ms  | min: 0.722886 ms  | max: 2.786982 ms  | iters: 1642
-  N= 3 , Size= 4096 B   -> mean: 4.524089920993228 ms  | min: 3.499826 ms  | max: 8.716778 ms  | iters: 443
+  N= 3 , Size= 8 B   -> mean: 0.9601731958713394 ms  | min: 0.385325 ms  | max: 4.566934 ms  | iters: 2083
+  N= 3 , Size= 64 B   -> mean: 0.9930717738095238 ms  | min: 0.470186 ms  | max: 4.632517 ms  | iters: 2016
+  N= 3 , Size= 512 B   -> mean: 1.3290253335548172 ms  | min: 0.857383 ms  | max: 4.876363 ms  | iters: 1505
+  N= 3 , Size= 4096 B   -> mean: 5.226968075718016 ms  | min: 3.650655 ms  | max: 13.148346 ms  | iters: 383
 
 --- N=4 ---
-  N= 4 , Size= 8 B   -> mean: 1.0041880537148595 ms  | min: 0.388573 ms  | max: 1.833672 ms  | iters: 1992
-  N= 4 , Size= 64 B   -> mean: 1.0412311311816762 ms  | min: 0.484386 ms  | max: 1.494707 ms  | iters: 1921
-  N= 4 , Size= 512 B   -> mean: 1.502398289039039 ms  | min: 0.916806 ms  | max: 1.954863 ms  | iters: 1332
-  N= 4 , Size= 4096 B   -> mean: 4.747284336492891 ms  | min: 4.261171 ms  | max: 6.327843 ms  | iters: 422
+  N= 4 , Size= 8 B   -> mean: 0.9665541805890874 ms  | min: 0.477998 ms  | max: 6.076391 ms  | iters: 2071
+  N= 4 , Size= 64 B   -> mean: 1.0286425764887064 ms  | min: 0.525613 ms  | max: 4.621807 ms  | iters: 1948
+  N= 4 , Size= 512 B   -> mean: 1.4027493913043478 ms  | min: 0.938379 ms  | max: 5.436416 ms  | iters: 1426
+  N= 4 , Size= 4096 B   -> mean: 5.158184370179948 ms  | min: 3.883361 ms  | max: 12.566437 ms  | iters: 389
 
 --- N=5 ---
-  N= 5 , Size= 8 B   -> mean: 1.137039993177942 ms  | min: 0.506208 ms  | max: 1.659334 ms  | iters: 1759
-  N= 5 , Size= 64 B   -> mean: 1.2095230900846432 ms  | min: 0.586635 ms  | max: 1.59334 ms  | iters: 1654
-  N= 5 , Size= 512 B   -> mean: 1.6585687728026535 ms  | min: 1.118205 ms  | max: 2.326194 ms  | iters: 1206
-  N= 5 , Size= 4096 B   -> mean: 4.8979314645476775 ms  | min: 4.556198 ms  | max: 9.978762 ms  | iters: 409
+  N= 5 , Size= 8 B   -> mean: 0.9484128923660503 ms  | min: 0.536301 ms  | max: 4.541123 ms  | iters: 2109
+  N= 5 , Size= 64 B   -> mean: 1.0192322613346918 ms  | min: 0.574304 ms  | max: 5.281594 ms  | iters: 1963
+  N= 5 , Size= 512 B   -> mean: 1.4580691428571428 ms  | min: 0.948017 ms  | max: 5.564433 ms  | iters: 1372
+  N= 5 , Size= 4096 B   -> mean: 5.261166443569554 ms  | min: 3.89688 ms  | max: 13.242658 ms  | iters: 381
 
 --- N=6 ---
-  N= 6 , Size= 8 B   -> mean: 1.1801763923303834 ms  | min: 0.660175 ms  | max: 1.617282 ms  | iters: 1695
-  N= 6 , Size= 64 B   -> mean: 1.2641198180669615 ms  | min: 0.706498 ms  | max: 1.635459 ms  | iters: 1583
-  N= 6 , Size= 512 B   -> mean: 1.6231517672343876 ms  | min: 1.174669 ms  | max: 2.383411 ms  | iters: 1233
-  N= 6 , Size= 4096 B   -> mean: 4.899523051344743 ms  | min: 4.422522 ms  | max: 6.50402 ms  | iters: 409
+  N= 6 , Size= 8 B   -> mean: 0.9908656432459179 ms  | min: 0.550942 ms  | max: 4.428099 ms  | iters: 2021
+  N= 6 , Size= 64 B   -> mean: 1.0363689243523315 ms  | min: 0.57956 ms  | max: 6.169586 ms  | iters: 1930
+  N= 6 , Size= 512 B   -> mean: 1.4904076028315947 ms  | min: 0.99657 ms  | max: 4.995654 ms  | iters: 1342
+  N= 6 , Size= 4096 B   -> mean: 5.324681015957447 ms  | min: 3.960278 ms  | max: 10.424313 ms  | iters: 376
 
 --- N=7 ---
-  N= 7 , Size= 8 B   -> mean: 1.2215301452991452 ms  | min: 0.693608 ms  | max: 1.751656 ms  | iters: 1638
-  N= 7 , Size= 64 B   -> mean: 1.270381643809524 ms  | min: 0.793995 ms  | max: 1.766979 ms  | iters: 1575
-  N= 7 , Size= 512 B   -> mean: 1.6920933913778529 ms  | min: 1.1385 ms  | max: 2.422702 ms  | iters: 1183
-  N= 7 , Size= 4096 B   -> mean: 5.019414558897243 ms  | min: 4.517542 ms  | max: 8.418295 ms  | iters: 399
+  N= 7 , Size= 8 B   -> mean: 1.0194240423037717 ms  | min: 0.562057 ms  | max: 6.459587 ms  | iters: 1962
+  N= 7 , Size= 64 B   -> mean: 1.0611362147401908 ms  | min: 0.616444 ms  | max: 4.851861 ms  | iters: 1886
+  N= 7 , Size= 512 B   -> mean: 1.517762724582701 ms  | min: 1.008841 ms  | max: 5.792883 ms  | iters: 1318
+  N= 7 , Size= 4096 B   -> mean: 5.307837275862068 ms  | min: 3.940957 ms  | max: 13.928939 ms  | iters: 377
 
 --- N=8 ---
-  N= 8 , Size= 8 B   -> mean: 1.259338111390812 ms  | min: 0.696928 ms  | max: 1.821698 ms  | iters: 1589
-  N= 8 , Size= 64 B   -> mean: 1.2786016600638979 ms  | min: 0.691974 ms  | max: 1.720039 ms  | iters: 1565
-  N= 8 , Size= 512 B   -> mean: 1.7636707354497354 ms  | min: 1.193251 ms  | max: 2.465557 ms  | iters: 1134
-  N= 8 , Size= 4096 B   -> mean: 5.040273256926953 ms  | min: 4.647787 ms  | max: 7.290449 ms  | iters: 397
+  N= 8 , Size= 8 B   -> mean: 1.0622289537971323 ms  | min: 0.58705 ms  | max: 4.912594 ms  | iters: 1883
+  N= 8 , Size= 64 B   -> mean: 1.063832215957447 ms  | min: 0.622558 ms  | max: 6.41313 ms  | iters: 1880
+  N= 8 , Size= 512 B   -> mean: 1.5337313302681992 ms  | min: 1.031051 ms  | max: 5.337983 ms  | iters: 1305
+  N= 8 , Size= 4096 B   -> mean: 5.3711253029490615 ms  | min: 3.944402 ms  | max: 12.90167 ms  | iters: 373
 
 --- N=9 ---
-  N= 9 , Size= 8 B   -> mean: 1.317856341897233 ms  | min: 0.755898 ms  | max: 2.120219 ms  | iters: 1518
-  N= 9 , Size= 64 B   -> mean: 1.4213597407670455 ms  | min: 0.793022 ms  | max: 1.831068 ms  | iters: 1408
-  N= 9 , Size= 512 B   -> mean: 1.7766342779751332 ms  | min: 1.209888 ms  | max: 2.430477 ms  | iters: 1126
-  N= 9 , Size= 4096 B   -> mean: 5.108417596938776 ms  | min: 4.570097 ms  | max: 7.208809 ms  | iters: 392
+  N= 9 , Size= 8 B   -> mean: 1.0814890118918918 ms  | min: 0.61524 ms  | max: 4.937655 ms  | iters: 1850
+  N= 9 , Size= 64 B   -> mean: 1.1069223265080244 ms  | min: 0.632104 ms  | max: 5.023578 ms  | iters: 1807
+  N= 9 , Size= 512 B   -> mean: 1.6054161452648474 ms  | min: 1.031527 ms  | max: 7.678488 ms  | iters: 1246
+  N= 9 , Size= 4096 B   -> mean: 5.489908019178082 ms  | min: 3.975482 ms  | max: 14.268434 ms  | iters: 365
 
 --- N=10 ---
-  N= 10 , Size= 8 B   -> mean: 1.3773228141775637 ms  | min: 0.820898 ms  | max: 2.148335 ms  | iters: 1453
-  N= 10 , Size= 64 B   -> mean: 1.404355594385965 ms  | min: 0.826096 ms  | max: 3.448249 ms  | iters: 1425
-  N= 10 , Size= 512 B   -> mean: 1.8861554344957587 ms  | min: 1.245677 ms  | max: 4.604652 ms  | iters: 1061
-  N= 10 , Size= 4096 B   -> mean: 5.50138893956044 ms  | min: 4.853334 ms  | max: 8.086763 ms  | iters: 364
+  N= 10 , Size= 8 B   -> mean: 1.0811331280388978 ms  | min: 0.628447 ms  | max: 5.583299 ms  | iters: 1851
+  N= 10 , Size= 64 B   -> mean: 1.1401917829059829 ms  | min: 0.672269 ms  | max: 8.042629 ms  | iters: 1755
+  N= 10 , Size= 512 B   -> mean: 1.6574881888980946 ms  | min: 1.057165 ms  | max: 6.51333 ms  | iters: 1207
+  N= 10 , Size= 4096 B   -> mean: 5.558415371191136 ms  | min: 4.009605 ms  | max: 13.886591 ms  | iters: 361
 
 --- N=11 ---
-  N= 11 , Size= 8 B   -> mean: 1.4407707926565874 ms  | min: 0.883152 ms  | max: 2.1882 ms  | iters: 1389
-  N= 11 , Size= 64 B   -> mean: 1.4692020469897211 ms  | min: 0.941552 ms  | max: 2.144836 ms  | iters: 1362
-  N= 11 , Size= 512 B   -> mean: 1.9529124858536586 ms  | min: 1.320983 ms  | max: 2.705336 ms  | iters: 1025
-  N= 11 , Size= 4096 B   -> mean: 5.168479012919897 ms  | min: 4.90601 ms  | max: 8.077045 ms  | iters: 387
+  N= 11 , Size= 8 B   -> mean: 1.1232289522740033 ms  | min: 0.636121 ms  | max: 6.082885 ms  | iters: 1781
+  N= 11 , Size= 64 B   -> mean: 1.2235138673594133 ms  | min: 0.699775 ms  | max: 10.619897 ms  | iters: 1636
+  N= 11 , Size= 512 B   -> mean: 1.65954987893864 ms  | min: 1.073884 ms  | max: 7.46579 ms  | iters: 1206
+  N= 11 , Size= 4096 B   -> mean: 5.682974444759207 ms  | min: 4.037648 ms  | max: 10.965979 ms  | iters: 353
 
 --- N=12 ---
-  N= 12 , Size= 8 B   -> mean: 1.4638116115581565 ms  | min: 0.915679 ms  | max: 2.276226 ms  | iters: 1367
-  N= 12 , Size= 64 B   -> mean: 1.4870015104011887 ms  | min: 0.924054 ms  | max: 1.907006 ms  | iters: 1346
-  N= 12 , Size= 512 B   -> mean: 2.015682917421954 ms  | min: 1.302684 ms  | max: 2.79339 ms  | iters: 993
-  N= 12 , Size= 4096 B   -> mean: 5.686832988636364 ms  | min: 4.893505 ms  | max: 8.342575 ms  | iters: 352
+  N= 12 , Size= 8 B   -> mean: 1.143410657142857 ms  | min: 0.651614 ms  | max: 5.3357 ms  | iters: 1750
+  N= 12 , Size= 64 B   -> mean: 1.1933325059665871 ms  | min: 0.692659 ms  | max: 6.475232 ms  | iters: 1676
+  N= 12 , Size= 512 B   -> mean: 1.7150084035989719 ms  | min: 1.075355 ms  | max: 6.154518 ms  | iters: 1167
+  N= 12 , Size= 4096 B   -> mean: 5.810742530434783 ms  | min: 4.025376 ms  | max: 20.303205 ms  | iters: 345
 
 ======================================================================
   Benchmark complete!
@@ -82,70 +82,70 @@
 ======================================================================
 
 --- N=2 ---
-  N= 2 , Size= 8 B   -> mean: 0.36076296212804326 ms  | min: 0.244689 ms  | max: 0.831486 ms  | iters: 5545
-  N= 2 , Size= 64 B   -> mean: 0.6269086678157317 ms  | min: 0.398734 ms  | max: 1.32599 ms  | iters: 3191
-  N= 2 , Size= 512 B   -> mean: 0.9072726108843537 ms  | min: 0.738234 ms  | max: 2.484554 ms  | iters: 2205
-  N= 2 , Size= 4096 B   -> mean: 3.5607020231316726 ms  | min: 3.398628 ms  | max: 4.252856 ms  | iters: 562
+  N= 2 , Size= 8 B   -> mean: 0.7722571127413127 ms  | min: 0.36824 ms  | max: 4.291997 ms  | iters: 2590
+  N= 2 , Size= 64 B   -> mean: 0.8238411836146563 ms  | min: 0.443754 ms  | max: 5.239692 ms  | iters: 2429
+  N= 2 , Size= 512 B   -> mean: 1.1970447929383603 ms  | min: 0.812364 ms  | max: 5.233386 ms  | iters: 1671
+  N= 2 , Size= 4096 B   -> mean: 4.61327816359447 ms  | min: 3.502748 ms  | max: 9.347695 ms  | iters: 434
 
 --- N=3 ---
-  N= 3 , Size= 8 B   -> mean: 0.8589863022756548 ms  | min: 0.442635 ms  | max: 1.550803 ms  | iters: 2329
-  N= 3 , Size= 64 B   -> mean: 0.8588519871189352 ms  | min: 0.525475 ms  | max: 1.622974 ms  | iters: 2329
-  N= 3 , Size= 512 B   -> mean: 1.2896699580915538 ms  | min: 1.077298 ms  | max: 2.540638 ms  | iters: 1551
-  N= 3 , Size= 4096 B   -> mean: 4.764202552380953 ms  | min: 3.724223 ms  | max: 8.820632 ms  | iters: 420
+  N= 3 , Size= 8 B   -> mean: 0.9021876774921065 ms  | min: 0.501262 ms  | max: 4.44454 ms  | iters: 2217
+  N= 3 , Size= 64 B   -> mean: 0.9744126838772528 ms  | min: 0.574043 ms  | max: 4.566464 ms  | iters: 2053
+  N= 3 , Size= 512 B   -> mean: 1.49522772122571 ms  | min: 1.071078 ms  | max: 5.471507 ms  | iters: 1338
+  N= 3 , Size= 4096 B   -> mean: 5.237165418848168 ms  | min: 4.058867 ms  | max: 12.643171 ms  | iters: 382
 
 --- N=4 ---
-  N= 4 , Size= 8 B   -> mean: 0.9516426232159847 ms  | min: 0.524122 ms  | max: 1.62292 ms  | iters: 2102
-  N= 4 , Size= 64 B   -> mean: 1.0080790367943548 ms  | min: 0.542895 ms  | max: 1.719716 ms  | iters: 1984
-  N= 4 , Size= 512 B   -> mean: 1.5061277537650601 ms  | min: 0.932792 ms  | max: 2.598598 ms  | iters: 1328
-  N= 4 , Size= 4096 B   -> mean: 5.34203044 ms  | min: 4.049054 ms  | max: 13.942535 ms  | iters: 375
+  N= 4 , Size= 8 B   -> mean: 0.9838629606492868 ms  | min: 0.622538 ms  | max: 6.498167 ms  | iters: 2033
+  N= 4 , Size= 64 B   -> mean: 1.0560745955649418 ms  | min: 0.658667 ms  | max: 4.769816 ms  | iters: 1894
+  N= 4 , Size= 512 B   -> mean: 1.5847742549485353 ms  | min: 1.150484 ms  | max: 6.284919 ms  | iters: 1263
+  N= 4 , Size= 4096 B   -> mean: 5.4087720540540545 ms  | min: 4.349234 ms  | max: 13.931058 ms  | iters: 370
 
 --- N=5 ---
-  N= 5 , Size= 8 B   -> mean: 0.9701818656644035 ms  | min: 0.507143 ms  | max: 1.530864 ms  | iters: 2062
-  N= 5 , Size= 64 B   -> mean: 1.0469430099424386 ms  | min: 0.653355 ms  | max: 1.56752 ms  | iters: 1911
-  N= 5 , Size= 512 B   -> mean: 1.6358597596075226 ms  | min: 0.969444 ms  | max: 3.389789 ms  | iters: 1223
-  N= 5 , Size= 4096 B   -> mean: 5.6455631830985915 ms  | min: 4.143021 ms  | max: 8.787675 ms  | iters: 355
+  N= 5 , Size= 8 B   -> mean: 1.0577579751454258 ms  | min: 0.664727 ms  | max: 4.23799 ms  | iters: 1891
+  N= 5 , Size= 64 B   -> mean: 1.1243220044969084 ms  | min: 0.72341 ms  | max: 5.333979 ms  | iters: 1779
+  N= 5 , Size= 512 B   -> mean: 1.6359609231398202 ms  | min: 1.171127 ms  | max: 7.206249 ms  | iters: 1223
+  N= 5 , Size= 4096 B   -> mean: 5.660620974576271 ms  | min: 4.380363 ms  | max: 13.353254 ms  | iters: 354
 
 --- N=6 ---
-  N= 6 , Size= 8 B   -> mean: 0.9287437265552461 ms  | min: 0.526485 ms  | max: 1.607201 ms  | iters: 2154
-  N= 6 , Size= 64 B   -> mean: 1.0323443188854489 ms  | min: 0.579148 ms  | max: 1.63695 ms  | iters: 1938
-  N= 6 , Size= 512 B   -> mean: 1.6293499584690554 ms  | min: 1.004062 ms  | max: 2.601758 ms  | iters: 1228
-  N= 6 , Size= 4096 B   -> mean: 5.81602675942029 ms  | min: 4.183713 ms  | max: 8.57566 ms  | iters: 345
+  N= 6 , Size= 8 B   -> mean: 1.1167542185061314 ms  | min: 0.696026 ms  | max: 5.569005 ms  | iters: 1794
+  N= 6 , Size= 64 B   -> mean: 1.1938858729116946 ms  | min: 0.743759 ms  | max: 4.728224 ms  | iters: 1676
+  N= 6 , Size= 512 B   -> mean: 1.6505186204620463 ms  | min: 1.213466 ms  | max: 7.126878 ms  | iters: 1212
+  N= 6 , Size= 4096 B   -> mean: 5.669984368271955 ms  | min: 4.521952 ms  | max: 15.49308 ms  | iters: 353
 
 --- N=7 ---
-  N= 7 , Size= 8 B   -> mean: 1.092712975423266 ms  | min: 0.579691 ms  | max: 2.121033 ms  | iters: 1831
-  N= 7 , Size= 64 B   -> mean: 1.1161808404017857 ms  | min: 0.614829 ms  | max: 1.54654 ms  | iters: 1792
-  N= 7 , Size= 512 B   -> mean: 1.643846738916256 ms  | min: 0.99067 ms  | max: 2.677194 ms  | iters: 1218
-  N= 7 , Size= 4096 B   -> mean: 6.887063209621993 ms  | min: 4.869877 ms  | max: 9.308361 ms  | iters: 291
+  N= 7 , Size= 8 B   -> mean: 1.203378004211793 ms  | min: 0.68295 ms  | max: 4.801995 ms  | iters: 1662
+  N= 7 , Size= 64 B   -> mean: 1.2131322122498485 ms  | min: 0.752627 ms  | max: 4.834133 ms  | iters: 1649
+  N= 7 , Size= 512 B   -> mean: 1.6952077288135592 ms  | min: 1.218274 ms  | max: 7.045611 ms  | iters: 1180
+  N= 7 , Size= 4096 B   -> mean: 6.197316628482972 ms  | min: 4.681568 ms  | max: 15.993821 ms  | iters: 323
 
 --- N=8 ---
-  N= 8 , Size= 8 B   -> mean: 1.1532552824207494 ms  | min: 0.620965 ms  | max: 2.254615 ms  | iters: 1735
-  N= 8 , Size= 64 B   -> mean: 1.1978714832335329 ms  | min: 0.781388 ms  | max: 1.658581 ms  | iters: 1670
-  N= 8 , Size= 512 B   -> mean: 1.8057378592057762 ms  | min: 1.031581 ms  | max: 2.340164 ms  | iters: 1108
-  N= 8 , Size= 4096 B   -> mean: 6.886652656357388 ms  | min: 5.060869 ms  | max: 8.89861 ms  | iters: 291
+  N= 8 , Size= 8 B   -> mean: 1.1958191273161984 ms  | min: 0.722643 ms  | max: 5.591373 ms  | iters: 1673
+  N= 8 , Size= 64 B   -> mean: 1.255924966101695 ms  | min: 0.774544 ms  | max: 9.180766 ms  | iters: 1593
+  N= 8 , Size= 512 B   -> mean: 1.760295021987687 ms  | min: 1.235758 ms  | max: 7.373791 ms  | iters: 1137
+  N= 8 , Size= 4096 B   -> mean: 6.324508255520505 ms  | min: 5.102814 ms  | max: 10.864534 ms  | iters: 317
 
 --- N=9 ---
-  N= 9 , Size= 8 B   -> mean: 1.177039084117647 ms  | min: 0.627315 ms  | max: 2.294041 ms  | iters: 1700
-  N= 9 , Size= 64 B   -> mean: 1.268393289790742 ms  | min: 0.83728 ms  | max: 1.830449 ms  | iters: 1577
-  N= 9 , Size= 512 B   -> mean: 1.844523734562212 ms  | min: 1.336165 ms  | max: 2.479742 ms  | iters: 1085
-  N= 9 , Size= 4096 B   -> mean: 7.262378786231884 ms  | min: 6.183523 ms  | max: 10.487738 ms  | iters: 276
+  N= 9 , Size= 8 B   -> mean: 1.244943920970753 ms  | min: 0.735942 ms  | max: 4.771905 ms  | iters: 1607
+  N= 9 , Size= 64 B   -> mean: 1.28094997631242 ms  | min: 0.774174 ms  | max: 5.683567 ms  | iters: 1562
+  N= 9 , Size= 512 B   -> mean: 1.8338174280476627 ms  | min: 1.219323 ms  | max: 6.104536 ms  | iters: 1091
+  N= 9 , Size= 4096 B   -> mean: 6.498135860389611 ms  | min: 5.348375 ms  | max: 9.347461 ms  | iters: 308
 
 --- N=10 ---
-  N= 10 , Size= 8 B   -> mean: 1.221423843101343 ms  | min: 0.692175 ms  | max: 2.591023 ms  | iters: 1638
-  N= 10 , Size= 64 B   -> mean: 1.227098308588957 ms  | min: 0.830611 ms  | max: 1.728529 ms  | iters: 1630
-  N= 10 , Size= 512 B   -> mean: 1.8564236437847867 ms  | min: 1.279337 ms  | max: 4.961682 ms  | iters: 1078
-  N= 10 , Size= 4096 B   -> mean: 7.961357238095238 ms  | min: 5.829144 ms  | max: 9.890687 ms  | iters: 252
+  N= 10 , Size= 8 B   -> mean: 1.2969977841866493 ms  | min: 0.753234 ms  | max: 5.678638 ms  | iters: 1543
+  N= 10 , Size= 64 B   -> mean: 1.3083316586003924 ms  | min: 0.771838 ms  | max: 6.809908 ms  | iters: 1529
+  N= 10 , Size= 512 B   -> mean: 1.9407194151309408 ms  | min: 1.211487 ms  | max: 5.763534 ms  | iters: 1031
+  N= 10 , Size= 4096 B   -> mean: 6.61771098349835 ms  | min: 5.545676 ms  | max: 11.887151 ms  | iters: 303
 
 --- N=11 ---
-  N= 11 , Size= 8 B   -> mean: 1.1972964141232794 ms  | min: 0.828556 ms  | max: 2.211928 ms  | iters: 1671
-  N= 11 , Size= 64 B   -> mean: 1.2633343156565657 ms  | min: 0.887951 ms  | max: 4.31045 ms  | iters: 1584
-  N= 11 , Size= 512 B   -> mean: 1.8936266121097447 ms  | min: 1.299609 ms  | max: 2.965153 ms  | iters: 1057
-  N= 11 , Size= 4096 B   -> mean: 8.094379177419356 ms  | min: 6.832508 ms  | max: 10.621439 ms  | iters: 248
+  N= 11 , Size= 8 B   -> mean: 1.3280431420039813 ms  | min: 0.76044 ms  | max: 6.166575 ms  | iters: 1507
+  N= 11 , Size= 64 B   -> mean: 1.3498307958221025 ms  | min: 0.795433 ms  | max: 6.543626 ms  | iters: 1484
+  N= 11 , Size= 512 B   -> mean: 1.9275121280076997 ms  | min: 1.241559 ms  | max: 7.259714 ms  | iters: 1039
+  N= 11 , Size= 4096 B   -> mean: 6.896697789655173 ms  | min: 5.822357 ms  | max: 15.735455 ms  | iters: 290
 
 --- N=12 ---
-  N= 12 , Size= 8 B   -> mean: 1.2498440618363522 ms  | min: 0.682134 ms  | max: 2.696781 ms  | iters: 1601
-  N= 12 , Size= 64 B   -> mean: 1.2237915834862385 ms  | min: 0.767038 ms  | max: 1.858324 ms  | iters: 1635
-  N= 12 , Size= 512 B   -> mean: 1.8841737165725048 ms  | min: 1.343182 ms  | max: 2.548063 ms  | iters: 1062
-  N= 12 , Size= 4096 B   -> mean: 9.30871493488372 ms  | min: 7.365799 ms  | max: 11.567352 ms  | iters: 215
+  N= 12 , Size= 8 B   -> mean: 1.3591877751358694 ms  | min: 0.762305 ms  | max: 5.332653 ms  | iters: 1472
+  N= 12 , Size= 64 B   -> mean: 1.3653937344709899 ms  | min: 0.77931 ms  | max: 5.946368 ms  | iters: 1465
+  N= 12 , Size= 512 B   -> mean: 2.0167834304435486 ms  | min: 1.287756 ms  | max: 9.38027 ms  | iters: 992
+  N= 12 , Size= 4096 B   -> mean: 7.280766076363636 ms  | min: 6.256719 ms  | max: 17.002197 ms  | iters: 275
 
 ======================================================================
   Benchmark complete!
@@ -158,17 +158,74 @@
 ======================================================================
 
 --- N=2 ---
-  N= 2 , Size= 8 B   -> mean: 0.6413037903174094 ms  | min: 0.516259 ms  | max: 0.903423 ms  | iters: 3119
-  N= 2 , Size= 64 B   -> mean: 0.6635227004975125 ms  | min: 0.541783 ms  | max: 0.936622 ms  | iters: 3015
-  N= 2 , Size= 512 B   -> mean: 1.253877538847118 ms  | min: 1.123592 ms  | max: 1.662409 ms  | iters: 1596
-  N= 2 , Size= 4096 B   -> mean: 6.1726682923076925 ms  | min: 5.917756 ms  | max: 6.653 ms  | iters: 325
+  N= 2 , Size= 8 B   -> mean: 1.0956386768893758 ms  | min: 0.581008 ms  | max: 4.567716 ms  | iters: 1826
+  N= 2 , Size= 64 B   -> mean: 1.122397460718294 ms  | min: 0.577675 ms  | max: 5.112873 ms  | iters: 1782
+  N= 2 , Size= 512 B   -> mean: 1.9442831982507287 ms  | min: 1.176594 ms  | max: 6.747352 ms  | iters: 1029
+  N= 2 , Size= 4096 B   -> mean: 7.3902413911439115 ms  | min: 6.18085 ms  | max: 14.825142 ms  | iters: 271
 
 --- N=3 ---
-  N= 3 , Size= 8 B   -> mean: 1.9529653079922027 ms  | min: 1.029367 ms  | max: 4.886414 ms  | iters: 1026
-  N= 3 , Size= 64 B   -> mean: 2.085670600625652 ms  | min: 1.205845 ms  | max: 5.804465 ms  | iters: 959
-  N= 3 , Size= 512 B   -> mean: 3.292564955592105 ms  | min: 2.702428 ms  | max: 7.238558 ms  | iters: 608
-  N= 3 , Size= 4096 B   -> mean: 13.624721006802721 ms  | min: 12.097367 ms  | max: 16.261544 ms  | iters: 147
+  N= 3 , Size= 8 B   -> mean: 2.0298804863221886 ms  | min: 1.024055 ms  | max: 6.027411 ms  | iters: 987
+  N= 3 , Size= 64 B   -> mean: 2.121997008474576 ms  | min: 1.148595 ms  | max: 6.381772 ms  | iters: 944
+  N= 3 , Size= 512 B   -> mean: 2.991576436472347 ms  | min: 1.770414 ms  | max: 7.315885 ms  | iters: 669
+  N= 3 , Size= 4096 B   -> mean: 8.128561344129555 ms  | min: 7.104821 ms  | max: 12.732619 ms  | iters: 247
 
+--- N=4 ---
+  N= 4 , Size= 8 B   -> mean: 2.9551616706056127 ms  | min: 1.150206 ms  | max: 7.874975 ms  | iters: 677
+  N= 4 , Size= 64 B   -> mean: 3.0604568180428133 ms  | min: 1.272383 ms  | max: 7.421878 ms  | iters: 654
+  N= 4 , Size= 512 B   -> mean: 3.6708247798165137 ms  | min: 1.981694 ms  | max: 7.229941 ms  | iters: 545
+  N= 4 , Size= 4096 B   -> mean: 8.3497971375 ms  | min: 7.257482 ms  | max: 12.153086 ms  | iters: 240
+
+--- N=5 ---
+  N= 5 , Size= 8 B   -> mean: 1.9749569763079962 ms  | min: 1.141621 ms  | max: 6.774368 ms  | iters: 1013
+  N= 5 , Size= 64 B   -> mean: 2.066732523219814 ms  | min: 1.248643 ms  | max: 5.692947 ms  | iters: 969
+  N= 5 , Size= 512 B   -> mean: 2.712499669376694 ms  | min: 1.888767 ms  | max: 8.150906 ms  | iters: 738
+  N= 5 , Size= 4096 B   -> mean: 7.990033701195219 ms  | min: 7.489388 ms  | max: 10.466717 ms  | iters: 251
+
+--- N=6 ---
+  N= 6 , Size= 8 B   -> mean: 2.281244370581528 ms  | min: 1.176312 ms  | max: 7.2896 ms  | iters: 877
+  N= 6 , Size= 64 B   -> mean: 2.2429543912556054 ms  | min: 1.252873 ms  | max: 6.638353 ms  | iters: 892
+  N= 6 , Size= 512 B   -> mean: 2.9459645066273934 ms  | min: 1.971781 ms  | max: 13.192705 ms  | iters: 679
+  N= 6 , Size= 4096 B   -> mean: 8.00628642 ms  | min: 7.351416 ms  | max: 10.918691 ms  | iters: 250
+
+--- N=7 ---
+  N= 7 , Size= 8 B   -> mean: 2.542435693773825 ms  | min: 1.170279 ms  | max: 10.060468 ms  | iters: 787
+  N= 7 , Size= 64 B   -> mean: 2.636815233201581 ms  | min: 1.31242 ms  | max: 9.394417 ms  | iters: 759
+  N= 7 , Size= 512 B   -> mean: 3.1707995784469096 ms  | min: 2.015473 ms  | max: 13.663401 ms  | iters: 631
+  N= 7 , Size= 4096 B   -> mean: 8.146191703252033 ms  | min: 7.381268 ms  | max: 16.42863 ms  | iters: 246
+
+--- N=8 ---
+  N= 8 , Size= 8 B   -> mean: 2.763022632596685 ms  | min: 1.209525 ms  | max: 8.134224 ms  | iters: 724
+  N= 8 , Size= 64 B   -> mean: 2.8766707327586207 ms  | min: 1.232126 ms  | max: 9.141088 ms  | iters: 696
+  N= 8 , Size= 512 B   -> mean: 3.6300274627949185 ms  | min: 2.061588 ms  | max: 11.670049 ms  | iters: 551
+  N= 8 , Size= 4096 B   -> mean: 8.176049742857142 ms  | min: 7.382481 ms  | max: 16.924187 ms  | iters: 245
+
+--- N=9 ---
+  N= 9 , Size= 8 B   -> mean: 2.546837968193384 ms  | min: 1.193336 ms  | max: 8.198823 ms  | iters: 786
+  N= 9 , Size= 64 B   -> mean: 2.495026221945137 ms  | min: 1.29667 ms  | max: 8.262139 ms  | iters: 802
+  N= 9 , Size= 512 B   -> mean: 3.1591781041009463 ms  | min: 2.009818 ms  | max: 9.748134 ms  | iters: 634
+  N= 9 , Size= 4096 B   -> mean: 8.121465850202428 ms  | min: 7.48342 ms  | max: 12.336998 ms  | iters: 247
+
+--- N=10 ---
+  N= 10 , Size= 8 B   -> mean: 2.7097343910690124 ms  | min: 1.221396 ms  | max: 15.543245 ms  | iters: 739
+  N= 10 , Size= 64 B   -> mean: 2.8722527575322814 ms  | min: 1.27099 ms  | max: 8.546208 ms  | iters: 697
+  N= 10 , Size= 512 B   -> mean: 3.6311915154264973 ms  | min: 2.095513 ms  | max: 11.452596 ms  | iters: 551
+  N= 10 , Size= 4096 B   -> mean: 8.243728032921812 ms  | min: 7.42343 ms  | max: 16.569921 ms  | iters: 243
+
+--- N=11 ---
+  N= 11 , Size= 8 B   -> mean: 3.0262383751891075 ms  | min: 1.268321 ms  | max: 9.177059 ms  | iters: 661
+  N= 11 , Size= 64 B   -> mean: 3.218485813504823 ms  | min: 1.451837 ms  | max: 11.307583 ms  | iters: 622
+  N= 11 , Size= 512 B   -> mean: 3.8204677938931297 ms  | min: 2.019395 ms  | max: 11.527184 ms  | iters: 524
+  N= 11 , Size= 4096 B   -> mean: 8.3425773 ms  | min: 7.430378 ms  | max: 13.526689 ms  | iters: 240
+
+--- N=12 ---
+  N= 12 , Size= 8 B   -> mean: 3.1277803900156007 ms  | min: 1.354516 ms  | max: 9.287689 ms  | iters: 641
+  N= 12 , Size= 64 B   -> mean: 3.3008949224422444 ms  | min: 1.415631 ms  | max: 8.530495 ms  | iters: 606
+  N= 12 , Size= 512 B   -> mean: 3.892178992217899 ms  | min: 2.06009 ms  | max: 11.165578 ms  | iters: 514
+  N= 12 , Size= 4096 B   -> mean: 8.370895531380754 ms  | min: 7.379667 ms  | max: 15.052834 ms  | iters: 239
+
+======================================================================
+  Benchmark complete!
+======================================================================
 
   Queue: MPMC_padding
 ======================================================================
@@ -177,70 +234,70 @@
 ======================================================================
 
 --- N=2 ---
-  N= 2 , Size= 8 B   -> mean: 0.6581605029605263 ms  | min: 0.198574 ms  | max: 1.201867 ms  | iters: 3040
-  N= 2 , Size= 64 B   -> mean: 0.5077945329949238 ms  | min: 0.242067 ms  | max: 1.146694 ms  | iters: 3940
-  N= 2 , Size= 512 B   -> mean: 0.7283397458120904 ms  | min: 0.625907 ms  | max: 1.290259 ms  | iters: 2746
-  N= 2 , Size= 4096 B   -> mean: 4.9361776083743845 ms  | min: 3.494171 ms  | max: 6.364899 ms  | iters: 406
+  N= 2 , Size= 8 B   -> mean: 0.7231789819233551 ms  | min: 0.337618 ms  | max: 4.246714 ms  | iters: 2766
+  N= 2 , Size= 64 B   -> mean: 0.8040289055466239 ms  | min: 0.36677 ms  | max: 4.707238 ms  | iters: 2488
+  N= 2 , Size= 512 B   -> mean: 1.17513885840188 ms  | min: 0.778079 ms  | max: 5.378872 ms  | iters: 1702
+  N= 2 , Size= 4096 B   -> mean: 4.543650108843537 ms  | min: 3.394779 ms  | max: 8.653589 ms  | iters: 441
 
 --- N=3 ---
-  N= 3 , Size= 8 B   -> mean: 0.971592920835357 ms  | min: 0.546213 ms  | max: 1.494923 ms  | iters: 2059
-  N= 3 , Size= 64 B   -> mean: 1.0642592563829787 ms  | min: 0.659026 ms  | max: 1.630903 ms  | iters: 1880
-  N= 3 , Size= 512 B   -> mean: 1.6964580999999999 ms  | min: 1.135484 ms  | max: 3.51453 ms  | iters: 1180
-  N= 3 , Size= 4096 B   -> mean: 5.481168742465753 ms  | min: 4.363151 ms  | max: 10.111108 ms  | iters: 365
+  N= 3 , Size= 8 B   -> mean: 0.9078978070812528 ms  | min: 0.491464 ms  | max: 6.796286 ms  | iters: 2203
+  N= 3 , Size= 64 B   -> mean: 0.9524140161904762 ms  | min: 0.56583 ms  | max: 4.484176 ms  | iters: 2100
+  N= 3 , Size= 512 B   -> mean: 1.439514723741007 ms  | min: 0.949918 ms  | max: 6.148876 ms  | iters: 1390
+  N= 3 , Size= 4096 B   -> mean: 5.18026526873385 ms  | min: 3.97418 ms  | max: 13.174648 ms  | iters: 387
 
 --- N=4 ---
-  N= 4 , Size= 8 B   -> mean: 1.094957486042693 ms  | min: 0.613164 ms  | max: 1.633234 ms  | iters: 1827
-  N= 4 , Size= 64 B   -> mean: 1.1340814994331065 ms  | min: 0.746039 ms  | max: 1.69968 ms  | iters: 1764
-  N= 4 , Size= 512 B   -> mean: 1.7753833726708075 ms  | min: 1.194535 ms  | max: 2.576648 ms  | iters: 1127
-  N= 4 , Size= 4096 B   -> mean: 5.6305236404494385 ms  | min: 4.542898 ms  | max: 7.43724 ms  | iters: 356
+  N= 4 , Size= 8 B   -> mean: 0.981889679921453 ms  | min: 0.559947 ms  | max: 9.64549 ms  | iters: 2037
+  N= 4 , Size= 64 B   -> mean: 1.0178611048346056 ms  | min: 0.627958 ms  | max: 5.122259 ms  | iters: 1965
+  N= 4 , Size= 512 B   -> mean: 1.4982769101123596 ms  | min: 1.071773 ms  | max: 6.251294 ms  | iters: 1335
+  N= 4 , Size= 4096 B   -> mean: 5.398635293800539 ms  | min: 4.279176 ms  | max: 14.033027 ms  | iters: 371
 
 --- N=5 ---
-  N= 5 , Size= 8 B   -> mean: 1.13385093707483 ms  | min: 0.715901 ms  | max: 1.816994 ms  | iters: 1764
-  N= 5 , Size= 64 B   -> mean: 1.1530146265129684 ms  | min: 0.745414 ms  | max: 1.682481 ms  | iters: 1735
-  N= 5 , Size= 512 B   -> mean: 1.838265640625 ms  | min: 1.280507 ms  | max: 2.897332 ms  | iters: 1088
-  N= 5 , Size= 4096 B   -> mean: 5.91763382300885 ms  | min: 4.620151 ms  | max: 7.342664 ms  | iters: 339
+  N= 5 , Size= 8 B   -> mean: 1.0312936860824742 ms  | min: 0.582541 ms  | max: 4.489884 ms  | iters: 1940
+  N= 5 , Size= 64 B   -> mean: 1.0948782484948003 ms  | min: 0.647384 ms  | max: 6.856108 ms  | iters: 1827
+  N= 5 , Size= 512 B   -> mean: 1.5501318698683193 ms  | min: 1.082891 ms  | max: 6.259243 ms  | iters: 1291
+  N= 5 , Size= 4096 B   -> mean: 5.596917036312849 ms  | min: 4.402138 ms  | max: 11.808618 ms  | iters: 358
 
 --- N=6 ---
-  N= 6 , Size= 8 B   -> mean: 1.1876954326409497 ms  | min: 0.710727 ms  | max: 1.778361 ms  | iters: 1685
-  N= 6 , Size= 64 B   -> mean: 1.233417742293465 ms  | min: 0.773884 ms  | max: 1.69078 ms  | iters: 1622
-  N= 6 , Size= 512 B   -> mean: 1.9400572502424829 ms  | min: 1.271121 ms  | max: 2.454035 ms  | iters: 1031
-  N= 6 , Size= 4096 B   -> mean: 6.110828676829268 ms  | min: 4.237882 ms  | max: 9.762011 ms  | iters: 328
+  N= 6 , Size= 8 B   -> mean: 1.0513558854440357 ms  | min: 0.624541 ms  | max: 4.755133 ms  | iters: 1903
+  N= 6 , Size= 64 B   -> mean: 1.1181155480446927 ms  | min: 0.654933 ms  | max: 4.700819 ms  | iters: 1790
+  N= 6 , Size= 512 B   -> mean: 1.6149290500403553 ms  | min: 1.122903 ms  | max: 6.157672 ms  | iters: 1239
+  N= 6 , Size= 4096 B   -> mean: 5.8219737267441865 ms  | min: 4.409938 ms  | max: 12.954254 ms  | iters: 344
 
 --- N=7 ---
-  N= 7 , Size= 8 B   -> mean: 1.2064712237635706 ms  | min: 0.492634 ms  | max: 1.955479 ms  | iters: 1658
-  N= 7 , Size= 64 B   -> mean: 1.2702274685714285 ms  | min: 0.774715 ms  | max: 1.732594 ms  | iters: 1575
-  N= 7 , Size= 512 B   -> mean: 1.8942015606060605 ms  | min: 0.975022 ms  | max: 2.638928 ms  | iters: 1056
-  N= 7 , Size= 4096 B   -> mean: 6.482394077669903 ms  | min: 4.497362 ms  | max: 10.150838 ms  | iters: 309
+  N= 7 , Size= 8 B   -> mean: 1.1044107622724766 ms  | min: 0.636327 ms  | max: 4.712395 ms  | iters: 1813
+  N= 7 , Size= 64 B   -> mean: 1.1469509552752295 ms  | min: 0.681285 ms  | max: 5.122561 ms  | iters: 1744
+  N= 7 , Size= 512 B   -> mean: 1.6203740008097165 ms  | min: 1.126223 ms  | max: 5.996917 ms  | iters: 1235
+  N= 7 , Size= 4096 B   -> mean: 6.045094323262839 ms  | min: 4.511234 ms  | max: 10.950388 ms  | iters: 331
 
 --- N=8 ---
-  N= 8 , Size= 8 B   -> mean: 1.332199997336884 ms  | min: 0.688413 ms  | max: 2.130845 ms  | iters: 1502
-  N= 8 , Size= 64 B   -> mean: 1.3318444840213048 ms  | min: 0.83244 ms  | max: 3.048278 ms  | iters: 1502
-  N= 8 , Size= 512 B   -> mean: 1.9984234485514485 ms  | min: 1.421466 ms  | max: 3.373973 ms  | iters: 1001
-  N= 8 , Size= 4096 B   -> mean: 7.033279428070175 ms  | min: 5.619882 ms  | max: 10.393041 ms  | iters: 285
+  N= 8 , Size= 8 B   -> mean: 1.2150949270959903 ms  | min: 0.66582 ms  | max: 7.999529 ms  | iters: 1646
+  N= 8 , Size= 64 B   -> mean: 1.1914051292435974 ms  | min: 0.693462 ms  | max: 6.169378 ms  | iters: 1679
+  N= 8 , Size= 512 B   -> mean: 1.715905394511149 ms  | min: 1.148217 ms  | max: 6.500542 ms  | iters: 1166
+  N= 8 , Size= 4096 B   -> mean: 6.239911031152649 ms  | min: 5.086953 ms  | max: 13.638135 ms  | iters: 321
 
 --- N=9 ---
-  N= 9 , Size= 8 B   -> mean: 1.3607696152277362 ms  | min: 0.604171 ms  | max: 2.230145 ms  | iters: 1471
-  N= 9 , Size= 64 B   -> mean: 1.4050145625000001 ms  | min: 0.965042 ms  | max: 1.957188 ms  | iters: 1424
-  N= 9 , Size= 512 B   -> mean: 2.0461451513292435 ms  | min: 1.37273 ms  | max: 2.776099 ms  | iters: 978
-  N= 9 , Size= 4096 B   -> mean: 7.27021597826087 ms  | min: 6.225408 ms  | max: 10.425588 ms  | iters: 276
+  N= 9 , Size= 8 B   -> mean: 1.226539199264255 ms  | min: 0.671286 ms  | max: 5.384984 ms  | iters: 1631
+  N= 9 , Size= 64 B   -> mean: 1.2415973451272502 ms  | min: 0.691514 ms  | max: 7.63594 ms  | iters: 1611
+  N= 9 , Size= 512 B   -> mean: 1.7907073008057297 ms  | min: 1.142995 ms  | max: 8.332502 ms  | iters: 1117
+  N= 9 , Size= 4096 B   -> mean: 6.435160257234727 ms  | min: 5.258281 ms  | max: 9.460546 ms  | iters: 311
 
 --- N=10 ---
-  N= 10 , Size= 8 B   -> mean: 1.327935784339748 ms  | min: 0.564807 ms  | max: 2.407745 ms  | iters: 1507
-  N= 10 , Size= 64 B   -> mean: 1.4340567663082437 ms  | min: 0.914054 ms  | max: 1.92044 ms  | iters: 1395
-  N= 10 , Size= 512 B   -> mean: 2.0946724136125656 ms  | min: 1.395508 ms  | max: 2.954157 ms  | iters: 955
-  N= 10 , Size= 4096 B   -> mean: 7.905613984251969 ms  | min: 6.46159 ms  | max: 10.734422 ms  | iters: 254
+  N= 10 , Size= 8 B   -> mean: 1.2513047397003745 ms  | min: 0.68059 ms  | max: 8.883098 ms  | iters: 1602
+  N= 10 , Size= 64 B   -> mean: 1.275140753983429 ms  | min: 0.69477 ms  | max: 7.798959 ms  | iters: 1569
+  N= 10 , Size= 512 B   -> mean: 1.7905295962399284 ms  | min: 1.151142 ms  | max: 6.534696 ms  | iters: 1117
+  N= 10 , Size= 4096 B   -> mean: 6.650546033222592 ms  | min: 5.519155 ms  | max: 11.385316 ms  | iters: 301
 
 --- N=11 ---
-  N= 11 , Size= 8 B   -> mean: 1.3850677950138504 ms  | min: 0.586112 ms  | max: 2.770383 ms  | iters: 1444
-  N= 11 , Size= 64 B   -> mean: 1.418564179432624 ms  | min: 0.699871 ms  | max: 1.964788 ms  | iters: 1410
-  N= 11 , Size= 512 B   -> mean: 2.053645636550308 ms  | min: 1.495385 ms  | max: 2.661052 ms  | iters: 974
-  N= 11 , Size= 4096 B   -> mean: 8.040027654618473 ms  | min: 6.995248 ms  | max: 11.111891 ms  | iters: 249
+  N= 11 , Size= 8 B   -> mean: 1.2614476147540983 ms  | min: 0.69511 ms  | max: 8.049842 ms  | iters: 1586
+  N= 11 , Size= 64 B   -> mean: 1.2715433405336722 ms  | min: 0.716187 ms  | max: 5.759644 ms  | iters: 1574
+  N= 11 , Size= 512 B   -> mean: 1.8717709410664174 ms  | min: 1.176851 ms  | max: 6.487527 ms  | iters: 1069
+  N= 11 , Size= 4096 B   -> mean: 6.910256882758621 ms  | min: 5.725535 ms  | max: 11.746783 ms  | iters: 290
 
 --- N=12 ---
-  N= 12 , Size= 8 B   -> mean: 1.2236102171253822 ms  | min: 0.62898 ms  | max: 2.526829 ms  | iters: 1635
-  N= 12 , Size= 64 B   -> mean: 1.423767987188612 ms  | min: 0.816823 ms  | max: 1.949248 ms  | iters: 1405
-  N= 12 , Size= 512 B   -> mean: 2.094781868062827 ms  | min: 1.444626 ms  | max: 2.950312 ms  | iters: 955
-  N= 12 , Size= 4096 B   -> mean: 9.248088907834102 ms  | min: 7.480823 ms  | max: 11.407599 ms  | iters: 217
+  N= 12 , Size= 8 B   -> mean: 1.3150118619329387 ms  | min: 0.705256 ms  | max: 6.430121 ms  | iters: 1521
+  N= 12 , Size= 64 B   -> mean: 1.3109645655307995 ms  | min: 0.708691 ms  | max: 5.385038 ms  | iters: 1526
+  N= 12 , Size= 512 B   -> mean: 1.9324965198067634 ms  | min: 1.188892 ms  | max: 11.592777 ms  | iters: 1035
+  N= 12 , Size= 4096 B   -> mean: 7.2206102697841725 ms  | min: 6.193857 ms  | max: 15.646658 ms  | iters: 278
 
 ======================================================================
   Benchmark complete!
@@ -253,73 +310,71 @@
 ======================================================================
 
 --- N=2 ---
-  N= 2 , Size= 8 B   -> mean: 0.52294330875817 ms  | min: 0.231298 ms  | max: 1.427752 ms  | iters: 3825
-  N= 2 , Size= 64 B   -> mean: 0.40195972950160774 ms  | min: 0.279835 ms  | max: 1.209922 ms  | iters: 4976
-  N= 2 , Size= 512 B   -> mean: 0.9258890185099491 ms  | min: 0.74993 ms  | max: 1.838138 ms  | iters: 2161
-  N= 2 , Size= 4096 B   -> mean: 4.656325448837209 ms  | min: 4.106539 ms  | max: 5.687542 ms  | iters: 430
+  N= 2 , Size= 8 B   -> mean: 0.7328132545787546 ms  | min: 0.293071 ms  | max: 4.142363 ms  | iters: 2730
+  N= 2 , Size= 64 B   -> mean: 0.77192727325357 ms  | min: 0.335763 ms  | max: 4.128557 ms  | iters: 2591
+  N= 2 , Size= 512 B   -> mean: 1.1803863628318585 ms  | min: 0.695869 ms  | max: 6.036654 ms  | iters: 1695
+  N= 2 , Size= 4096 B   -> mean: 4.878332469586375 ms  | min: 3.389986 ms  | max: 10.024281 ms  | iters: 411
 
 --- N=3 ---
-  N= 3 , Size= 8 B   -> mean: 1.0923824134352813 ms  | min: 0.614351 ms  | max: 1.67731 ms  | iters: 1831
-  N= 3 , Size= 64 B   -> mean: 1.1763798783068784 ms  | min: 0.706306 ms  | max: 1.672223 ms  | iters: 1701
-  N= 3 , Size= 512 B   -> mean: 1.8004109486948696 ms  | min: 1.244386 ms  | max: 2.598168 ms  | iters: 1111
-  N= 3 , Size= 4096 B   -> mean: 5.172272023255814 ms  | min: 4.547138 ms  | max: 7.83178 ms  | iters: 387
+  N= 3 , Size= 8 B   -> mean: 0.9858818255298176 ms  | min: 0.488053 ms  | max: 5.131508 ms  | iters: 2029
+  N= 3 , Size= 64 B   -> mean: 1.0097078818778396 ms  | min: 0.542365 ms  | max: 4.891681 ms  | iters: 1981
+  N= 3 , Size= 512 B   -> mean: 1.4309280743919885 ms  | min: 0.883269 ms  | max: 5.715332 ms  | iters: 1398
+  N= 3 , Size= 4096 B   -> mean: 5.10531062086514 ms  | min: 3.789867 ms  | max: 12.969443 ms  | iters: 393
 
 --- N=4 ---
-  N= 4 , Size= 8 B   -> mean: 1.1486027967853043 ms  | min: 0.673469 ms  | max: 1.637362 ms  | iters: 1742
-  N= 4 , Size= 64 B   -> mean: 1.2003766604679065 ms  | min: 0.746223 ms  | max: 1.882804 ms  | iters: 1667
-  N= 4 , Size= 512 B   -> mean: 1.7952778161434977 ms  | min: 1.27345 ms  | max: 3.059721 ms  | iters: 1115
-  N= 4 , Size= 4096 B   -> mean: 5.149538005141388 ms  | min: 4.670915 ms  | max: 6.69732 ms  | iters: 389
+  N= 4 , Size= 8 B   -> mean: 0.9774511820400195 ms  | min: 0.527716 ms  | max: 4.677299 ms  | iters: 2049
+  N= 4 , Size= 64 B   -> mean: 1.0327033763551885 ms  | min: 0.561807 ms  | max: 4.735168 ms  | iters: 1937
+  N= 4 , Size= 512 B   -> mean: 1.4452369421965319 ms  | min: 0.966094 ms  | max: 5.00568 ms  | iters: 1384
+  N= 4 , Size= 4096 B   -> mean: 5.18596260880829 ms  | min: 4.023862 ms  | max: 11.745937 ms  | iters: 386
 
 --- N=5 ---
-  N= 5 , Size= 8 B   -> mean: 1.2326619038817004 ms  | min: 0.732481 ms  | max: 1.872401 ms  | iters: 1623
-  N= 5 , Size= 64 B   -> mean: 1.2803982309660908 ms  | min: 0.764754 ms  | max: 2.120564 ms  | iters: 1563
-  N= 5 , Size= 512 B   -> mean: 1.8685401848739496 ms  | min: 1.288028 ms  | max: 2.580681 ms  | iters: 1071
-  N= 5 , Size= 4096 B   -> mean: 5.283395039577837 ms  | min: 4.735206 ms  | max: 7.616747 ms  | iters: 379
+  N= 5 , Size= 8 B   -> mean: 0.9815614494602551 ms  | min: 0.562491 ms  | max: 4.216194 ms  | iters: 2038
+  N= 5 , Size= 64 B   -> mean: 1.068112514148425 ms  | min: 0.607285 ms  | max: 5.354047 ms  | iters: 1873
+  N= 5 , Size= 512 B   -> mean: 1.4939295265123227 ms  | min: 1.022713 ms  | max: 5.278547 ms  | iters: 1339
+  N= 5 , Size= 4096 B   -> mean: 5.2992979100529105 ms  | min: 4.092301 ms  | max: 10.969681 ms  | iters: 378
 
 --- N=6 ---
-  N= 6 , Size= 8 B   -> mean: 1.2693553788071066 ms  | min: 0.578004 ms  | max: 1.941487 ms  | iters: 1576
-  N= 6 , Size= 64 B   -> mean: 1.3108553636959372 ms  | min: 0.790212 ms  | max: 1.889806 ms  | iters: 1526
-  N= 6 , Size= 512 B   -> mean: 1.904006533777355 ms  | min: 1.382964 ms  | max: 2.78953 ms  | iters: 1051
-  N= 6 , Size= 4096 B   -> mean: 5.315911525198939 ms  | min: 4.698314 ms  | max: 7.871369 ms  | iters: 377
+  N= 6 , Size= 8 B   -> mean: 0.9859490970921636 ms  | min: 0.599929 ms  | max: 4.305865 ms  | iters: 2029
+  N= 6 , Size= 64 B   -> mean: 1.069843677540107 ms  | min: 0.640262 ms  | max: 4.919416 ms  | iters: 1870
+  N= 6 , Size= 512 B   -> mean: 1.5732837264150943 ms  | min: 1.072852 ms  | max: 6.002531 ms  | iters: 1272
+  N= 6 , Size= 4096 B   -> mean: 5.289199788918205 ms  | min: 4.116279 ms  | max: 12.346404 ms  | iters: 379
 
 --- N=7 ---
-  N= 7 , Size= 8 B   -> mean: 1.3079350947712418 ms  | min: 0.825657 ms  | max: 1.807421 ms  | iters: 1530
-  N= 7 , Size= 64 B   -> mean: 1.3406258029490616 ms  | min: 0.81738 ms  | max: 1.84019 ms  | iters: 1492
-  N= 7 , Size= 512 B   -> mean: 1.9403896886517944 ms  | min: 1.385473 ms  | max: 2.860805 ms  | iters: 1031
-  N= 7 , Size= 4096 B   -> mean: 5.39540760916442 ms  | min: 4.890134 ms  | max: 11.117097 ms  | iters: 371
+  N= 7 , Size= 8 B   -> mean: 1.0165446051829268 ms  | min: 0.628749 ms  | max: 4.518582 ms  | iters: 1968
+  N= 7 , Size= 64 B   -> mean: 1.0702488925133689 ms  | min: 0.66205 ms  | max: 4.572352 ms  | iters: 1870
+  N= 7 , Size= 512 B   -> mean: 1.587379383029342 ms  | min: 1.078438 ms  | max: 7.427669 ms  | iters: 1261
+  N= 7 , Size= 4096 B   -> mean: 5.3366192906666665 ms  | min: 4.12523 ms  | max: 11.550258 ms  | iters: 375
 
 --- N=8 ---
-  N= 8 , Size= 8 B   -> mean: 1.3912931432545201 ms  | min: 0.877096 ms  | max: 1.9556 ms  | iters: 1438
-  N= 8 , Size= 64 B   -> mean: 1.538035756341276 ms  | min: 0.927092 ms  | max: 2.102311 ms  | iters: 1301
-  N= 8 , Size= 512 B   -> mean: 2.000285891 ms  | min: 1.389428 ms  | max: 2.958563 ms  | iters: 1000
-  N= 8 , Size= 4096 B   -> mean: 5.545134969529086 ms  | min: 4.925965 ms  | max: 8.694463 ms  | iters: 361
+  N= 8 , Size= 8 B   -> mean: 1.05709733615222 ms  | min: 0.649723 ms  | max: 4.806089 ms  | iters: 1892
+  N= 8 , Size= 64 B   -> mean: 1.1219891839596186 ms  | min: 0.65685 ms  | max: 4.906347 ms  | iters: 1783
+  N= 8 , Size= 512 B   -> mean: 1.6491229917559769 ms  | min: 1.079887 ms  | max: 5.438498 ms  | iters: 1213
+  N= 8 , Size= 4096 B   -> mean: 5.498485848901099 ms  | min: 4.162542 ms  | max: 15.57683 ms  | iters: 364
 
 --- N=9 ---
-  N= 9 , Size= 8 B   -> mean: 1.4207741058238637 ms  | min: 0.885809 ms  | max: 1.914061 ms  | iters: 1408
-  N= 9 , Size= 64 B   -> mean: 1.5182186084977238 ms  | min: 0.909764 ms  | max: 1.964617 ms  | iters: 1318
-  N= 9 , Size= 512 B   -> mean: 2.06790701446281 ms  | min: 1.373372 ms  | max: 2.963632 ms  | iters: 968
-  N= 9 , Size= 4096 B   -> mean: 5.59440472905028 ms  | min: 5.055838 ms  | max: 8.778834 ms  | iters: 358
+  N= 9 , Size= 8 B   -> mean: 1.084115667208672 ms  | min: 0.665398 ms  | max: 6.243743 ms  | iters: 1845
+  N= 9 , Size= 64 B   -> mean: 1.1406258762827823 ms  | min: 0.695635 ms  | max: 9.882669 ms  | iters: 1754
+  N= 9 , Size= 512 B   -> mean: 1.691009114961961 ms  | min: 1.086418 ms  | max: 5.830797 ms  | iters: 1183
+  N= 9 , Size= 4096 B   -> mean: 5.5894396117318434 ms  | min: 4.170444 ms  | max: 15.023221 ms  | iters: 358
 
 --- N=10 ---
-  N= 10 , Size= 8 B   -> mean: 1.4644835197657393 ms  | min: 0.94049 ms  | max: 2.003805 ms  | iters: 1366
-  N= 10 , Size= 64 B   -> mean: 1.4982654494382024 ms  | min: 0.938093 ms  | max: 1.979579 ms  | iters: 1335
-  N= 10 , Size= 512 B   -> mean: 2.1031236161934808 ms  | min: 1.429494 ms  | max: 2.97963 ms  | iters: 951
-  N= 10 , Size= 4096 B   -> mean: 5.504360247252747 ms  | min: 5.023694 ms  | max: 8.687256 ms  | iters: 364
+  N= 10 , Size= 8 B   -> mean: 1.0792255970873785 ms  | min: 0.670657 ms  | max: 7.071819 ms  | iters: 1854
+  N= 10 , Size= 64 B   -> mean: 1.1890973131313132 ms  | min: 0.700633 ms  | max: 6.028104 ms  | iters: 1683
+  N= 10 , Size= 512 B   -> mean: 1.7087536140051238 ms  | min: 1.118173 ms  | max: 6.034685 ms  | iters: 1171
+  N= 10 , Size= 4096 B   -> mean: 5.763721380403458 ms  | min: 4.212756 ms  | max: 13.04499 ms  | iters: 347
 
 --- N=11 ---
-  N= 11 , Size= 8 B   -> mean: 1.4963698414360507 ms  | min: 0.9069 ms  | max: 2.195575 ms  | iters: 1337
-  N= 11 , Size= 64 B   -> mean: 1.6593480854063019 ms  | min: 0.988754 ms  | max: 3.514561 ms  | iters: 1206
-  N= 11 , Size= 512 B   -> mean: 2.198980041758242 ms  | min: 1.513213 ms  | max: 3.404543 ms  | iters: 910
-  N= 11 , Size= 4096 B   -> mean: 5.742940610315186 ms  | min: 5.049263 ms  | max: 8.974261 ms  | iters: 349
+  N= 11 , Size= 8 B   -> mean: 1.1345301934203063 ms  | min: 0.683586 ms  | max: 6.152086 ms  | iters: 1763
+  N= 11 , Size= 64 B   -> mean: 1.2384028799504951 ms  | min: 0.722529 ms  | max: 6.055922 ms  | iters: 1616
+  N= 11 , Size= 512 B   -> mean: 1.7829103057040998 ms  | min: 1.142265 ms  | max: 7.204267 ms  | iters: 1122
+  N= 11 , Size= 4096 B   -> mean: 5.722512768571429 ms  | min: 4.244553 ms  | max: 11.723971 ms  | iters: 350
 
 --- N=12 ---
-  N= 12 , Size= 8 B   -> mean: 1.5159740446969698 ms  | min: 1.025005 ms  | max: 2.010333 ms  | iters: 1320
-  N= 12 , Size= 64 B   -> mean: 1.6205718995951417 ms  | min: 1.038479 ms  | max: 2.287756 ms  | iters: 1235
-  N= 12 , Size= 512 B   -> mean: 2.218093009977827 ms  | min: 1.459183 ms  | max: 3.479523 ms  | iters: 902
-  N= 12 , Size= 4096 B   -> mean: 5.996653 ms  | min: 5.131757 ms  | max: 8.711844 ms  | iters: 334
+  N= 12 , Size= 8 B   -> mean: 1.1473013325688073 ms  | min: 0.682374 ms  | max: 6.421969 ms  | iters: 1744
+  N= 12 , Size= 64 B   -> mean: 1.2454745678704857 ms  | min: 0.698943 ms  | max: 7.29993 ms  | iters: 1606
+  N= 12 , Size= 512 B   -> mean: 1.8205437170154686 ms  | min: 1.101665 ms  | max: 6.53532 ms  | iters: 1099
+  N= 12 , Size= 4096 B   -> mean: 5.692976247159091 ms  | min: 4.190816 ms  | max: 15.580926 ms  | iters: 352
 
 ======================================================================
   Benchmark complete!
 ======================================================================
-
-

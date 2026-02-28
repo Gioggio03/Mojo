@@ -12,6 +12,7 @@ fn run_pipeline_2[Size: Int]() raises:
     source = BenchSource[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -21,6 +22,7 @@ fn run_pipeline_3[Size: Int]() raises:
     t1 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -31,6 +33,7 @@ fn run_pipeline_4[Size: Int]() raises:
     t2 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, t2, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -42,6 +45,7 @@ fn run_pipeline_5[Size: Int]() raises:
     t3 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, t2, t3, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -54,6 +58,7 @@ fn run_pipeline_6[Size: Int]() raises:
     t4 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, t2, t3, t4, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -67,6 +72,7 @@ fn run_pipeline_7[Size: Int]() raises:
     t5 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, t2, t3, t4, t5, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -81,6 +87,7 @@ fn run_pipeline_8[Size: Int]() raises:
     t6 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -96,6 +103,7 @@ fn run_pipeline_9[Size: Int]() raises:
     t7 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -112,6 +120,7 @@ fn run_pipeline_10[Size: Int]() raises:
     t8 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -129,6 +138,7 @@ fn run_pipeline_11[Size: Int]() raises:
     t9 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, t9, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 
@@ -147,6 +157,7 @@ fn run_pipeline_12[Size: Int]() raises:
     t10 = BenchTransform[Size]()
     sink = BenchSink[Size]()
     pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, sink))
+    pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
 

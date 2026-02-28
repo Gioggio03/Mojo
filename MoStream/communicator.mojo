@@ -59,11 +59,11 @@ struct Communicator[T: MessageTrait](Movable):
             if result:
                 return result.take()
 
-    # push -> ALERT: to be used with MPMC_Padding_optional_v2 only!
+### [PUSH_V2]
     fn push(mut self, var msg: MessageWrapper[Self.T]):
         _ = self.queue[].push(msg^)
 
-    # push (always good for all MPMC variants)
+### [PUSH_UNIVERSAL]
     # fn push(mut self, msg: MessageWrapper[Self.T]):
-    #    while not self.queue[].push(msg):
-    #        pass
+    #     while not self.queue[].push(msg):
+    #         pass

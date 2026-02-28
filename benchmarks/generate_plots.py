@@ -23,11 +23,11 @@ def parse_scalability_results(filename):
                 current_queue = queue_match.group(1)
                 continue
 
-            # New combined header: "--- Size=64B, T=100ms ---"
-            combined = re.search(r'--- Size=(\d+)B, T=(\d+)ms ---', line)
+            # New combined header: "--- Size=64B, T=100.0ms ---"
+            combined = re.search(r'--- Size=(\d+)B, T=([\d.]+)ms ---', line)
             if combined:
                 current_size = int(combined.group(1))
-                current_t = int(combined.group(2))
+                current_t = float(combined.group(2))
                 continue
 
             # Also support old formats
@@ -42,7 +42,7 @@ def parse_scalability_results(filename):
                 continue
 
             data_match = re.search(
-                r'N=\s*(\d+).*SleepPerStage=\s*(\d+)\s*ms'
+                r'N=\s*(\d+).*SleepPerStage=\s*([\d.]+)\s*ms'
                 r'.*mean:\s*([\d.]+)\s*ms'
                 r'.*B:\s*([\d.]+)\s*msg/s'
                 r'.*E\(N\):\s*([\d.]+)'
@@ -51,7 +51,7 @@ def parse_scalability_results(filename):
             )
             if data_match and current_queue and current_t is not None:
                 n = int(data_match.group(1))
-                sleep_ms = int(data_match.group(2))
+                sleep_ms = float(data_match.group(2))
                 # Infer size from data line if not set by combined header
                 size_in_line = re.search(r'Size=\s*(\d+)\s*B', line)
                 size = current_size if current_size else int(size_in_line.group(1))
