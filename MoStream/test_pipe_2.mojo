@@ -1,6 +1,6 @@
 # Second trivial test of a pipeline with 3 stages:
 #   - FirstStage: source, generates numbers from 1 to 1000
-#   - SecondStage: transform_many, increments each input and converts it to a string sending it two times
+#   - SecondStage: transform_many, produces two strings for each input number: "Valore <number+1>" and "Valore <(number+1)*2>"
 #   - ThirdStage: sink, prints the input string
 
 from collections import Optional
