@@ -1,11 +1,12 @@
-# Trivial test of a pipeline with 3 stages:
+# Second trivial test of a pipeline with 3 stages:
 #   - FirstStage: source, generates numbers from 1 to 1000
-#   - SecondStage: transform, increments each input and converts it to a string
+#   - SecondStage: transform_many, increments each input and converts it to a string sending it two times
 #   - ThirdStage: sink, prints the input string
 
 from collections import Optional
 from MoStream.communicator import MessageTrait
 from MoStream.stage import StageKind, StageTrait
+from MoStream.emitter import Emitter
 from MoStream.pipeline import Pipeline
 
 # FirstStage - Source: generetes numbers from 1 to 1000
@@ -21,7 +22,7 @@ struct FirstStage(StageTrait):
         self.count = 0
 
     # next_element implementation
-    fn next_element(mut self) -> Optional[Int]:
+    fn next_element(mut self) raises -> Optional[Int]:
         if self.count > 1000:
             return None
         else:
@@ -30,7 +31,7 @@ struct FirstStage(StageTrait):
 
 # SecondStage - increaments the input and converts it to a string
 struct SecondStage(StageTrait):
-    comptime kind = StageKind.TRANSFORM
+    comptime kind = StageKind.TRANSFORM_MANY
     comptime InType = Int
     comptime OutType = String
     comptime name = "SecondStage"
@@ -40,9 +41,10 @@ struct SecondStage(StageTrait):
         pass
 
     # compute implementation
-    fn compute(mut self, var input: Int) -> Optional[String]:
+    fn compute_many(mut self, var input: Int, mut emitter: Emitter[String]) raises:
         input = input + 1
-        return String("Valore " + String(input))
+        emitter.emit(String("Valore " + String(input)))
+        emitter.emit(String("Valore " + String(input * 2)))
 
 # ThirdStage - prints the input string
 struct ThirdStage(StageTrait):
@@ -56,7 +58,7 @@ struct ThirdStage(StageTrait):
         pass
 
     # consume_element implementation
-    fn consume_element(mut self, var input: Self.InType):
+    fn consume_element(mut self, var input: Self.InType) raises:
         print(input)
 
 # Main
