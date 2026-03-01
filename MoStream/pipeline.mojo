@@ -124,7 +124,7 @@ struct Pipeline[*Ts: StageTrait]:
         self._run_from[0, Self.N](first_comm)
         self.tg.wait()
 
-    # Method to parse the cpus list
+    # parse the cpus list
     fn parse_mapping_string(mut self, s: String) raises:
         if (s == ""):
             for i in range(0, self.num_cpus):
@@ -135,6 +135,6 @@ struct Pipeline[*Ts: StageTrait]:
             for part in parts:
                 self.cpu_ids.append(Int(part))
 
-    # Method to enable/disable pinning for the pipeline threads
+    # enable/disable pinning for the pipeline threads
     fn setPinning(mut self, enabled: Bool):
         self.pinning_enabled = enabled
