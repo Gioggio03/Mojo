@@ -253,6 +253,7 @@ def main():
     print("=" * 70)
 
     # Size=8B
+    # Size=8B
     bench_size_t[8, 100_000_000]()
     bench_size_t[8, 50_000_000]()
     bench_size_t[8, 25_000_000]()

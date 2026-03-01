@@ -1,0 +1,380 @@
+
+  Queue: MPMC_padding_optional_v2
+======================================================================
+  Pipeline Benchmark (Zero Computation)
+  Messages per run: 1000
+======================================================================
+
+--- N=2 ---
+  N= 2 , Size= 8 B   -> mean: 0.5354636493576017 ms  | min: 0.274895 ms  | max: 1.055665 ms  | iters: 3736
+  N= 2 , Size= 64 B   -> mean: 0.5333355010666667 ms  | min: 0.310714 ms  | max: 1.133587 ms  | iters: 3750
+  N= 2 , Size= 512 B   -> mean: 0.7450824659217877 ms  | min: 0.640765 ms  | max: 1.190346 ms  | iters: 2685
+  N= 2 , Size= 4096 B   -> mean: 3.3400527813021705 ms  | min: 3.241635 ms  | max: 3.603975 ms  | iters: 599
+
+--- N=3 ---
+  N= 3 , Size= 8 B   -> mean: 0.8125499902518278 ms  | min: 0.436425 ms  | max: 1.580575 ms  | iters: 2462
+  N= 3 , Size= 64 B   -> mean: 0.7645995955657492 ms  | min: 0.56244 ms  | max: 1.665132 ms  | iters: 2616
+  N= 3 , Size= 512 B   -> mean: 1.1670632176196032 ms  | min: 0.993689 ms  | max: 2.154599 ms  | iters: 1714
+  N= 3 , Size= 4096 B   -> mean: 4.756017387173396 ms  | min: 4.290541 ms  | max: 7.124383 ms  | iters: 421
+
+--- N=4 ---
+  N= 4 , Size= 8 B   -> mean: 1.1480180585197934 ms  | min: 0.586401 ms  | max: 1.742418 ms  | iters: 1743
+  N= 4 , Size= 64 B   -> mean: 1.1630092895348838 ms  | min: 0.626536 ms  | max: 2.751415 ms  | iters: 1720
+  N= 4 , Size= 512 B   -> mean: 1.5039192203007519 ms  | min: 0.987472 ms  | max: 2.918609 ms  | iters: 1330
+  N= 4 , Size= 4096 B   -> mean: 4.897704863080684 ms  | min: 4.407935 ms  | max: 11.318282 ms  | iters: 409
+
+--- N=5 ---
+  N= 5 , Size= 8 B   -> mean: 1.0679016107848371 ms  | min: 0.595358 ms  | max: 1.923074 ms  | iters: 1873
+  N= 5 , Size= 64 B   -> mean: 1.126702383445946 ms  | min: 0.665438 ms  | max: 1.872308 ms  | iters: 1776
+  N= 5 , Size= 512 B   -> mean: 1.4773902407680946 ms  | min: 1.043951 ms  | max: 2.924836 ms  | iters: 1354
+  N= 5 , Size= 4096 B   -> mean: 4.975341910447761 ms  | min: 4.543391 ms  | max: 6.072157 ms  | iters: 402
+
+--- N=6 ---
+  N= 6 , Size= 8 B   -> mean: 1.3643011521145976 ms  | min: 0.892383 ms  | max: 1.858564 ms  | iters: 1466
+  N= 6 , Size= 64 B   -> mean: 1.5045639481203006 ms  | min: 0.966751 ms  | max: 1.938821 ms  | iters: 1330
+  N= 6 , Size= 512 B   -> mean: 1.9212314101825168 ms  | min: 1.415747 ms  | max: 2.354358 ms  | iters: 1041
+  N= 6 , Size= 4096 B   -> mean: 5.019902323308271 ms  | min: 4.717328 ms  | max: 7.289757 ms  | iters: 399
+
+--- N=7 ---
+  N= 7 , Size= 8 B   -> mean: 1.4372639885057472 ms  | min: 0.943538 ms  | max: 2.061538 ms  | iters: 1392
+  N= 7 , Size= 64 B   -> mean: 1.4444461978339351 ms  | min: 0.877478 ms  | max: 1.93326 ms  | iters: 1385
+  N= 7 , Size= 512 B   -> mean: 1.7680770609540635 ms  | min: 1.101767 ms  | max: 3.068282 ms  | iters: 1132
+  N= 7 , Size= 4096 B   -> mean: 5.242940434554973 ms  | min: 4.753001 ms  | max: 8.072195 ms  | iters: 382
+
+--- N=8 ---
+  N= 8 , Size= 8 B   -> mean: 1.2987818961038962 ms  | min: 0.646752 ms  | max: 1.987177 ms  | iters: 1540
+  N= 8 , Size= 64 B   -> mean: 1.6507220049504951 ms  | min: 1.027791 ms  | max: 1.949135 ms  | iters: 1212
+  N= 8 , Size= 512 B   -> mean: 1.9877915322740816 ms  | min: 1.331212 ms  | max: 2.948268 ms  | iters: 1007
+  N= 8 , Size= 4096 B   -> mean: 5.296272275132275 ms  | min: 4.980049 ms  | max: 8.065869 ms  | iters: 378
+
+--- N=9 ---
+  N= 9 , Size= 8 B   -> mean: 1.5605646544461778 ms  | min: 1.089957 ms  | max: 2.333123 ms  | iters: 1282
+  N= 9 , Size= 64 B   -> mean: 1.6504831485148515 ms  | min: 0.997664 ms  | max: 2.05298 ms  | iters: 1212
+  N= 9 , Size= 512 B   -> mean: 2.069944472595657 ms  | min: 1.384001 ms  | max: 6.317591 ms  | iters: 967
+  N= 9 , Size= 4096 B   -> mean: 5.2622681994750655 ms  | min: 5.02045 ms  | max: 12.059771 ms  | iters: 381
+
+--- N=10 ---
+  N= 10 , Size= 8 B   -> mean: 1.4283275688793717 ms  | min: 0.752214 ms  | max: 2.017636 ms  | iters: 1401
+  N= 10 , Size= 64 B   -> mean: 1.6682059007506256 ms  | min: 1.192686 ms  | max: 2.039469 ms  | iters: 1199
+  N= 10 , Size= 512 B   -> mean: 2.144675669882101 ms  | min: 1.539577 ms  | max: 2.478779 ms  | iters: 933
+  N= 10 , Size= 4096 B   -> mean: 5.226662174934726 ms  | min: 5.055454 ms  | max: 5.618045 ms  | iters: 383
+
+--- N=11 ---
+  N= 11 , Size= 8 B   -> mean: 1.605872356340289 ms  | min: 1.209008 ms  | max: 2.03488 ms  | iters: 1246
+  N= 11 , Size= 64 B   -> mean: 1.658374096106048 ms  | min: 0.968421 ms  | max: 2.055228 ms  | iters: 1207
+  N= 11 , Size= 512 B   -> mean: 2.1349599434364994 ms  | min: 1.537564 ms  | max: 2.682202 ms  | iters: 937
+  N= 11 , Size= 4096 B   -> mean: 5.2256633577023495 ms  | min: 5.073785 ms  | max: 7.383784 ms  | iters: 383
+
+--- N=12 ---
+  N= 12 , Size= 8 B   -> mean: 1.6111682157809986 ms  | min: 1.146056 ms  | max: 1.840457 ms  | iters: 1242
+  N= 12 , Size= 64 B   -> mean: 1.7540602217353198 ms  | min: 1.065417 ms  | max: 2.171134 ms  | iters: 1141
+  N= 12 , Size= 512 B   -> mean: 2.2377051912751678 ms  | min: 1.558786 ms  | max: 2.907973 ms  | iters: 894
+  N= 12 , Size= 4096 B   -> mean: 5.650952980225989 ms  | min: 4.999483 ms  | max: 8.217776 ms  | iters: 354
+
+======================================================================
+  Benchmark complete!
+======================================================================
+
+  Queue: MPMC
+======================================================================
+  Pipeline Benchmark (Zero Computation)
+  Messages per run: 1000
+======================================================================
+
+--- N=2 ---
+  N= 2 , Size= 8 B   -> mean: 0.5670637263963708 ms  | min: 0.349136 ms  | max: 1.239326 ms  | iters: 3527
+  N= 2 , Size= 64 B   -> mean: 0.5465677144808743 ms  | min: 0.393632 ms  | max: 0.905318 ms  | iters: 3660
+  N= 2 , Size= 512 B   -> mean: 0.9547549957040573 ms  | min: 0.852753 ms  | max: 1.398203 ms  | iters: 2095
+  N= 2 , Size= 4096 B   -> mean: 3.6951675664206642 ms  | min: 3.529898 ms  | max: 4.581167 ms  | iters: 542
+
+--- N=3 ---
+  N= 3 , Size= 8 B   -> mean: 0.7546409524707658 ms  | min: 0.549696 ms  | max: 1.630713 ms  | iters: 2651
+  N= 3 , Size= 64 B   -> mean: 0.7591355848197343 ms  | min: 0.571915 ms  | max: 1.59263 ms  | iters: 2635
+  N= 3 , Size= 512 B   -> mean: 1.4102356575052855 ms  | min: 1.066678 ms  | max: 2.625975 ms  | iters: 1419
+  N= 3 , Size= 4096 B   -> mean: 5.124631925831202 ms  | min: 4.062247 ms  | max: 7.624152 ms  | iters: 391
+
+--- N=4 ---
+  N= 4 , Size= 8 B   -> mean: 1.0166682708333334 ms  | min: 0.611405 ms  | max: 1.705927 ms  | iters: 1968
+  N= 4 , Size= 64 B   -> mean: 0.9719017473275025 ms  | min: 0.654158 ms  | max: 2.137509 ms  | iters: 2058
+  N= 4 , Size= 512 B   -> mean: 1.6676229041666666 ms  | min: 1.279975 ms  | max: 2.673549 ms  | iters: 1200
+  N= 4 , Size= 4096 B   -> mean: 5.364176455764075 ms  | min: 4.911476 ms  | max: 8.963793 ms  | iters: 373
+
+--- N=5 ---
+  N= 5 , Size= 8 B   -> mean: 1.3186033566249176 ms  | min: 0.890758 ms  | max: 2.004361 ms  | iters: 1517
+  N= 5 , Size= 64 B   -> mean: 1.3366354983299933 ms  | min: 0.922231 ms  | max: 2.292231 ms  | iters: 1497
+  N= 5 , Size= 512 B   -> mean: 1.7184078987124465 ms  | min: 1.303805 ms  | max: 2.997957 ms  | iters: 1165
+  N= 5 , Size= 4096 B   -> mean: 5.629776797752809 ms  | min: 4.991741 ms  | max: 12.351982 ms  | iters: 356
+
+--- N=6 ---
+  N= 6 , Size= 8 B   -> mean: 1.1585498112333528 ms  | min: 0.772432 ms  | max: 1.92354 ms  | iters: 1727
+  N= 6 , Size= 64 B   -> mean: 1.1162347388392857 ms  | min: 0.805575 ms  | max: 2.066665 ms  | iters: 1792
+  N= 6 , Size= 512 B   -> mean: 2.0556102446043165 ms  | min: 1.551407 ms  | max: 2.711502 ms  | iters: 973
+  N= 6 , Size= 4096 B   -> mean: 5.689847678977273 ms  | min: 5.122637 ms  | max: 9.069519 ms  | iters: 352
+
+--- N=7 ---
+  N= 7 , Size= 8 B   -> mean: 1.233366581381011 ms  | min: 0.771727 ms  | max: 1.888743 ms  | iters: 1622
+  N= 7 , Size= 64 B   -> mean: 1.4028402917251053 ms  | min: 0.971071 ms  | max: 2.026538 ms  | iters: 1426
+  N= 7 , Size= 512 B   -> mean: 1.904781417697431 ms  | min: 1.349398 ms  | max: 2.706045 ms  | iters: 1051
+  N= 7 , Size= 4096 B   -> mean: 5.995216395209581 ms  | min: 5.185114 ms  | max: 7.92103 ms  | iters: 334
+
+--- N=8 ---
+  N= 8 , Size= 8 B   -> mean: 1.1491725904652499 ms  | min: 0.793756 ms  | max: 2.107032 ms  | iters: 1741
+  N= 8 , Size= 64 B   -> mean: 1.4071874620253164 ms  | min: 0.833859 ms  | max: 1.91655 ms  | iters: 1422
+  N= 8 , Size= 512 B   -> mean: 2.0102670110441765 ms  | min: 1.477698 ms  | max: 3.318587 ms  | iters: 996
+  N= 8 , Size= 4096 B   -> mean: 7.099658358156029 ms  | min: 5.683275 ms  | max: 10.519537 ms  | iters: 282
+
+--- N=9 ---
+  N= 9 , Size= 8 B   -> mean: 1.4132374950564972 ms  | min: 1.069066 ms  | max: 2.23893 ms  | iters: 1416
+  N= 9 , Size= 64 B   -> mean: 1.4955612130044844 ms  | min: 1.076571 ms  | max: 1.945438 ms  | iters: 1338
+  N= 9 , Size= 512 B   -> mean: 2.113419652587117 ms  | min: 1.587087 ms  | max: 3.018003 ms  | iters: 947
+  N= 9 , Size= 4096 B   -> mean: 7.440017334572491 ms  | min: 6.414952 ms  | max: 11.007098 ms  | iters: 269
+
+--- N=10 ---
+  N= 10 , Size= 8 B   -> mean: 1.5017436231231232 ms  | min: 1.110621 ms  | max: 2.709288 ms  | iters: 1332
+  N= 10 , Size= 64 B   -> mean: 1.5873272698412697 ms  | min: 1.151823 ms  | max: 3.88278 ms  | iters: 1260
+  N= 10 , Size= 512 B   -> mean: 2.167870920910076 ms  | min: 1.670493 ms  | max: 3.518762 ms  | iters: 923
+  N= 10 , Size= 4096 B   -> mean: 8.322994892116183 ms  | min: 6.837442 ms  | max: 11.723261 ms  | iters: 241
+
+--- N=11 ---
+  N= 11 , Size= 8 B   -> mean: 1.5084852004521476 ms  | min: 1.104427 ms  | max: 2.814706 ms  | iters: 1327
+  N= 11 , Size= 64 B   -> mean: 1.5762193215130023 ms  | min: 1.094045 ms  | max: 2.268186 ms  | iters: 1269
+  N= 11 , Size= 512 B   -> mean: 2.146591424892704 ms  | min: 1.67306 ms  | max: 2.710952 ms  | iters: 932
+  N= 11 , Size= 4096 B   -> mean: 8.23079147325103 ms  | min: 6.953826 ms  | max: 11.168094 ms  | iters: 243
+
+--- N=12 ---
+  N= 12 , Size= 8 B   -> mean: 1.4257218424803992 ms  | min: 0.880919 ms  | max: 2.881214 ms  | iters: 1403
+  N= 12 , Size= 64 B   -> mean: 1.5969037924980047 ms  | min: 0.986766 ms  | max: 2.144408 ms  | iters: 1253
+  N= 12 , Size= 512 B   -> mean: 2.1768855701849836 ms  | min: 1.751989 ms  | max: 3.057254 ms  | iters: 919
+  N= 12 , Size= 4096 B   -> mean: 9.393434464788733 ms  | min: 7.787386 ms  | max: 12.497732 ms  | iters: 213
+
+======================================================================
+  Benchmark complete!
+======================================================================
+
+  Queue: MPMC_naif
+======================================================================
+  Pipeline Benchmark (Zero Computation)
+  Messages per run: 1000
+======================================================================
+
+--- N=2 ---
+  N= 2 , Size= 8 B   -> mean: 1.2114970635978195 ms  | min: 0.665138 ms  | max: 2.294462 ms  | iters: 1651
+  N= 2 , Size= 64 B   -> mean: 1.1628017877906975 ms  | min: 0.566816 ms  | max: 1.824079 ms  | iters: 1720
+  N= 2 , Size= 512 B   -> mean: 1.7418247023498694 ms  | min: 1.532456 ms  | max: 2.309605 ms  | iters: 1149
+  N= 2 , Size= 4096 B   -> mean: 6.429697330128206 ms  | min: 6.094608 ms  | max: 6.967844 ms  | iters: 312
+
+--- N=3 ---
+  N= 3 , Size= 8 B   -> mean: 2.056758892086331 ms  | min: 1.153835 ms  | max: 5.001725 ms  | iters: 973
+  N= 3 , Size= 64 B   -> mean: 2.2654255617214045 ms  | min: 1.26822 ms  | max: 5.417895 ms  | iters: 883
+  N= 3 , Size= 512 B   -> mean: 2.876317441091954 ms  | min: 1.891543 ms  | max: 7.07096 ms  | iters: 696
+  N= 3 , Size= 4096 B   -> mean: 8.050660305220884 ms  | min: 7.024176 ms  | max: 9.922783 ms  | iters: 249
+
+--- N=4 ---
+  N= 4 , Size= 8 B   -> mean: 2.2298325712694878 ms  | min: 1.196955 ms  | max: 6.080798 ms  | iters: 898
+  N= 4 , Size= 64 B   -> mean: 2.388294741050119 ms  | min: 1.220413 ms  | max: 7.61388 ms  | iters: 838
+  N= 4 , Size= 512 B   -> mean: 2.9635428785185183 ms  | min: 1.976189 ms  | max: 7.351625 ms  | iters: 675
+  N= 4 , Size= 4096 B   -> mean: 8.15319205691057 ms  | min: 7.158773 ms  | max: 10.691249 ms  | iters: 246
+
+--- N=5 ---
+  N= 5 , Size= 8 B   -> mean: 2.683865252010724 ms  | min: 1.182803 ms  | max: 6.694846 ms  | iters: 746
+  N= 5 , Size= 64 B   -> mean: 2.6118474302477184 ms  | min: 1.328908 ms  | max: 6.683969 ms  | iters: 767
+  N= 5 , Size= 512 B   -> mean: 3.1357579859154927 ms  | min: 1.99032 ms  | max: 6.866248 ms  | iters: 639
+  N= 5 , Size= 4096 B   -> mean: 8.409396344537814 ms  | min: 7.200615 ms  | max: 16.192123 ms  | iters: 238
+
+--- N=6 ---
+  N= 6 , Size= 8 B   -> mean: 2.583168126451613 ms  | min: 1.25541 ms  | max: 6.876156 ms  | iters: 775
+  N= 6 , Size= 64 B   -> mean: 2.6876444147651006 ms  | min: 1.264974 ms  | max: 6.973383 ms  | iters: 745
+  N= 6 , Size= 512 B   -> mean: 3.3294667121464223 ms  | min: 1.955803 ms  | max: 7.222194 ms  | iters: 601
+  N= 6 , Size= 4096 B   -> mean: 9.308544725581395 ms  | min: 7.133076 ms  | max: 11.770017 ms  | iters: 215
+
+--- N=7 ---
+  N= 7 , Size= 8 B   -> mean: 2.7356517076502733 ms  | min: 1.221466 ms  | max: 6.063985 ms  | iters: 732
+  N= 7 , Size= 64 B   -> mean: 2.856304027104137 ms  | min: 1.439327 ms  | max: 6.715551 ms  | iters: 701
+  N= 7 , Size= 512 B   -> mean: 3.369566313131313 ms  | min: 2.030513 ms  | max: 6.602207 ms  | iters: 594
+  N= 7 , Size= 4096 B   -> mean: 9.367733042056074 ms  | min: 7.176594 ms  | max: 11.735974 ms  | iters: 214
+
+--- N=8 ---
+  N= 8 , Size= 8 B   -> mean: 2.6153337859007832 ms  | min: 1.242102 ms  | max: 6.65755 ms  | iters: 766
+  N= 8 , Size= 64 B   -> mean: 3.02937991376702 ms  | min: 1.388468 ms  | max: 6.315512 ms  | iters: 661
+  N= 8 , Size= 512 B   -> mean: 3.3924373220338984 ms  | min: 1.970278 ms  | max: 6.282354 ms  | iters: 590
+  N= 8 , Size= 4096 B   -> mean: 9.966868119402985 ms  | min: 7.232747 ms  | max: 17.583628 ms  | iters: 201
+
+--- N=9 ---
+  N= 9 , Size= 8 B   -> mean: 2.707689222972973 ms  | min: 1.177618 ms  | max: 6.451163 ms  | iters: 740
+  N= 9 , Size= 64 B   -> mean: 2.929026074670571 ms  | min: 1.439405 ms  | max: 6.213645 ms  | iters: 683
+  N= 9 , Size= 512 B   -> mean: 3.5815399248658317 ms  | min: 1.981291 ms  | max: 6.821952 ms  | iters: 559
+  N= 9 , Size= 4096 B   -> mean: 9.644538548076923 ms  | min: 7.434237 ms  | max: 16.539072 ms  | iters: 208
+
+--- N=10 ---
+  N= 10 , Size= 8 B   -> mean: 2.6279075643044623 ms  | min: 1.212874 ms  | max: 6.063744 ms  | iters: 762
+  N= 10 , Size= 64 B   -> mean: 2.8683421891117478 ms  | min: 1.400524 ms  | max: 6.060748 ms  | iters: 698
+  N= 10 , Size= 512 B   -> mean: 3.51795067486819 ms  | min: 2.280146 ms  | max: 6.861473 ms  | iters: 569
+  N= 10 , Size= 4096 B   -> mean: 9.791074765853658 ms  | min: 7.314831 ms  | max: 18.719923 ms  | iters: 205
+
+--- N=11 ---
+  N= 11 , Size= 8 B   -> mean: 2.978157395833333 ms  | min: 1.383021 ms  | max: 6.344883 ms  | iters: 672
+  N= 11 , Size= 64 B   -> mean: 2.929232467057101 ms  | min: 1.260571 ms  | max: 7.206173 ms  | iters: 683
+  N= 11 , Size= 512 B   -> mean: 3.6293054619565215 ms  | min: 1.996587 ms  | max: 7.756923 ms  | iters: 552
+  N= 11 , Size= 4096 B   -> mean: 9.882056630541872 ms  | min: 8.126541 ms  | max: 19.8754 ms  | iters: 203
+
+--- N=12 ---
+  N= 12 , Size= 8 B   -> mean: 2.9138719082969433 ms  | min: 1.564043 ms  | max: 6.101838 ms  | iters: 687
+  N= 12 , Size= 64 B   -> mean: 3.0730256850998465 ms  | min: 1.699576 ms  | max: 6.723951 ms  | iters: 651
+  N= 12 , Size= 512 B   -> mean: 3.703823988888889 ms  | min: 2.369722 ms  | max: 7.3426 ms  | iters: 540
+  N= 12 , Size= 4096 B   -> mean: 10.50956282198953 ms  | min: 8.724692 ms  | max: 17.299486 ms  | iters: 191
+
+======================================================================
+  Benchmark complete!
+======================================================================
+
+  Queue: MPMC_padding
+======================================================================
+  Pipeline Benchmark (Zero Computation)
+  Messages per run: 1000
+======================================================================
+
+--- N=2 ---
+  N= 2 , Size= 8 B   -> mean: 0.48414506293875575 ms  | min: 0.336675 ms  | max: 1.590437 ms  | iters: 4131
+  N= 2 , Size= 64 B   -> mean: 0.516227807483871 ms  | min: 0.375658 ms  | max: 1.448593 ms  | iters: 3875
+  N= 2 , Size= 512 B   -> mean: 0.9019500653742111 ms  | min: 0.775364 ms  | max: 1.183392 ms  | iters: 2218
+  N= 2 , Size= 4096 B   -> mean: 3.6382808727272726 ms  | min: 3.536113 ms  | max: 4.445446 ms  | iters: 550
+
+--- N=3 ---
+  N= 3 , Size= 8 B   -> mean: 0.6780933071186441 ms  | min: 0.475323 ms  | max: 1.489411 ms  | iters: 2950
+  N= 3 , Size= 64 B   -> mean: 0.7211883406633021 ms  | min: 0.532586 ms  | max: 1.447417 ms  | iters: 2774
+  N= 3 , Size= 512 B   -> mean: 1.3912372267037552 ms  | min: 1.00057 ms  | max: 2.61149 ms  | iters: 1438
+  N= 3 , Size= 4096 B   -> mean: 4.883258717073171 ms  | min: 4.668086 ms  | max: 8.884818 ms  | iters: 410
+
+--- N=4 ---
+  N= 4 , Size= 8 B   -> mean: 0.8282365606625258 ms  | min: 0.614449 ms  | max: 1.888923 ms  | iters: 2415
+  N= 4 , Size= 64 B   -> mean: 0.8694450825727945 ms  | min: 0.669469 ms  | max: 1.827905 ms  | iters: 2301
+  N= 4 , Size= 512 B   -> mean: 1.6361411283728537 ms  | min: 1.163212 ms  | max: 3.063093 ms  | iters: 1223
+  N= 4 , Size= 4096 B   -> mean: 5.289422150395779 ms  | min: 4.735319 ms  | max: 9.256134 ms  | iters: 379
+
+--- N=5 ---
+  N= 5 , Size= 8 B   -> mean: 1.2120040351302241 ms  | min: 0.663521 ms  | max: 1.850402 ms  | iters: 1651
+  N= 5 , Size= 64 B   -> mean: 0.9360591946654188 ms  | min: 0.689286 ms  | max: 1.953155 ms  | iters: 2137
+  N= 5 , Size= 512 B   -> mean: 1.732821812987013 ms  | min: 1.188697 ms  | max: 2.897679 ms  | iters: 1155
+  N= 5 , Size= 4096 B   -> mean: 5.878277434017595 ms  | min: 5.137371 ms  | max: 15.021783 ms  | iters: 341
+
+--- N=6 ---
+  N= 6 , Size= 8 B   -> mean: 1.3516443087837837 ms  | min: 0.695986 ms  | max: 2.13492 ms  | iters: 1480
+  N= 6 , Size= 64 B   -> mean: 1.5002452631184409 ms  | min: 1.054074 ms  | max: 3.800805 ms  | iters: 1334
+  N= 6 , Size= 512 B   -> mean: 2.1970687826564217 ms  | min: 1.523519 ms  | max: 5.354132 ms  | iters: 911
+  N= 6 , Size= 4096 B   -> mean: 6.067719215151515 ms  | min: 5.159648 ms  | max: 8.604058 ms  | iters: 330
+
+--- N=7 ---
+  N= 7 , Size= 8 B   -> mean: 1.473268324742268 ms  | min: 0.761427 ms  | max: 2.078767 ms  | iters: 1358
+  N= 7 , Size= 64 B   -> mean: 1.370896339958876 ms  | min: 0.72635 ms  | max: 2.114569 ms  | iters: 1459
+  N= 7 , Size= 512 B   -> mean: 1.8363026697247706 ms  | min: 1.213483 ms  | max: 3.204662 ms  | iters: 1090
+  N= 7 , Size= 4096 B   -> mean: 6.256225665625 ms  | min: 5.240611 ms  | max: 10.716898 ms  | iters: 320
+
+--- N=8 ---
+  N= 8 , Size= 8 B   -> mean: 1.3430854624161075 ms  | min: 0.725249 ms  | max: 2.128408 ms  | iters: 1490
+  N= 8 , Size= 64 B   -> mean: 1.4887364025297618 ms  | min: 0.757732 ms  | max: 2.016426 ms  | iters: 1344
+  N= 8 , Size= 512 B   -> mean: 2.2224562355555557 ms  | min: 1.612962 ms  | max: 2.940053 ms  | iters: 900
+  N= 8 , Size= 4096 B   -> mean: 7.453426810408922 ms  | min: 6.491709 ms  | max: 10.630899 ms  | iters: 269
+
+--- N=9 ---
+  N= 9 , Size= 8 B   -> mean: 1.6064927046548958 ms  | min: 1.132889 ms  | max: 2.472903 ms  | iters: 1246
+  N= 9 , Size= 64 B   -> mean: 1.612119804995971 ms  | min: 1.110736 ms  | max: 2.108377 ms  | iters: 1241
+  N= 9 , Size= 512 B   -> mean: 2.281068998859749 ms  | min: 1.679155 ms  | max: 2.815118 ms  | iters: 877
+  N= 9 , Size= 4096 B   -> mean: 7.587168609848485 ms  | min: 6.569955 ms  | max: 11.167972 ms  | iters: 264
+
+--- N=10 ---
+  N= 10 , Size= 8 B   -> mean: 1.5524375399534522 ms  | min: 0.853179 ms  | max: 2.740129 ms  | iters: 1289
+  N= 10 , Size= 64 B   -> mean: 1.6537007487603306 ms  | min: 1.10805 ms  | max: 2.043692 ms  | iters: 1210
+  N= 10 , Size= 512 B   -> mean: 2.306943565668203 ms  | min: 1.696479 ms  | max: 2.9126 ms  | iters: 868
+  N= 10 , Size= 4096 B   -> mean: 8.00433176 ms  | min: 6.773728 ms  | max: 11.402944 ms  | iters: 250
+
+--- N=11 ---
+  N= 11 , Size= 8 B   -> mean: 1.7269462838654013 ms  | min: 1.106105 ms  | max: 2.814356 ms  | iters: 1159
+  N= 11 , Size= 64 B   -> mean: 1.7773965808170515 ms  | min: 1.260288 ms  | max: 2.201051 ms  | iters: 1126
+  N= 11 , Size= 512 B   -> mean: 2.324116198606272 ms  | min: 1.716103 ms  | max: 3.053906 ms  | iters: 861
+  N= 11 , Size= 4096 B   -> mean: 8.385209472803346 ms  | min: 7.240453 ms  | max: 11.586309 ms  | iters: 239
+
+--- N=12 ---
+  N= 12 , Size= 8 B   -> mean: 1.7221993493975902 ms  | min: 1.18782 ms  | max: 2.938943 ms  | iters: 1162
+  N= 12 , Size= 64 B   -> mean: 1.703027349787234 ms  | min: 1.226824 ms  | max: 2.067825 ms  | iters: 1175
+  N= 12 , Size= 512 B   -> mean: 2.3649418711583925 ms  | min: 1.767254 ms  | max: 5.744992 ms  | iters: 846
+  N= 12 , Size= 4096 B   -> mean: 9.293026074074074 ms  | min: 8.038478 ms  | max: 14.016219 ms  | iters: 216
+
+======================================================================
+  Benchmark complete!
+======================================================================
+
+  Queue: MPMC_padding_optional
+======================================================================
+  Pipeline Benchmark (Zero Computation)
+  Messages per run: 1000
+======================================================================
+
+--- N=2 ---
+  N= 2 , Size= 8 B   -> mean: 0.5336559340981857 ms  | min: 0.320877 ms  | max: 1.526582 ms  | iters: 3748
+  N= 2 , Size= 64 B   -> mean: 0.7462906456546066 ms  | min: 0.362652 ms  | max: 1.611509 ms  | iters: 2681
+  N= 2 , Size= 512 B   -> mean: 1.1714680210772834 ms  | min: 0.805338 ms  | max: 1.687522 ms  | iters: 1708
+  N= 2 , Size= 4096 B   -> mean: 4.6498017238979115 ms  | min: 3.462081 ms  | max: 6.515118 ms  | iters: 431
+
+--- N=3 ---
+  N= 3 , Size= 8 B   -> mean: 1.2523630713838447 ms  | min: 0.61722 ms  | max: 2.257626 ms  | iters: 1597
+  N= 3 , Size= 64 B   -> mean: 1.3795971027586207 ms  | min: 0.837411 ms  | max: 2.66678 ms  | iters: 1450
+  N= 3 , Size= 512 B   -> mean: 1.5700702150706436 ms  | min: 1.127991 ms  | max: 2.913008 ms  | iters: 1274
+  N= 3 , Size= 4096 B   -> mean: 5.488209750684931 ms  | min: 4.755755 ms  | max: 8.330671 ms  | iters: 365
+
+--- N=4 ---
+  N= 4 , Size= 8 B   -> mean: 1.2848406281310212 ms  | min: 0.678559 ms  | max: 2.010737 ms  | iters: 1557
+  N= 4 , Size= 64 B   -> mean: 1.3593021243206522 ms  | min: 0.910761 ms  | max: 2.233174 ms  | iters: 1472
+  N= 4 , Size= 512 B   -> mean: 1.952577664390244 ms  | min: 1.36823 ms  | max: 3.281926 ms  | iters: 1025
+  N= 4 , Size= 4096 B   -> mean: 5.349707938502673 ms  | min: 4.900211 ms  | max: 8.71906 ms  | iters: 374
+
+--- N=5 ---
+  N= 5 , Size= 8 B   -> mean: 1.397649862334032 ms  | min: 0.98021 ms  | max: 1.947945 ms  | iters: 1431
+  N= 5 , Size= 64 B   -> mean: 1.5075468251695554 ms  | min: 0.930484 ms  | max: 2.234261 ms  | iters: 1327
+  N= 5 , Size= 512 B   -> mean: 1.9173483697318008 ms  | min: 1.196464 ms  | max: 3.300684 ms  | iters: 1044
+  N= 5 , Size= 4096 B   -> mean: 5.449637702997276 ms  | min: 4.981435 ms  | max: 8.717378 ms  | iters: 367
+
+--- N=6 ---
+  N= 6 , Size= 8 B   -> mean: 1.3956610850767084 ms  | min: 0.923541 ms  | max: 1.883801 ms  | iters: 1434
+  N= 6 , Size= 64 B   -> mean: 1.571354051060487 ms  | min: 1.032838 ms  | max: 2.086816 ms  | iters: 1273
+  N= 6 , Size= 512 B   -> mean: 2.056114614594039 ms  | min: 1.456952 ms  | max: 3.126792 ms  | iters: 973
+  N= 6 , Size= 4096 B   -> mean: 5.399356307277628 ms  | min: 4.999465 ms  | max: 7.998724 ms  | iters: 371
+
+--- N=7 ---
+  N= 7 , Size= 8 B   -> mean: 1.5300586490825687 ms  | min: 0.953524 ms  | max: 2.143021 ms  | iters: 1308
+  N= 7 , Size= 64 B   -> mean: 1.4971721489520957 ms  | min: 0.973409 ms  | max: 2.276944 ms  | iters: 1336
+  N= 7 , Size= 512 B   -> mean: 2.051615202051282 ms  | min: 1.508561 ms  | max: 3.15294 ms  | iters: 975
+  N= 7 , Size= 4096 B   -> mean: 5.482356035616438 ms  | min: 5.022422 ms  | max: 7.475433 ms  | iters: 365
+
+--- N=8 ---
+  N= 8 , Size= 8 B   -> mean: 1.5362229093701996 ms  | min: 1.059345 ms  | max: 1.890191 ms  | iters: 1302
+  N= 8 , Size= 64 B   -> mean: 1.695283727118644 ms  | min: 1.125228 ms  | max: 2.192853 ms  | iters: 1180
+  N= 8 , Size= 512 B   -> mean: 2.18014425708061 ms  | min: 1.311542 ms  | max: 2.951613 ms  | iters: 918
+  N= 8 , Size= 4096 B   -> mean: 5.536945712707182 ms  | min: 4.850397 ms  | max: 8.312411 ms  | iters: 362
+
+--- N=9 ---
+  N= 9 , Size= 8 B   -> mean: 1.5925624307324842 ms  | min: 1.110007 ms  | max: 1.946396 ms  | iters: 1256
+  N= 9 , Size= 64 B   -> mean: 1.795694315978456 ms  | min: 1.242878 ms  | max: 3.356089 ms  | iters: 1114
+  N= 9 , Size= 512 B   -> mean: 2.335235309218203 ms  | min: 1.750032 ms  | max: 3.074768 ms  | iters: 857
+  N= 9 , Size= 4096 B   -> mean: 5.554270709141274 ms  | min: 5.288848 ms  | max: 7.29837 ms  | iters: 361
+
+--- N=10 ---
+  N= 10 , Size= 8 B   -> mean: 1.57200513982718 ms  | min: 0.949271 ms  | max: 1.940223 ms  | iters: 1273
+  N= 10 , Size= 64 B   -> mean: 1.6497865152514428 ms  | min: 1.143871 ms  | max: 2.16582 ms  | iters: 1213
+  N= 10 , Size= 512 B   -> mean: 2.2922812749140893 ms  | min: 1.665564 ms  | max: 3.285718 ms  | iters: 873
+  N= 10 , Size= 4096 B   -> mean: 5.680145934844193 ms  | min: 5.254902 ms  | max: 8.869172 ms  | iters: 353
+
+--- N=11 ---
+  N= 11 , Size= 8 B   -> mean: 1.6410819015586546 ms  | min: 1.20994 ms  | max: 1.975004 ms  | iters: 1219
+  N= 11 , Size= 64 B   -> mean: 1.6718632364243944 ms  | min: 1.159267 ms  | max: 2.149021 ms  | iters: 1197
+  N= 11 , Size= 512 B   -> mean: 2.336426001166861 ms  | min: 1.709577 ms  | max: 2.838537 ms  | iters: 857
+  N= 11 , Size= 4096 B   -> mean: 5.640687746478873 ms  | min: 5.144016 ms  | max: 8.561217 ms  | iters: 355
+
+--- N=12 ---
+  N= 12 , Size= 8 B   -> mean: 1.69377933276884 ms  | min: 1.150996 ms  | max: 2.656716 ms  | iters: 1181
+  N= 12 , Size= 64 B   -> mean: 1.855857616883117 ms  | min: 1.221065 ms  | max: 2.330059 ms  | iters: 1078
+  N= 12 , Size= 512 B   -> mean: 2.3659966914893618 ms  | min: 1.731869 ms  | max: 3.222663 ms  | iters: 846
+  N= 12 , Size= 4096 B   -> mean: 5.70450680965909 ms  | min: 5.304985 ms  | max: 8.631963 ms  | iters: 352
+
+======================================================================
+  Benchmark complete!
+======================================================================
