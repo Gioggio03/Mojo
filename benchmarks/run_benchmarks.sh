@@ -70,7 +70,7 @@ sed -i '/bench_size_t\[[0-9]*, 1_000_000\]()/d' scalability_bench.mojo
 echo "--- A. Running WITHOUT Pinning ---"
 sed -i 's/pipeline.setPinning(True)/pipeline.setPinning(False)/g' scalability_bench.mojo
 echo "Building scalability_bench_no_pinning..."
-mojo build -I .. scalability_bench.mojo -o scalability_bench_no_pinning
+mojo build -O3 -I .. scalability_bench.mojo -o scalability_bench_no_pinning
 echo "Running scalability benchmark (No Pinning)..."
 ./scalability_bench_no_pinning > "$RESULTS_DIR/scalability_results_no_pinning.txt"
 echo "Done."
@@ -83,7 +83,7 @@ echo "=========================================="
 echo "Restoring Pinning to True in scalabilityStages..."
 sed -i 's/pipeline.setPinning(False)/pipeline.setPinning(True)/g' scalability_bench.mojo
 echo "Building scalability_bench_with_pinning..."
-mojo build -I .. scalability_bench.mojo -o scalability_bench_with_pinning
+mojo build -O3 -I .. scalability_bench.mojo -o scalability_bench_with_pinning
 echo "Running scalability benchmark (With Pinning)..."
 ./scalability_bench_with_pinning > "$RESULTS_DIR/scalability_results.txt"
 echo "Done."
@@ -104,7 +104,7 @@ for queue in "${QUEUES[@]}"; do
     sed -i 's/pipeline.setPinning(True)/pipeline.setPinning(False)/g' benchmark_pipe.mojo
 
     echo "  Building benchmark_pipe_no_pinning..."
-    mojo build -I .. benchmark_pipe.mojo -o benchmark_pipe_no_pinning
+    mojo build -O3 -I .. benchmark_pipe.mojo -o benchmark_pipe_no_pinning
     echo "  Running benchmark..."
     echo "" >> "$RESULTS_DIR/benchmark_results_no_pinning.txt"
     echo "  Queue: $queue" >> "$RESULTS_DIR/benchmark_results_no_pinning.txt"
@@ -128,7 +128,7 @@ for queue in "${QUEUES[@]}"; do
     sed -i 's/pipeline.setPinning(False)/pipeline.setPinning(True)/g' benchmark_pipe.mojo
 
     echo "  Building benchmark_pipe_with_pinning..."
-    mojo build -I .. benchmark_pipe.mojo -o benchmark_pipe_with_pinning
+    mojo build -O3 -I .. benchmark_pipe.mojo -o benchmark_pipe_with_pinning
     echo "  Running benchmark..."
     echo "" >> "$RESULTS_DIR/benchmark_results.txt"
     echo "  Queue: $queue" >> "$RESULTS_DIR/benchmark_results.txt"
