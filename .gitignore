@@ -1,2 +1,9 @@
 benchmarks/.venv/
 benchmarks/__pycache__/
+
+# Compiled binaries
+*.so
+spot_test
+scalability_bench_*_pinning
+scalability_bench_test
+benchmark_pipe_*_pinning

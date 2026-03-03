@@ -10,7 +10,7 @@ from payload import Payload
 from time import perf_counter_ns
 
 # Number of messages processed per benchmark run
-comptime NUM_MESSAGES: Int = 50
+comptime NUM_MESSAGES: Int = 5000
 
 # Helper function: busy-wait for exactly `ns` nanoseconds using perf_counter_ns
 @always_inline

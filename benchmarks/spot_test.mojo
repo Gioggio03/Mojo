@@ -20,18 +20,18 @@ from time import perf_counter_ns
 # ╠══════════════════════════════════════════════════════════════════════╣
 # ║  TEST_N:        numero di stadi della pipeline (2..12)             ║
 # ║  TEST_T_NS:     tempo totale di calcolo per messaggio (in ns)      ║
-# ║                 100ms = 100_000_000, 10ms = 10_000_000             ║
-# ║                 5ms = 5_000_000, 2ms = 2_000_000, 1ms = 1_000_000 ║
-# ║  TEST_SIZE:     dimensione payload in byte (8, 64, 512, 4096)      ║
+# ║                 10ms = 10_000_000, 1ms = 1_000_000                 ║
+# ║                 100us = 100_000, 10us = 10_000                     ║
+# ║  TEST_SIZE:     dimensione payload in byte (8, 64, 512)            ║
 # ║  USE_PINNING:   True/False per CPU pinning                        ║
 # ║                                                                    ║
 # ║  NUM_MESSAGES è definito in scalabilityStages.mojo                ║
 # ╚══════════════════════════════════════════════════════════════════════╝
 
 comptime TEST_N: Int = 10
-comptime TEST_T_NS: Int = 100_000_000    # 100ms
-comptime TEST_SIZE: Int = 512
-comptime USE_PINNING: Bool = False
+comptime TEST_T_NS: Int = 1_000_000      # 1ms
+comptime TEST_SIZE: Int = 64
+comptime USE_PINNING: Bool = True
 
 # ============================================================================
 # Pipeline runners

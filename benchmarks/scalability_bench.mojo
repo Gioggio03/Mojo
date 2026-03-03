@@ -252,34 +252,24 @@ def main():
     print("  Timing: perf_counter_ns busy-wait")
     print("=" * 70)
 
+    # T values: 10ms, 1ms, 100us, 10us
     # Size=8B
-    # Size=8B
-    bench_size_t[8, 100_000_000]()
-    bench_size_t[8, 50_000_000]()
-    bench_size_t[8, 25_000_000]()
     bench_size_t[8, 10_000_000]()
-    bench_size_t[8, 5_000_000]()
+    bench_size_t[8, 1_000_000]()
+    bench_size_t[8, 100_000]()
+    bench_size_t[8, 10_000]()
 
     # Size=64B
-    bench_size_t[64, 100_000_000]()
-    bench_size_t[64, 50_000_000]()
-    bench_size_t[64, 25_000_000]()
     bench_size_t[64, 10_000_000]()
-    bench_size_t[64, 5_000_000]()
+    bench_size_t[64, 1_000_000]()
+    bench_size_t[64, 100_000]()
+    bench_size_t[64, 10_000]()
 
     # Size=512B
-    bench_size_t[512, 100_000_000]()
-    bench_size_t[512, 50_000_000]()
-    bench_size_t[512, 25_000_000]()
     bench_size_t[512, 10_000_000]()
-    bench_size_t[512, 5_000_000]()
-
-    # Size=4096B
-    bench_size_t[4096, 100_000_000]()
-    bench_size_t[4096, 50_000_000]()
-    bench_size_t[4096, 25_000_000]()
-    bench_size_t[4096, 10_000_000]()
-    bench_size_t[4096, 5_000_000]()
+    bench_size_t[512, 1_000_000]()
+    bench_size_t[512, 100_000]()
+    bench_size_t[512, 10_000]()
 
     print("\n" + "=" * 70)
     print("  Benchmark complete!")

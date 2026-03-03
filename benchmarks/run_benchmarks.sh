@@ -53,26 +53,21 @@ set_queue() {
     sed -i 's/# # /# /g' "$COMMUNICATOR"
 }
 
-# ─── 1. Scalability benchmark (V2 only) ───────────────────────────
 # ─── 1. Scalability benchmark (NO PINNING) ───────────────────────────
 echo "=========================================="
 echo " 1/5  Scalability Benchmark (No Pinning)"
 echo "=========================================="
 set_queue "MPMC_padding_optional_v2"
 
-echo "Setting NUM_MESSAGES to 50 for regular benchmark..."
-sed -i 's/^comptime NUM_MESSAGES: Int = [0-9]*/comptime NUM_MESSAGES: Int = 50/' scalabilityStages.mojo
-
-echo "Setting T values to 100ms - 5ms..."
-sed -i 's/bench_size_t\[\([0-9]*\), 2_000_000\]()/bench_size_t\[\1, 100_000_000\]()\n    bench_size_t\[\1, 50_000_000\]()\n    bench_size_t\[\1, 25_000_000\]()\n    bench_size_t\[\1, 10_000_000\]()\n    bench_size_t\[\1, 5_000_000\]()/g' scalability_bench.mojo
-sed -i '/bench_size_t\[[0-9]*, 1_000_000\]()/d' scalability_bench.mojo
+echo "Setting NUM_MESSAGES to 5000..."
+sed -i 's/^comptime NUM_MESSAGES: Int = [0-9]*/comptime NUM_MESSAGES: Int = 5000/' scalabilityStages.mojo
 
 echo "--- A. Running WITHOUT Pinning ---"
 sed -i 's/pipeline.setPinning(True)/pipeline.setPinning(False)/g' scalability_bench.mojo
 echo "Building scalability_bench_no_pinning..."
 mojo build -O3 -I .. scalability_bench.mojo -o scalability_bench_no_pinning
 echo "Running scalability benchmark (No Pinning)..."
-./scalability_bench_no_pinning > "$RESULTS_DIR/scalability_results_no_pinning.txt"
+./scalability_bench_no_pinning > "$RESULTS_DIR/scalability_v2_no_pinning.txt"
 echo "Done."
 
 # ─── 2. Scalability benchmark (WITH PINNING) ───────────────────────────
@@ -80,12 +75,12 @@ echo ""
 echo "=========================================="
 echo " 2/5  Scalability Benchmark (With Pinning)"
 echo "=========================================="
-echo "Restoring Pinning to True in scalabilityStages..."
+echo "Restoring Pinning to True..."
 sed -i 's/pipeline.setPinning(False)/pipeline.setPinning(True)/g' scalability_bench.mojo
 echo "Building scalability_bench_with_pinning..."
 mojo build -O3 -I .. scalability_bench.mojo -o scalability_bench_with_pinning
 echo "Running scalability benchmark (With Pinning)..."
-./scalability_bench_with_pinning > "$RESULTS_DIR/scalability_results.txt"
+./scalability_bench_with_pinning > "$RESULTS_DIR/scalability_v2_with_pinning.txt"
 echo "Done."
 
 # ─── 3. Zero-computation benchmark (NO PINNING) ───────────────────
@@ -147,8 +142,7 @@ echo "=========================================="
 echo " 5/5  Generating plots"
 echo "=========================================="
 
-$PYTHON generate_plots.py
-$PYTHON generate_plots_no_pinning.py
+$PYTHON generate_plots_v2.py
 
 echo ""
 echo "All done! Results in $RESULTS_DIR/, plots in $PLOTS_DIR/"
