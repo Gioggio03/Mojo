@@ -6,6 +6,7 @@ from MoStream.communicator import MessageTrait, MessageWrapper, Communicator
 from MoStream.stage import StageKind, StageTrait
 from MoStream.node import NodeTrait, SeqNode, ParallelNode, seq, parallel
 from MoStream.emitter import Emitter
+from MoStream.utils import print_cyan_color, print_red_color, print_yellow_color
 from os import getenv
 from sys.ffi import OwnedDLHandle, c_int
 from python import Python
@@ -29,7 +30,7 @@ fn executor_task[NodeT: NodeTrait,
         if (cpu_id >= 0):
             r = libFuncC.call["pin_thread_to_cpu_checked", c_int](c_int(cpu_id))
             if (r < 0):
-                print("Warning: failed to pin thread of stage", NodeT.StageT.name, "to CPU core", cpu_id)
+                print_yellow_color("{MoStream} Warning: failed to pin thread of stage" + String(NodeT.StageT.name) + "to CPU core" + String(cpu_id))
         @parameter
         if NodeT.StageT.kind == StageKind.SOURCE:
             constrained[idx == 0]() # Source stage must be the first stage of the pipeline
@@ -44,7 +45,7 @@ fn executor_task[NodeT: NodeTrait,
         else:
             raise String("Error: Stage") + String(NodeT.StageT.name) + String("has an undefined kind")
     except e:
-        print("Error: executor_task in stage", NodeT.StageT.name, "raised a problem -> ", e)
+        print_red_color("{MoStream} Error: executor_task in stage" + String(NodeT.StageT.name) + "raised a problem -> " + String(e))
 
 # Execute_source, the function that will be run by the task of a SOURCE stage of the pipeline
 fn execute_source[Stage: StageTrait,
@@ -158,7 +159,7 @@ struct Pipeline[*Ts: NodeTrait]:
         self.num_cpus = Int(py=mp.cpu_count())
         path_lib = getenv("MOSTREAM_HOME", ".")
         if path_lib == ".":
-            print("Warning: MOSTREAM_HOME environment variable not set, using current directory as default")
+            print_yellow_color("{MoStream} Warning: MOSTREAM_HOME environment variable not set, using current directory as default")
         path_lib += "/MoStream/lib/libFuncC.so"
         self.libFuncC = OwnedDLHandle(path_lib)
         if not self.libFuncC.check_symbol("pin_thread_to_cpu_checked"):
@@ -168,6 +169,8 @@ struct Pipeline[*Ts: NodeTrait]:
         self.last_assigned_cpu = 0
         mapping_str = getenv("MOSTREAM_PINNING", "")
         self.parse_mapping_string(mapping_str)
+        if (self.getNumThreads() > self.num_cpus):
+            raise("Error: the number of threads in the pipeline is greater than the number of CPU cores")
 
     # _run_from
     fn _run_from[idx: Int, length: Int, M: MessageTrait](mut self, in_comm: UnsafePointer[mut=True, Communicator[M]]):
@@ -194,11 +197,18 @@ struct Pipeline[*Ts: NodeTrait]:
 
     # run
     fn run(mut self):
+        var status = "disabled"
+        if self.pinning_enabled:
+            status = "enabled"
+        print_cyan_color("{MoStream} Starting pipeline execution with " + String(Self.N) + " stages and total parallelism of " + String(self.getNumThreads()) + " threads")
+        print_cyan_color("{MoStream} CPU pinning is " + status)
+        print_cyan_color("{MoStream} Pipeline starts...")
         comm = Communicator[Self.Ts[0].InType](0, self.nodes[0].parallelism())
         first_comm = alloc[Communicator[Self.Ts[0].InType]](1)
         first_comm.init_pointee_move(comm^)
         self._run_from[0, Self.N](first_comm)
         self.tg.wait()
+        print_cyan_color("{MoStream} ...Pipeline terminated successfully!")
 
     # parse the cpus list
     fn parse_mapping_string(mut self, s: String) raises:
@@ -214,3 +224,11 @@ struct Pipeline[*Ts: NodeTrait]:
     # enable/disable pinning for the pipeline threads
     fn setPinning(mut self, enabled: Bool):
         self.pinning_enabled = enabled
+
+    # get number of threads required by this pipeline
+    fn getNumThreads(self) -> Int:
+        var total_threads = 0
+        @parameter
+        for i in range(0, Self.N):
+            total_threads += self.nodes[i].parallelism()
+        return total_threads

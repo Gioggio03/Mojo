@@ -4,6 +4,7 @@ from os.atomic import Atomic, Consistency, fence
 from time import sleep
 from builtin.simd import Scalar
 from sys.terminate import exit
+from MoStream.utils import print_red_color
 
 # Cell struct used in the MPMC queue, containing a sequence number and the actual data (one slot of the queue)
 struct Cell[T: Movable & Copyable & Defaultable](Movable):
@@ -36,7 +37,7 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable](Movable):
     # constructor
     fn __init__(out self, size: Int):
         if not ((size >= 2) and (size & (size - 1)) == 0):
-            print("MPMC queue needs size to be a power of 2 and at least 2.")
+            print_red_color("{MoStream} Error: MPMC queues need size to be a power of 2 and at least 2.")
             exit(1)
         self.size = size
         self.mask = size - 1
