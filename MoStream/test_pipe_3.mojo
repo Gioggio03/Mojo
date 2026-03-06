@@ -1,12 +1,14 @@
-# Trivial test of a pipeline with 3 stages:
+# Third trivial test of a pipeline with 4 stages:
 #   - FirstStage: source, generates numbers from 1 to 1000
-#   - SecondStage: transform, increments each input and converts it to a string
-#   - ThirdStage: sink, prints the input string
+#   - SecondStage: forward the received number
+#   - ThirdStage: forward the received number
+#   - FourthStage: sink, couting the total sum of all received inputs
 
 from collections import Optional
 from MoStream.communicator import MessageTrait
 from MoStream.stage import StageKind, StageTrait
 from MoStream.node import NodeTrait, SeqNode, ParallelNode, seq, parallel
+from MoStream.emitter import Emitter
 from MoStream.pipeline import Pipeline
 
 # FirstStage - Source: generetes numbers from 1 to 1000
@@ -23,17 +25,17 @@ struct FirstStage(StageTrait):
 
     # next_element implementation
     fn next_element(mut self) raises -> Optional[Int]:
-        if self.count > 1000:
+        if self.count >= 1000:
             return None
         else:
             self.count = self.count + 1
             return self.count
 
-# SecondStage - increaments the input and converts it to a string
+# SecondStage - forward the received number
 struct SecondStage(StageTrait):
     comptime kind = StageKind.TRANSFORM
     comptime InType = Int
-    comptime OutType = String
+    comptime OutType = Int
     comptime name = "SecondStage"
 
     # costrutor
@@ -41,24 +43,43 @@ struct SecondStage(StageTrait):
         pass
 
     # compute implementation
-    fn compute(mut self, var input: Int) raises -> Optional[String]:
-        input = input + 1
-        return String("Valore " + String(input))
+    fn compute(mut self, var input: Int) raises -> Int:
+        return input
 
-# ThirdStage - prints the input string
+# ThirdStage - forward the received number
 struct ThirdStage(StageTrait):
-    comptime kind = StageKind.SINK
-    comptime InType = String
-    comptime OutType = String
+    comptime kind = StageKind.TRANSFORM
+    comptime InType = Int
+    comptime OutType = Int
     comptime name = "ThirdStage"
 
-    # constructor
+    # costrutor
     fn __init__ (out self):
         pass
 
+    # compute implementation
+    fn compute(mut self, var input: Int) raises -> Int:
+        return input
+
+# FourthStage - prints the input string
+struct FourthStage(StageTrait):
+    comptime kind = StageKind.SINK
+    comptime InType = Int
+    comptime OutType = Int
+    comptime name = "FourthStage"
+    var sum: Int
+
+    # constructor
+    fn __init__ (out self):
+        self.sum = 0
+
     # consume_element implementation
-    fn consume_element(mut self, var input: String) raises:
-        print(input)
+    fn consume_element(mut self, var input: Int) raises:
+        self.sum = self.sum + input
+
+    # receive_eof implementation
+    fn received_eos(mut self):
+        print("Total sum: ", self.sum)
 
 # Main
 def main():
@@ -66,9 +87,10 @@ def main():
     first_stage = FirstStage()
     second_stage = SecondStage()
     third_stage = ThirdStage()
+    fourth_stage = FourthStage()
 
     # creating the pipeline and running it
-    pipeline = Pipeline((seq(first_stage), seq(second_stage), seq(third_stage)))
+    pipeline = Pipeline((seq(first_stage), parallel(second_stage,2), parallel(third_stage,3), seq(fourth_stage)))
     pipeline.setPinning(enabled=False)
     pipeline.run()
     _ = pipeline

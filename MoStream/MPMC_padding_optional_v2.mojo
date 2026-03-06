@@ -72,7 +72,6 @@ struct MPMCQueue[T: Copyable & Defaultable](Movable):
         for i in range(self.size):
             (self.buffer + i).destroy_pointee()
         self.buffer.free()
-        # print("MPMCQueue destroyed!")
 
     # push method for producers, always return True because it spins forever until the item is pushed successfully
     fn push(mut self, var item: Self.T) -> Bool:
@@ -96,7 +95,8 @@ struct MPMCQueue[T: Copyable & Defaultable](Movable):
             # elif pw > seq:
             #    return False
 
-    # pop method for consumers, returns an Optional containing the item if popped successfully, or None if the queue is empty
+    # pop method for consumers, returns an Optional containing the item if popped successfully,
+    #    or None if the queue is empty
     fn pop(mut self) -> Optional[Self.T]:
         var pr: UInt64
         var seq: UInt64

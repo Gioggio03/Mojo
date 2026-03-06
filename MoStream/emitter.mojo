@@ -7,6 +7,7 @@ from MoStream.communicator import MessageTrait, MessageWrapper, Communicator
 struct Emitter[Out: MessageTrait]:
     var outComm: UnsafePointer[Communicator[Self.Out], MutAnyOrigin]
 
-    # produce a new output element for the current input element being processed by a TRANSFORM_MANY stage, by pushing it to the output communicator
+    # produce a new output element for the current input element being processed
+    #     by a TRANSFORM_MANY stage, by pushing it to the output communicator
     fn emit(mut self, var output: Self.Out) raises:
         self.outComm[].push(MessageWrapper[Self.Out](data = output^, eos = False))

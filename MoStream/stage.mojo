@@ -38,3 +38,8 @@ trait StageTrait(ImplicitlyCopyable):
     #    consume one input element
     fn consume_element(mut self, var input: Self.InType) raises:
         raise String("Error: Stage ") + String(Self.name) + String(" does not implement the consume_element() method")
+
+    # received_eos (all stages)
+    #    react to the end of the stream, perform any necessary cleanup
+    fn received_eos(mut self):
+        pass

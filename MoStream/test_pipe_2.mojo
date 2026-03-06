@@ -6,6 +6,7 @@
 from collections import Optional
 from MoStream.communicator import MessageTrait
 from MoStream.stage import StageKind, StageTrait
+from MoStream.node import NodeTrait, SeqNode, ParallelNode, seq, parallel
 from MoStream.emitter import Emitter
 from MoStream.pipeline import Pipeline
 
@@ -58,7 +59,7 @@ struct ThirdStage(StageTrait):
         pass
 
     # consume_element implementation
-    fn consume_element(mut self, var input: Self.InType) raises:
+    fn consume_element(mut self, var input: String) raises:
         print(input)
 
 # Main
@@ -69,7 +70,7 @@ def main():
     third_stage = ThirdStage()
 
     # creating the pipeline and running it
-    pipeline = Pipeline((first_stage, second_stage, third_stage))
+    pipeline = Pipeline((seq(first_stage), seq(second_stage), seq(third_stage)))
     pipeline.setPinning(enabled=False)
     pipeline.run()
     _ = pipeline

@@ -3,7 +3,7 @@
 # This isolates the framework overhead and lets us see how it scales with the number of stages and message sizes.
 
 from benchmark import run, Unit
-from MoStream import Pipeline
+from MoStream import Pipeline, seq
 from benchStages import BenchSource, BenchTransform, BenchSink, NUM_MESSAGES
 from payload import Payload
 
@@ -11,7 +11,7 @@ from payload import Payload
 fn run_pipeline_2[Size: Int]() raises:
     source = BenchSource[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, sink))
+    pipeline = Pipeline((seq(source), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -21,7 +21,7 @@ fn run_pipeline_3[Size: Int]() raises:
     source = BenchSource[Size]()
     t1 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -32,7 +32,7 @@ fn run_pipeline_4[Size: Int]() raises:
     t1 = BenchTransform[Size]()
     t2 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, t2, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -44,7 +44,7 @@ fn run_pipeline_5[Size: Int]() raises:
     t2 = BenchTransform[Size]()
     t3 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, t2, t3, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -57,7 +57,7 @@ fn run_pipeline_6[Size: Int]() raises:
     t3 = BenchTransform[Size]()
     t4 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -71,7 +71,7 @@ fn run_pipeline_7[Size: Int]() raises:
     t4 = BenchTransform[Size]()
     t5 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -86,7 +86,7 @@ fn run_pipeline_8[Size: Int]() raises:
     t5 = BenchTransform[Size]()
     t6 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -102,7 +102,7 @@ fn run_pipeline_9[Size: Int]() raises:
     t6 = BenchTransform[Size]()
     t7 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(t7), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -119,7 +119,7 @@ fn run_pipeline_10[Size: Int]() raises:
     t7 = BenchTransform[Size]()
     t8 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(t7), seq(t8), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -137,7 +137,7 @@ fn run_pipeline_11[Size: Int]() raises:
     t8 = BenchTransform[Size]()
     t9 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, t9, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(t7), seq(t8), seq(t9), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -156,7 +156,7 @@ fn run_pipeline_12[Size: Int]() raises:
     t9 = BenchTransform[Size]()
     t10 = BenchTransform[Size]()
     sink = BenchSink[Size]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(t7), seq(t8), seq(t9), seq(t10), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -164,7 +164,6 @@ fn run_pipeline_12[Size: Int]() raises:
 # Function bench_and_print: runs the given pipeline and prints the results in a nice format
 fn bench_and_print[Size: Int, N: Int]() raises:
     print("  N=", N, ", Size=", Size, "B", end="")
-
     @parameter
     if N == 2:
         report = run[func1 = run_pipeline_2[Size]](max_iters=100, min_runtime_secs=2, max_runtime_secs=30, max_batch_size=1)
@@ -191,7 +190,6 @@ fn bench_and_print[Size: Int, N: Int]() raises:
     else:
         print("  -> ERROR: unsupported N")
         return
-
     print(
         "   -> mean:", report.mean(Unit.ms), "ms",
         " | min:", report.min(Unit.ms), "ms",
@@ -212,7 +210,6 @@ def main():
     print("  Pipeline Benchmark (Zero Computation)")
     print("  Messages per run:", NUM_MESSAGES)
     print("=" * 70)
-
     @parameter
     for n in range(2, 13):
         print("\n--- N=" + String(n) + " ---")

@@ -4,7 +4,7 @@
 # Deviations from ideal measure the communication and async task overhead.
 
 from benchmark import run, Unit
-from MoStream import Pipeline
+from MoStream import Pipeline, seq
 from scalabilityStages import SleepSource, SleepTransform, SleepSink, NUM_MESSAGES
 
 # N=2: Source -> Sink
@@ -12,7 +12,7 @@ fn run_pipeline_2[Size: Int, T_ns: Int]() raises:
     comptime SleepNs = T_ns // 2
     source = SleepSource[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, sink))
+    pipeline = Pipeline((seq(source), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -23,7 +23,7 @@ fn run_pipeline_3[Size: Int, T_ns: Int]() raises:
     source = SleepSource[Size, SleepNs]()
     t1 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -35,7 +35,7 @@ fn run_pipeline_4[Size: Int, T_ns: Int]() raises:
     t1 = SleepTransform[Size, SleepNs]()
     t2 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, t2, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -48,7 +48,7 @@ fn run_pipeline_5[Size: Int, T_ns: Int]() raises:
     t2 = SleepTransform[Size, SleepNs]()
     t3 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, t2, t3, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -62,7 +62,7 @@ fn run_pipeline_6[Size: Int, T_ns: Int]() raises:
     t3 = SleepTransform[Size, SleepNs]()
     t4 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -77,7 +77,7 @@ fn run_pipeline_7[Size: Int, T_ns: Int]() raises:
     t4 = SleepTransform[Size, SleepNs]()
     t5 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -93,7 +93,7 @@ fn run_pipeline_8[Size: Int, T_ns: Int]() raises:
     t5 = SleepTransform[Size, SleepNs]()
     t6 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -110,7 +110,7 @@ fn run_pipeline_9[Size: Int, T_ns: Int]() raises:
     t6 = SleepTransform[Size, SleepNs]()
     t7 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(t7), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -128,7 +128,7 @@ fn run_pipeline_10[Size: Int, T_ns: Int]() raises:
     t7 = SleepTransform[Size, SleepNs]()
     t8 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(t7), seq(t8), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -147,7 +147,7 @@ fn run_pipeline_11[Size: Int, T_ns: Int]() raises:
     t8 = SleepTransform[Size, SleepNs]()
     t9 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, t9, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(t7), seq(t8), seq(t9), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -167,7 +167,7 @@ fn run_pipeline_12[Size: Int, T_ns: Int]() raises:
     t9 = SleepTransform[Size, SleepNs]()
     t10 = SleepTransform[Size, SleepNs]()
     sink = SleepSink[Size, SleepNs]()
-    pipeline = Pipeline((source, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, sink))
+    pipeline = Pipeline((seq(source), seq(t1), seq(t2), seq(t3), seq(t4), seq(t5), seq(t6), seq(t7), seq(t8), seq(t9), seq(t10), seq(sink)))
     pipeline.setPinning(True)
     pipeline.run()
     _ = pipeline
@@ -176,7 +176,6 @@ fn run_pipeline_12[Size: Int, T_ns: Int]() raises:
 fn bench_config[Size: Int, N: Int, T_ns: Int]() raises:
     comptime SleepNs = T_ns // N
     comptime num_msgs = NUM_MESSAGES
-
     # use the benchmark package to run with multiple iterations
     @parameter
     if N == 2:
@@ -204,26 +203,19 @@ fn bench_config[Size: Int, N: Int, T_ns: Int]() raises:
     else:
         print("  -> ERROR: unsupported N")
         return
-
     # compute B, E(N), S(N) from the benchmark mean time
     mean_s = report.mean(Unit.ms) / 1000.0
-
     # use actual T = SleepNs * N (not T_ns) to account for integer division rounding
     # e.g. T_ns=100_000_000, N=3: SleepNs=33_333_333, actual total = 33_333_333*3 = 99_999_999 ns
     comptime actual_T_s = Float64(SleepNs * N) / 1_000_000_000.0
-
     # B = measured throughput (messages per second)
     B = Float64(num_msgs) / mean_s
-
     # E(N) = (B/N) * T  -> efficiency (1.0 = ideal, < 1.0 = overhead)
     E = (B / Float64(N)) * actual_T_s
-
     # S(N) = B * T -> scalability (how many times faster than sequential)
     S = B * actual_T_s
-
     # convert SleepNs to ms for display
     comptime sleep_ms = Float64(SleepNs) / 1_000_000.0
-
     print("  N=", N, ", Size=", Size, "B, SleepPerStage=", sleep_ms, "ms",
           " -> mean:", report.mean(Unit.ms), "ms",
           " | iters:", report.iters(),
@@ -251,26 +243,22 @@ def main():
     print("  Messages per run:", NUM_MESSAGES)
     print("  Timing: perf_counter_ns busy-wait")
     print("=" * 70)
-
     # T values: 10ms, 1ms, 100us, 10us
     # Size=8B
     bench_size_t[8, 10_000_000]()
     bench_size_t[8, 1_000_000]()
     bench_size_t[8, 100_000]()
     bench_size_t[8, 10_000]()
-
     # Size=64B
     bench_size_t[64, 10_000_000]()
     bench_size_t[64, 1_000_000]()
     bench_size_t[64, 100_000]()
     bench_size_t[64, 10_000]()
-
     # Size=512B
     bench_size_t[512, 10_000_000]()
     bench_size_t[512, 1_000_000]()
     bench_size_t[512, 100_000]()
     bench_size_t[512, 10_000]()
-
     print("\n" + "=" * 70)
     print("  Benchmark complete!")
     print("=" * 70)
