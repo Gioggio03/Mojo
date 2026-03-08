@@ -184,7 +184,7 @@ struct Pipeline[*Ts: NodeTrait]:
         out_comm.init_pointee_move(comm^)
         for i in range(0, np):
             var cpu_id: Int # identifier of the CPU core assigned to the task running this stage
-            cpu_id = self.cpu_ids[self.last_assigned_cpu + idx] if self.pinning_enabled else -1
+            cpu_id = self.cpu_ids[self.last_assigned_cpu + i] if self.pinning_enabled else -1
             self.tg.create_task(executor_task[idx, length](self.nodes[idx],
                                                            in_comm,
                                                            out_comm,
