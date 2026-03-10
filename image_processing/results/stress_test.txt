@@ -1,0 +1,246 @@
+======================================================================
+  Image Processing Pipeline Benchmark [STRESS TEST]
+  Pipeline: Source -> Grayscale -> Blur -> Sharpen -> Brightness -> Sink
+  Images per run: 2000
+  Queue: MPMC_padding_optional_v2
+  Focus: Only SEQ (True Data Pipelining)
+======================================================================
+
+======================================================================
+  Image Size: 64x64 (12288 bytes)
+  Messages per run: 2000
+======================================================================
+
+  --- SEQ: all stages with 1 replica ---
+
+  [SEQ] 3 stages (Source->Gray->Sink):
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 2931438000 | Time: 23.009588 ms | Throughput: 86920.28731674813 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 112.338475 ms
+
+  [SEQ] 4 stages (Source->Gray->Blur->Sink):
+[36m{MoStream} Starting pipeline execution with 4 stages and total parallelism of 4 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 2920140000 | Time: 346.716849 ms | Throughput: 5768.395755119474 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 347.517678 ms
+
+  [SEQ] 5 stages (Source->Gray->Blur->Sharp->Sink):
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 5 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 2920164000 | Time: 355.238136 ms | Throughput: 5630.026163632387 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 356.537567 ms
+
+  [SEQ] 6 stages (Source->Gray->Blur->Sharp->Bright->Sink):
+[36m{MoStream} Starting pipeline execution with 6 stages and total parallelism of 6 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 3411552000 | Time: 361.751486 ms | Throughput: 5528.657316973675 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 362.75661 ms
+
+  --- Summary ---
+  Config          | Stages | Time (ms)     | Speedup vs 3-stage baseline
+  ----------------|--------|---------------|----------------------------
+  SEQ             | 3      | 112.338475 | baseline
+  SEQ             | 4      | 347.517678 | 0.32325974219935943
+  SEQ             | 5      | 356.537567 | 0.31508173443052634
+  SEQ             | 6      | 362.75661 | 0.3096800220952555
+
+======================================================================
+  Image Size: 128x128 (49152 bytes)
+  Messages per run: 2000
+======================================================================
+
+  --- SEQ: all stages with 1 replica ---
+
+  [SEQ] 3 stages (Source->Gray->Sink):
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 11726466000 | Time: 88.138784 ms | Throughput: 22691.486190687632 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 89.513204 ms
+
+  [SEQ] 4 stages (Source->Gray->Blur->Sink):
+[36m{MoStream} Starting pipeline execution with 4 stages and total parallelism of 4 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 11684280000 | Time: 1376.18499 ms | Throughput: 1453.2929907918847 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 1379.735144 ms
+
+  [SEQ] 5 stages (Source->Gray->Blur->Sharp->Sink):
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 5 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 11684304000 | Time: 1422.599398 ms | Throughput: 1405.8771589610922 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 1425.416084 ms
+
+  [SEQ] 6 stages (Source->Gray->Blur->Sharp->Bright->Sink):
+[36m{MoStream} Starting pipeline execution with 6 stages and total parallelism of 6 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 13650156000 | Time: 1434.849805 ms | Throughput: 1393.874113534831 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 1436.827996 ms
+
+  --- Summary ---
+  Config          | Stages | Time (ms)     | Speedup vs 3-stage baseline
+  ----------------|--------|---------------|----------------------------
+  SEQ             | 3      | 89.513204 | baseline
+  SEQ             | 4      | 1379.735144 | 0.06487709209210372
+  SEQ             | 5      | 1425.416084 | 0.06279794721328541
+  SEQ             | 6      | 1436.827996 | 0.06229917864156094
+
+======================================================================
+  Image Size: 256x256 (196608 bytes)
+  Messages per run: 2000
+======================================================================
+
+  --- SEQ: all stages with 1 replica ---
+
+  [SEQ] 3 stages (Source->Gray->Sink):
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 47066142000 | Time: 360.335499 ms | Throughput: 5550.382922444174 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 361.277822 ms
+
+  [SEQ] 4 stages (Source->Gray->Blur->Sink):
+[36m{MoStream} Starting pipeline execution with 4 stages and total parallelism of 4 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 46913730000 | Time: 5600.4669 ms | Throughput: 357.1130828395753 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 5605.031705 ms
+
+  [SEQ] 5 stages (Source->Gray->Blur->Sharp->Sink):
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 5 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 46913802000 | Time: 5700.829142 ms | Throughput: 350.82616057816944 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 5709.679831 ms
+
+  [SEQ] 6 stages (Source->Gray->Blur->Sharp->Bright->Sink):
+[36m{MoStream} Starting pipeline execution with 6 stages and total parallelism of 6 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 54777222000 | Time: 5756.922843 ms | Throughput: 347.40781743007983 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 5763.957132 ms
+
+  --- Summary ---
+  Config          | Stages | Time (ms)     | Speedup vs 3-stage baseline
+  ----------------|--------|---------------|----------------------------
+  SEQ             | 3      | 361.277822 | baseline
+  SEQ             | 4      | 5605.031705 | 0.06445598187744773
+  SEQ             | 5      | 5709.679831 | 0.06327462006511937
+  SEQ             | 6      | 5763.957132 | 0.06267878364227919
+
+======================================================================
+  Image Size: 512x512 (786432 bytes)
+  Messages per run: 2000
+======================================================================
+
+  --- SEQ: all stages with 1 replica ---
+
+  [SEQ] 3 stages (Source->Gray->Sink):
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 187569918000 | Time: 1554.092854 ms | Throughput: 1286.9243911985711 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 1558.452676 ms
+
+  [SEQ] 4 stages (Source->Gray->Blur->Sink):
+[36m{MoStream} Starting pipeline execution with 4 stages and total parallelism of 4 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 186831114000 | Time: 22407.39003 ms | Throughput: 89.25626756718708 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 22421.96125 ms
+
+  [SEQ] 5 stages (Source->Gray->Blur->Sharp->Sink):
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 5 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 186831234000 | Time: 22808.507169 ms | Throughput: 87.68658050178242 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 22831.835686 ms
+
+  [SEQ] 6 stages (Source->Gray->Blur->Sharp->Bright->Sink):
+[36m{MoStream} Starting pipeline execution with 6 stages and total parallelism of 6 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 218286198000 | Time: 23110.11711 ms | Throughput: 86.5421836886572 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 23133.201229 ms
+
+  --- Summary ---
+  Config          | Stages | Time (ms)     | Speedup vs 3-stage baseline
+  ----------------|--------|---------------|----------------------------
+  SEQ             | 3      | 1558.452676 | baseline
+  SEQ             | 4      | 22421.96125 | 0.06950563595323313
+  SEQ             | 5      | 22831.835686 | 0.06825787892979672
+  SEQ             | 6      | 23133.201229 | 0.06736865600971426
+
+======================================================================
+  Image Size: 1024x1024 (3145728 bytes)
+  Messages per run: 2000
+======================================================================
+
+  --- SEQ: all stages with 1 replica ---
+
+  [SEQ] 3 stages (Source->Gray->Sink):
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 750279882000 | Time: 5945.242071 ms | Throughput: 336.4034594580598 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 5964.57159 ms
+
+  [SEQ] 4 stages (Source->Gray->Blur->Sink):
+[36m{MoStream} Starting pipeline execution with 4 stages and total parallelism of 4 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 748802250000 | Time: 89180.05307 ms | Throughput: 22.426539693020167 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 89236.997791 ms
+
+  [SEQ] 5 stages (Source->Gray->Blur->Sharp->Sink):
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 5 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 748802442000 | Time: 91868.098087 ms | Throughput: 21.770342933473817 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 91958.178089 ms
+
+  [SEQ] 6 stages (Source->Gray->Blur->Sharp->Bright->Sink):
+[36m{MoStream} Starting pipeline execution with 6 stages and total parallelism of 6 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 2000 | Checksum: 874623480000 | Time: 93101.911849 ms | Throughput: 21.481835982528022 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 93199.462463 ms
+
+  --- Summary ---
+  Config          | Stages | Time (ms)     | Speedup vs 3-stage baseline
+  ----------------|--------|---------------|----------------------------
+  SEQ             | 3      | 5964.57159 | baseline
+  SEQ             | 4      | 89236.997791 | 0.06683967118626616
+  SEQ             | 5      | 91958.178089 | 0.06486178515006355
+  SEQ             | 6      | 93199.462463 | 0.06399791836104121
+
+======================================================================
+  Benchmark complete!
+======================================================================

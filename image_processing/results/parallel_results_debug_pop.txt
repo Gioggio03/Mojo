@@ -1,0 +1,96 @@
+======================================================================
+  Image Processing Pipeline Benchmark [SEQ vs PAR]
+  Pipeline: Source -> Grayscale -> Blur -> Sharpen -> Brightness -> Sink
+  Images per run: 2000
+  Queue: MPMC_padding_optional_v2
+  Parallelism tested: SEQ, PAR(P=2), PAR(P=4)
+======================================================================
+
+======================================================================
+  Image Size: 64x64 (12288 bytes)
+  Messages per run: 2000
+======================================================================
+
+  --- SEQ: all stages with 1 replica ---
+
+  [SEQ] 3 stages (Source->Gray->Sink):
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+Transform Grayscale processed 500 items
+Transform Grayscale processed 1000 items
+Transform Grayscale processed 1500 items
+Transform Grayscale processed 2000 items
+  [Sink] Images received: 2000 | Checksum: 2931438000 | Time: 22.802642 ms | Throughput: 87709.13475727945 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 110.401367 ms
+
+  [SEQ] 4 stages (Source->Gray->Blur->Sink):
+[36m{MoStream} Starting pipeline execution with 4 stages and total parallelism of 4 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+Transform Grayscale processed 500 items
+Transform Grayscale processed 1000 items
+Transform Grayscale processed 1500 items
+Transform GaussianBlur processed 500 items
+Transform Grayscale processed 2000 items
+Transform GaussianBlur processed 1000 items
+Transform GaussianBlur processed 1500 items
+Transform GaussianBlur processed 2000 items
+  [Sink] Images received: 2000 | Checksum: 2920140000 | Time: 354.122942 ms | Throughput: 5647.756083535531 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 354.67931 ms
+
+  [SEQ] 5 stages (Source->Gray->Blur->Sharp->Sink):
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 5 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+Transform Grayscale processed 500 items
+Transform Grayscale processed 1000 items
+Transform Grayscale processed 1500 items
+Transform GaussianBlur processed 500 items
+Transform Sharpen processed 500 items
+Transform Grayscale processed 2000 items
+Transform GaussianBlur processed 1000 items
+Transform Sharpen processed 1000 items
+Transform GaussianBlur processed 1500 items
+Transform Sharpen processed 1500 items
+Transform GaussianBlur processed 2000 items
+Transform Sharpen processed 2000 items
+  [Sink] Images received: 2000 | Checksum: 2920164000 | Time: 358.663492 ms | Throughput: 5576.257535573205 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 359.43917 ms
+
+  [SEQ] 6 stages (Source->Gray->Blur->Sharp->Bright->Sink):
+[36m{MoStream} Starting pipeline execution with 6 stages and total parallelism of 6 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+Transform Grayscale processed 500 items
+Transform Grayscale processed 1000 items
+Transform Grayscale processed 1500 items
+Transform GaussianBlur processed 500 items
+Transform Sharpen processed 500 items
+Transform Brightness processed 500 items
+Transform Grayscale processed 2000 items
+Transform GaussianBlur processed 1000 items
+Transform Sharpen processed 1000 items
+Transform Brightness processed 1000 items
+Transform GaussianBlur processed 1500 items
+Transform Sharpen processed 1500 items
+Transform Brightness processed 1500 items
+Transform GaussianBlur processed 2000 items
+Transform Sharpen processed 2000 items
+Transform Brightness processed 2000 items
+  [Sink] Images received: 2000 | Checksum: 3411552000 | Time: 365.803557 ms | Throughput: 5467.415397494344 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 366.703685 ms
+
+  --- PAR(P=2): intermediate stages with 2 replicas ---
+
+  [PAR P=2] 3 stages (Source->Gray(2)->Sink):
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 4 threads[0m
+[36m{MoStream} CPU pinning is disabled[0m
+[36m{MoStream} Pipeline starts...[0m
+Transform Grayscale processed 500 items
+Transform Grayscale processed 500 items
+Transform Grayscale processed 1000 items

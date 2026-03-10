@@ -1,0 +1,69 @@
+======================================================================
+  Image Processing Pipeline Benchmark [SEQ vs PAR]
+  Pipeline: Source -> Grayscale -> Blur -> Sharpen -> Brightness -> Sink
+  Images per run: 200
+  Queue: MPMC_padding_optional_v2
+  Parallelism tested: SEQ, PAR(P=2), PAR(P=4)
+======================================================================
+
+======================================================================
+  Image Size: 64x64 (12288 bytes)
+  Messages per run: 200
+======================================================================
+
+  --- SEQ: all stages with 1 replica ---
+
+  [SEQ] 3 stages (Source->Gray->Sink):
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 200 | Checksum: 293143800 | Time: 4.124732 ms | Throughput: 48487.99873543299 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 89.831319 ms
+
+  [SEQ] 4 stages (Source->Gray->Blur->Sink):
+[36m{MoStream} Starting pipeline execution with 4 stages and total parallelism of 4 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 200 | Checksum: 292014000 | Time: 33.74037 ms | Throughput: 5927.617272721076 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 34.407739 ms
+
+  [SEQ] 5 stages (Source->Gray->Blur->Sharp->Sink):
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 5 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 200 | Checksum: 292016400 | Time: 34.573523 ms | Throughput: 5784.773510064334 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 35.253994 ms
+
+  [SEQ] 6 stages (Source->Gray->Blur->Sharp->Bright->Sink):
+[36m{MoStream} Starting pipeline execution with 6 stages and total parallelism of 6 threads[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 200 | Checksum: 341155200 | Time: 35.525077 ms | Throughput: 5629.825939575022 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 36.220646 ms
+
+  --- PAR(P=2): intermediate stages with 2 replicas ---
+
+  [PAR P=2] 3 stages (Source->Gray(2)->Sink):
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 4 threads[0m
+[36m{MoStream} CPU pinning is disabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 200 | Checksum: 293143800 | Time: 1.71033 ms | Throughput: 116936.49763495933 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 1.994383 ms
+
+  [PAR P=2] 4 stages (Source->Gray(2)->Blur(2)->Sink):
+[36m{MoStream} Starting pipeline execution with 4 stages and total parallelism of 6 threads[0m
+[36m{MoStream} CPU pinning is disabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 200 | Checksum: 292014000 | Time: 17.62792 ms | Throughput: 11345.638055992995 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+    Total: 18.188069 ms
+
+  [PAR P=2] 5 stages (Source->Gray(2)->Blur(2)->Sharp(2)->Sink):
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 8 threads[0m
+[36m{MoStream} CPU pinning is disabled[0m
+[36m{MoStream} Pipeline starts...[0m
