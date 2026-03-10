@@ -9,7 +9,7 @@ fn main() raises:
     var blur = GaussianBlur()
     var sharp = Sharpen()
     var sink = ImageSink()
-    var pipeline = Pipeline((seq(source), parallel(gray, 2), parallel(blur, 2), parallel(sharp, 2), seq(sink)))
+    var pipeline = Pipeline((seq(source), parallel(gray, 3), parallel(blur, 4), parallel(sharp, 5), seq(sink)))
     pipeline.setPinning(False)
     pipeline.run()
     print("Done!")

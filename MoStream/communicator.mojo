@@ -8,6 +8,7 @@ from MoStream.MPMC_padding_optional_v2 import MPMCQueue # MPMC by Dmitry Vyukov 
 from collections import Optional
 from sys.info import size_of
 from os.atomic import Atomic
+from memory import Reference
 
 # Trait of messages that can be sent through the Communicator
 comptime MessageTrait = ImplicitlyCopyable & Writable
@@ -37,8 +38,8 @@ struct Communicator[T: MessageTrait](Movable):
     var queue: UnsafePointer[MPMCQueue[MessageWrapper[Self.T]], MutExternalOrigin]
     var prodNum: Int # number of producers
     var consNum: Int # number of consumers
-    var destroyCount: Atomic[DType.uint64] # counter to coordinate the destruction of the Communicator
-    var finishedProducerCount: Atomic[DType.uint64] # counter to coordinate the sending of end-of-stream messages by producers
+    var destroyCount: UnsafePointer[Atomic[DType.int64], MutExternalOrigin]
+    var finishedProducerCount: UnsafePointer[Atomic[DType.int64], MutExternalOrigin]
 
     # constructor
     fn __init__(out self, pN: Int, cN: Int, queue_size: Int):
@@ -47,13 +48,19 @@ struct Communicator[T: MessageTrait](Movable):
         self.queue.init_pointee_move(q^)
         self.prodNum = pN
         self.consNum = cN
-        self.destroyCount = Atomic[DType.uint64](cN)
-        self.finishedProducerCount = Atomic[DType.uint64](pN)
+        self.destroyCount = alloc[Atomic[DType.int64]](1)
+        self.destroyCount[] = Atomic[DType.int64](cN)
+        self.finishedProducerCount = alloc[Atomic[DType.int64]](1)
+        self.finishedProducerCount[] = Atomic[DType.int64](pN)
 
     # destructor
     fn __del__(deinit self):
         self.queue.destroy_pointee()
         self.queue.free()
+        self.destroyCount.destroy_pointee()
+        self.destroyCount.free()
+        self.finishedProducerCount.destroy_pointee()
+        self.finishedProducerCount.free()
 
     # move constructor
     fn __moveinit__(out self, deinit existing: Self):
@@ -61,19 +68,19 @@ struct Communicator[T: MessageTrait](Movable):
         self.queue = existing.queue
         self.prodNum = existing.prodNum
         self.consNum = existing.consNum
-        self.destroyCount = Atomic[DType.uint64](self.consNum)
-        self.finishedProducerCount = Atomic[DType.uint64](self.prodNum)        
+        self.destroyCount = existing.destroyCount
+        self.finishedProducerCount = existing.finishedProducerCount
 
     # signaling that a producer has finished sending messages (to coordinate the sending of end-of-stream messages)
     fn producer_finished(mut self):
-        old_count = self.finishedProducerCount.fetch_sub(1)
+        old_count = self.finishedProducerCount[].fetch_sub(1)
         if old_count == 1: # this was the last producer to finish
             for i in range(0, self.consNum):
                 self.push(MessageWrapper[Self.T](eos = True))
 
     # check whether the Communicator can be safely destroyed
     fn check_isDestroyable(mut self) -> Bool:
-        old_count = self.destroyCount.fetch_sub(1)
+        old_count = self.destroyCount[].fetch_sub(1)
         if old_count == 1: # this was the last consumer to check for destroyability
             return True
         else:

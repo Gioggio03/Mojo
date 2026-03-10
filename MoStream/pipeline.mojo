@@ -1,6 +1,6 @@
 # MoStream pipeline implementation
 
-from runtime.asyncrt import create_task, TaskGroup
+from runtime.asyncrt import create_task, TaskGroup, parallelism_level
 from collections import Optional
 from MoStream.communicator import MessageTrait, MessageWrapper, Communicator
 from MoStream.stage import StageKind, StageTrait
@@ -171,8 +171,8 @@ struct Pipeline[*Ts: NodeTrait]:
         self.queue_size = 1024 # default size of the MPMC queues used for communication between stages
         mapping_str = getenv("MOSTREAM_PINNING", "")
         self.parse_mapping_string(mapping_str)
-        if (self.getNumThreads() > self.num_cpus):
-            raise("Error: the number of threads in the pipeline is greater than the number of CPU cores")
+        if (self.getNumNodes() > parallelism_level()):
+            raise("Error: the number of nodes in the pipeline is greater than the number threads available in the thread pool")
 
     # _run_from
     fn _run_from[idx: Int, length: Int, M: MessageTrait](mut self, in_comm: UnsafePointer[mut=True, Communicator[M]]):
@@ -202,7 +202,7 @@ struct Pipeline[*Ts: NodeTrait]:
         var status = "disabled"
         if self.pinning_enabled:
             status = "enabled"
-        print_cyan_color("{MoStream} Starting pipeline execution with " + String(Self.N) + " stages and total parallelism of " + String(self.getNumThreads()) + " threads")
+        print_cyan_color("{MoStream} Starting pipeline execution with " + String(Self.N) + " stages and total parallelism of " + String(self.getNumNodes()) + " nodes...")
         print_cyan_color("{MoStream} CPU pinning is " + status)
         print_cyan_color("{MoStream} Pipeline starts...")
         comm = Communicator[Self.Ts[0].InType](pN=0, cN=self.nodes[0].parallelism(), queue_size=self.queue_size)
@@ -231,10 +231,10 @@ struct Pipeline[*Ts: NodeTrait]:
     fn setQueueSize(mut self, queue_size: Int):
         self.queue_size = queue_size
 
-    # get number of threads required by this pipeline
-    fn getNumThreads(self) -> Int:
-        var total_threads = 0
+    # get number of nodes of this pipeline
+    fn getNumNodes(self) -> Int:
+        var total_nodes = 0
         @parameter
         for i in range(0, Self.N):
-            total_threads += self.nodes[i].parallelism()
-        return total_threads
+            total_nodes += self.nodes[i].parallelism()
+        return total_nodes
