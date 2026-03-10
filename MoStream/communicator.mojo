@@ -41,9 +41,9 @@ struct Communicator[T: MessageTrait](Movable):
     var finishedProducerCount: Atomic[DType.uint64] # counter to coordinate the sending of end-of-stream messages by producers
 
     # constructor
-    fn __init__(out self, pN: Int, cN: Int):
+    fn __init__(out self, pN: Int, cN: Int, queue_size: Int):
         self.queue = alloc[MPMCQueue[MessageWrapper[Self.T]]](1)
-        q = MPMCQueue[MessageWrapper[Self.T]](size=1024)
+        q = MPMCQueue[MessageWrapper[Self.T]](size=queue_size)
         self.queue.init_pointee_move(q^)
         self.prodNum = pN
         self.consNum = cN

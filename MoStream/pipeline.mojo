@@ -150,6 +150,7 @@ struct Pipeline[*Ts: NodeTrait]:
     var tg: TaskGroup
     var pinning_enabled: Bool
     var last_assigned_cpu: Int
+    var queue_size: Int
 
     # constructor
     fn __init__(out self, var nodes: Tuple[*Self.Ts]) raises:
@@ -167,6 +168,7 @@ struct Pipeline[*Ts: NodeTrait]:
         self.tg = TaskGroup()
         self.pinning_enabled = False
         self.last_assigned_cpu = 0
+        self.queue_size = 1024 # default size of the MPMC queues used for communication between stages
         mapping_str = getenv("MOSTREAM_PINNING", "")
         self.parse_mapping_string(mapping_str)
         if (self.getNumThreads() > self.num_cpus):
@@ -179,7 +181,7 @@ struct Pipeline[*Ts: NodeTrait]:
         @parameter
         if idx < Self.N-1:
             nc = self.nodes[idx+1].parallelism()
-        comm = Communicator[Self.Ts[idx].OutType](np, nc)
+        comm = Communicator[Self.Ts[idx].OutType](pN=np, cN=nc, queue_size=self.queue_size)
         out_comm = alloc[Communicator[Self.Ts[idx].OutType]](1)
         out_comm.init_pointee_move(comm^)
         for i in range(0, np):
@@ -203,7 +205,7 @@ struct Pipeline[*Ts: NodeTrait]:
         print_cyan_color("{MoStream} Starting pipeline execution with " + String(Self.N) + " stages and total parallelism of " + String(self.getNumThreads()) + " threads")
         print_cyan_color("{MoStream} CPU pinning is " + status)
         print_cyan_color("{MoStream} Pipeline starts...")
-        comm = Communicator[Self.Ts[0].InType](0, self.nodes[0].parallelism())
+        comm = Communicator[Self.Ts[0].InType](pN=0, cN=self.nodes[0].parallelism(), queue_size=self.queue_size)
         first_comm = alloc[Communicator[Self.Ts[0].InType]](1)
         first_comm.init_pointee_move(comm^)
         self._run_from[0, Self.N](first_comm)
@@ -224,6 +226,10 @@ struct Pipeline[*Ts: NodeTrait]:
     # enable/disable pinning for the pipeline threads
     fn setPinning(mut self, enabled: Bool):
         self.pinning_enabled = enabled
+
+    # set the size of the queues used by the communicators between stages
+    fn setQueueSize(mut self, queue_size: Int):
+        self.queue_size = queue_size
 
     # get number of threads required by this pipeline
     fn getNumThreads(self) -> Int:
