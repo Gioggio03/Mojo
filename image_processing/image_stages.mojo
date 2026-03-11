@@ -32,7 +32,7 @@ struct ImageSource[ImgW: Int, ImgH: Int, NumMessages: Int](StageTrait):
         return self.pool
     
     fn received_eos(mut self):
-        print("  [ImageSource] EOS received")
+        pass
 
 # ============================================================================
 # Grayscale — TRANSFORM stage
@@ -64,7 +64,7 @@ struct Grayscale(StageTrait):
         return out
 
     fn received_eos(mut self):
-        print("  [Grayscale] EOS received")
+        pass
 
 # ============================================================================
 # GaussianBlur — TRANSFORM stage
@@ -121,7 +121,7 @@ struct GaussianBlur(StageTrait):
         return out
 
     fn received_eos(mut self):
-        print("  [GaussianBlur] EOS received")
+        pass
 
 # ============================================================================
 # Sharpen — TRANSFORM stage
@@ -194,7 +194,7 @@ struct Sharpen(StageTrait):
         return out
 
     fn received_eos(mut self):
-        print("  [Sharpen] EOS received")
+        pass
 
 # ============================================================================
 # Brightness — TRANSFORM stage
@@ -225,7 +225,7 @@ struct Brightness[Offset: Int](StageTrait):
         return out
 
     fn received_eos(mut self):
-        print("  [Brightness] EOS received")
+        pass
 
 # ============================================================================
 # ImageSink — SINK stage
@@ -253,7 +253,7 @@ struct ImageSink(StageTrait):
         self.checksum_total += input.checksum()
 
     fn received_eos(mut self):
-        print("  [ImageSink] EOS received")
+        pass
         var elapsed_ns = perf_counter_ns() - self.start_ns
         var elapsed_ms = Float64(Int(elapsed_ns)) / 1_000_000.0
         var throughput: Float64 = 0.0

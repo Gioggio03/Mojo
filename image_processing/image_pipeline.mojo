@@ -206,14 +206,60 @@ fn bench_image_size[W: Int, H: Int]() raises:
     var par4_6_ms = Float64(Int(perf_counter_ns() - t0)) / 1_000_000.0
     print("    Total: " + String(par4_6_ms) + " ms")
 
-    # Summary table
-    print("\n  --- Summary ---")
-    print("  Stages | SEQ (ms)       | PAR P=2 (ms)   | Speedup(2) | PAR P=4 (ms)   | Speedup(4)")
-    print("  -------|----------------|----------------|------------|----------------|----------")
-    print("  3      | " + String(seq3_ms) + " | " + String(par2_3_ms) + " | " + String(seq3_ms / par2_3_ms) + " | " + String(par4_3_ms) + " | " + String(seq3_ms / par4_3_ms))
-    print("  4      | " + String(seq4_ms) + " | " + String(par2_4_ms) + " | " + String(seq4_ms / par2_4_ms) + " | " + String(par4_4_ms) + " | " + String(seq4_ms / par4_4_ms))
-    print("  5      | " + String(seq5_ms) + " | " + String(par2_5_ms) + " | " + String(seq5_ms / par2_5_ms) + " | " + String(par4_5_ms) + " | " + String(seq5_ms / par4_5_ms))
-    print("  6      | " + String(seq6_ms) + " | " + String(par2_6_ms) + " | " + String(seq6_ms / par2_6_ms) + " | " + String(par4_6_ms) + " | " + String(seq6_ms / par4_6_ms))
+    # Calculations
+    var r_num = Float64(NUM_IMAGES)
+    var s_ms = 1000.0
+    
+    # Throughputs (img/s)
+    var seq3_tput = r_num / (seq3_ms / s_ms)
+    var seq4_tput = r_num / (seq4_ms / s_ms)
+    var seq5_tput = r_num / (seq5_ms / s_ms)
+    var seq6_tput = r_num / (seq6_ms / s_ms)
+    
+    var par2_3_tput = r_num / (par2_3_ms / s_ms)
+    var par2_4_tput = r_num / (par2_4_ms / s_ms)
+    var par2_5_tput = r_num / (par2_5_ms / s_ms)
+    var par2_6_tput = r_num / (par2_6_ms / s_ms)
+
+    var par4_3_tput = r_num / (par4_3_ms / s_ms)
+    var par4_4_tput = r_num / (par4_4_ms / s_ms)
+    var par4_5_tput = r_num / (par4_5_ms / s_ms)
+    var par4_6_tput = r_num / (par4_6_ms / s_ms)
+
+    # Scalability (vs 3 stages SEQ)
+    var seq3_scal = seq3_ms / seq3_ms
+    var seq4_scal = seq3_ms / seq4_ms
+    var seq5_scal = seq3_ms / seq5_ms
+    var seq6_scal = seq3_ms / seq6_ms
+
+    # Speedups
+    var s2_3 = seq3_ms / par2_3_ms; var s4_3 = seq3_ms / par4_3_ms
+    var s2_4 = seq4_ms / par2_4_ms; var s4_4 = seq4_ms / par4_4_ms
+    var s2_5 = seq5_ms / par2_5_ms; var s4_5 = seq5_ms / par4_5_ms
+    var s2_6 = seq6_ms / par2_6_ms; var s4_6 = seq6_ms / par4_6_ms
+
+    # Efficiency (Speedup / P)
+    var e2_3 = s2_3 / 2.0; var e4_3 = s4_3 / 4.0
+    var e2_4 = s2_4 / 2.0; var e4_4 = s4_4 / 4.0
+    var e2_5 = s2_5 / 2.0; var e4_5 = s4_5 / 4.0
+    var e2_6 = s2_6 / 2.0; var e4_6 = s4_6 / 4.0
+
+    # Summary tables
+    print("\n  --- Summary (Sequential P=1) ---")
+    print("  Stages | Time (ms)      | Throughput (img/s) | Scalability (vs 3 stg)")
+    print("  -------|----------------|--------------------|-----------------------")
+    print("  3      | " + String(seq3_ms) + " | " + String(seq3_tput) + " | " + String(seq3_scal))
+    print("  4      | " + String(seq4_ms) + " | " + String(seq4_tput) + " | " + String(seq4_scal))
+    print("  5      | " + String(seq5_ms) + " | " + String(seq5_tput) + " | " + String(seq5_scal))
+    print("  6      | " + String(seq6_ms) + " | " + String(seq6_tput) + " | " + String(seq6_scal))
+
+    print("\n  --- Summary (Parallel Performance vs Sequential Baseline) ---")
+    print("  Stages | P=2 T(ms)      | P=2 (img/s) | P=2 Sp. | P=2 Eff. | P=4 T(ms)      | P=4 (img/s) | P=4 Sp. | P=4 Eff.")
+    print("  -------|----------------|-------------|---------|----------|----------------|-------------|---------|---------")
+    print("  3      | " + String(par2_3_ms) + " | " + String(par2_3_tput) + " | " + String(s2_3) + " | " + String(e2_3) + " | " + String(par4_3_ms) + " | " + String(par4_3_tput) + " | " + String(s4_3) + " | " + String(e4_3))
+    print("  4      | " + String(par2_4_ms) + " | " + String(par2_4_tput) + " | " + String(s2_4) + " | " + String(e2_4) + " | " + String(par4_4_ms) + " | " + String(par4_4_tput) + " | " + String(s4_4) + " | " + String(e4_4))
+    print("  5      | " + String(par2_5_ms) + " | " + String(par2_5_tput) + " | " + String(s2_5) + " | " + String(e2_5) + " | " + String(par4_5_ms) + " | " + String(par4_5_tput) + " | " + String(s4_5) + " | " + String(e4_5))
+    print("  6      | " + String(par2_6_ms) + " | " + String(par2_6_tput) + " | " + String(s2_6) + " | " + String(e2_6) + " | " + String(par4_6_ms) + " | " + String(par4_6_tput) + " | " + String(s4_6) + " | " + String(e4_6))
 
 
 # ============================================================================
@@ -227,6 +273,14 @@ def main():
     print("  Queue: MPMC_padding_optional_v2")
     print("  Parallelism tested: SEQ, PAR(P=2), PAR(P=4)")
     print("=" * 70)
+
+    # Warmup run to initialize Mojo runtime and thread pools
+    print("\n[Warmup] Initializing runtime...")
+    try:
+        run_seq_3[64, 64]()
+    except:
+        pass
+    print("[Warmup] Complete.\n")
 
     # Run benchmarks for different image sizes
     bench_image_size[64, 64]()
