@@ -228,6 +228,26 @@ struct Brightness[Offset: Int](StageTrait):
         pass
 
 # ============================================================================
+# PassThrough — TRANSFORM stage (no-op)
+# Forwards images without any processing.
+# Used to measure ideal source bandwidth: Source -> PassThrough -> Sink
+# ============================================================================
+struct PassThrough(StageTrait):
+    comptime kind = StageKind.TRANSFORM
+    comptime InType = PPMImage
+    comptime OutType = PPMImage
+    comptime name = "PassThrough"
+
+    fn __init__(out self):
+        pass
+
+    fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
+        return input
+
+    fn received_eos(mut self):
+        pass
+
+# ============================================================================
 # ImageSink — SINK stage
 # Collects processed images, counts them, computes checksum for validation,
 # and reports timing/throughput at end of stream.
