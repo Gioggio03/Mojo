@@ -8,3 +8,7 @@ spot_test
 scalability_bench_*_pinning
 scalability_bench_test
 benchmark_pipe_*_pinning
+
+# Fastflow comparison binaries
+fastflow_comparison/source_rate_benchmark
+
