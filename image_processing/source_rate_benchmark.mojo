@@ -1,18 +1,18 @@
 # Source-Rate Benchmark
-#
+# 
 # Goal: find how much parallelism is needed in Gray/Blur/Sharp to match
 #       the raw throughput of the Source stage (the theoretical ceiling).
-#
+# 
 # Hardware: 24 physical cores (48 logical with HT — not used).
 # Thread budget: source(1) + sink(1) = 2 fixed → max 22 transform threads.
-#
+# 
 # Structure:
 #   Phase 0: Source baseline  — Source -> PassThrough -> Sink
 #   Phase 1: Sequential       — Source -> Gray(1) -> Blur(1) -> Sharp(1) -> Sink
 #   Phase 2: Uniform sweep    — P=2,3,4,5,6,7  (max total: 7*3+2=23 threads)
 #   Phase 3: Smart configs    — proportional to stage cost, up to G2 B14 S6
 #                               (max total: 2+14+6+2=24 threads)
-#
+# 
 # Pipeline: Source -> Grayscale -> GaussianBlur -> Sharpen -> Sink
 
 from MoStream import Pipeline, seq, parallel
@@ -44,6 +44,7 @@ fn print_row(config: String, threads: Int, ms: Float64, tput: Float64, source_tp
 # Source(1) -> PassThrough(1) -> Sink(1)
 # Total threads: 2
 # ============================================================================
+
 fn run_source_baseline() raises -> Float64:
     var source = ImageSource[W, H, NUM_IMAGES]()
     var pt = PassThrough()
@@ -61,6 +62,7 @@ fn run_source_baseline() raises -> Float64:
 # Source(1) -> Gray(1) -> Blur(1) -> Sharp(1) -> Sink(1)
 # Total threads: 5
 # ============================================================================
+
 fn run_seq() raises -> Float64:
     var source = ImageSource[W, H, NUM_IMAGES]()
     var gray = Grayscale()
@@ -242,7 +244,6 @@ fn run_smart_g2_b14_s6() raises -> Float64:
 # ============================================================================
 def main():
     var n = NUM_IMAGES
-
     print("=" * 70)
     print("  Source-Rate Benchmark")
     print("  Image: " + String(W) + "x" + String(H) + " | N=" + String(n))
@@ -264,12 +265,11 @@ def main():
     # Phase 0: Source baseline
     # ----------------------------------------------------------------
     print("PHASE 0: Source baseline (theoretical ceiling)")
-    print("  Config: Source(1) -> PassThrough(1) -> Sink(1)  [2 total threads]")
+    print("  Config: Source(1) -> PassThrough(1) -> Sink(1)  [3 total threads]")
     print("  " + "-" * 66)
     var t_source = run_source_baseline()
     var tput_source = throughput(n, t_source)
     print("  Time: " + String(t_source) + " ms | Throughput: " + String(tput_source) + " img/s  <-- TARGET")
-
     print("\n  " + "=" * 66)
     print("  Config                    | Threads | Time (ms)  | Tput (img/s) | vs Source")
     print("  " + "-" * 66)

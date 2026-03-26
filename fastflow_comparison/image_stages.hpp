@@ -20,6 +20,7 @@ using namespace ff;
 // ImageSource — first pipeline stage (generates images)
 // Produces NUM_IMAGES copies of a synthetic gradient image.
 // ============================================================================
+
 struct ImageSource : ff_node_t<PPMImage> {
     int img_w, img_h, num_messages;
     int count;
@@ -41,6 +42,7 @@ struct ImageSource : ff_node_t<PPMImage> {
 // Converts RGB to grayscale: gray = (77*R + 150*G + 29*B) >> 8
 // Output is 3-channel (R=G=B=gray) to maintain PPMImage format.
 // ============================================================================
+
 struct GrayscaleWorker : ff_node_t<PPMImage> {
     PPMImage* svc(PPMImage* input) override {
         int w = input->width;
@@ -64,6 +66,7 @@ struct GrayscaleWorker : ff_node_t<PPMImage> {
 // GaussianBlurWorker — TRANSFORM stage
 // 3x3 Gaussian kernel: [1 2 1; 2 4 2; 1 2 1] / 16
 // ============================================================================
+
 struct GaussianBlurWorker : ff_node_t<PPMImage> {
     PPMImage* svc(PPMImage* input) override {
         int w = input->width;
@@ -100,6 +103,7 @@ struct GaussianBlurWorker : ff_node_t<PPMImage> {
 // SharpenWorker — TRANSFORM stage
 // 3x3 sharpening kernel: [0 -1 0; -1 5 -1; 0 -1 0]
 // ============================================================================
+
 struct SharpenWorker : ff_node_t<PPMImage> {
     PPMImage* svc(PPMImage* input) override {
         int w = input->width;
@@ -135,6 +139,7 @@ struct SharpenWorker : ff_node_t<PPMImage> {
 // PassThroughWorker — TRANSFORM stage (no-op)
 // Forwards images without processing. Used for source bandwidth baseline.
 // ============================================================================
+
 struct PassThroughWorker : ff_node_t<PPMImage> {
     PPMImage* svc(PPMImage* input) override {
         return input;
@@ -145,6 +150,7 @@ struct PassThroughWorker : ff_node_t<PPMImage> {
 // ImageSink — last pipeline stage (collects results)
 // Counts images, computes checksum, reports timing/throughput.
 // ============================================================================
+
 struct ImageSink : ff_node_t<PPMImage> {
     int count;
     uint64_t checksum_total;

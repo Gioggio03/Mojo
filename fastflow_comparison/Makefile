@@ -1,15 +1,15 @@
 # Makefile for FastFlow image processing benchmark
-#
+# 
 # FastFlow is header-only. Set FF_HOME to the root of your FastFlow installation.
 # Example: make FF_HOME=/path/to/fastflow
-#
+# 
 # If FastFlow is not installed, clone it:
 #   git clone https://github.com/fastflow/fastflow.git
 
 FF_HOME ?= ../fastflow
 
 CXX      = g++
-CXXFLAGS = -std=c++17 -O3 -DNDEBUG -I$(FF_HOME)
+CXXFLAGS = -std=c++17 -O3 -DNDEBUG -I$(FF_HOME) -DFF_BOUNDED_BUFFER -DDEFAULT_BUFFER_CAPACITY=1024
 LDFLAGS  = -pthread
 
 # Optional: enable native arch optimizations (same machine compilation)

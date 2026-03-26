@@ -112,23 +112,3 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable](Movable):
                 # Coda vuota: restituisci None invece di fare busy-wait infinito
                 return Optional[Self.T](None)
             # else: seq > expected_seq significa che siamo in ritardo, riprova con nuovo pr
-
-# Test function to verify the basic functionality of the MPMCQueue
-fn test_streaming():
-    var queue = MPMCQueue[Int](size=1024)
-    resultPop = queue.push(42)
-    if not resultPop:
-        print("Failed to push data into the queue: the queue seems full!")
-        return
-    var received_data = queue.pop()
-    if (not received_data):
-        print("Failed to pop data from the queue: the queue seems empty!")
-        return
-    if received_data.value() == 42:
-        print("Success! Data transferred")
-    else:
-        print("Failure! Data mismatch")
-
-# Main
-def main():
-    test_streaming()

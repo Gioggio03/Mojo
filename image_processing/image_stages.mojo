@@ -12,6 +12,7 @@ from time import perf_counter_ns
 # Generates images from a pre-loaded pool, cycling through them N times.
 # Images are created synthetically as gradients of the given size.
 # ============================================================================
+
 struct ImageSource[ImgW: Int, ImgH: Int, NumMessages: Int](StageTrait):
     comptime kind = StageKind.SOURCE
     comptime InType = PPMImage
@@ -40,6 +41,7 @@ struct ImageSource[ImgW: Int, ImgH: Int, NumMessages: Int](StageTrait):
 #   gray = 0.299*R + 0.587*G + 0.114*B
 # Output is still 3-channel (R=G=B=gray) to maintain PPMImage format.
 # ============================================================================
+
 struct Grayscale(StageTrait):
     comptime kind = StageKind.TRANSFORM
     comptime InType = PPMImage
@@ -73,6 +75,7 @@ struct Grayscale(StageTrait):
 #   [2 4 2]  / 16
 #   [1 2 1]
 # ============================================================================
+
 struct GaussianBlur(StageTrait):
     comptime kind = StageKind.TRANSFORM
     comptime InType = PPMImage
@@ -130,6 +133,7 @@ struct GaussianBlur(StageTrait):
 #   [-1  5 -1]
 #   [ 0 -1  0]
 # ============================================================================
+
 struct Sharpen(StageTrait):
     comptime kind = StageKind.TRANSFORM
     comptime InType = PPMImage
@@ -201,6 +205,7 @@ struct Sharpen(StageTrait):
 # Adjusts brightness by adding a fixed offset to all channels.
 # Values are clamped to [0, 255].
 # ============================================================================
+
 struct Brightness[Offset: Int](StageTrait):
     comptime kind = StageKind.TRANSFORM
     comptime InType = PPMImage
@@ -232,6 +237,7 @@ struct Brightness[Offset: Int](StageTrait):
 # Forwards images without any processing.
 # Used to measure ideal source bandwidth: Source -> PassThrough -> Sink
 # ============================================================================
+
 struct PassThrough(StageTrait):
     comptime kind = StageKind.TRANSFORM
     comptime InType = PPMImage
@@ -242,7 +248,8 @@ struct PassThrough(StageTrait):
         pass
 
     fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
-        return input
+        var res = Optional[PPMImage](input^)
+        return res
 
     fn received_eos(mut self):
         pass
@@ -252,6 +259,7 @@ struct PassThrough(StageTrait):
 # Collects processed images, counts them, computes checksum for validation,
 # and reports timing/throughput at end of stream.
 # ============================================================================
+
 struct ImageSink(StageTrait):
     comptime kind = StageKind.SINK
     comptime InType = PPMImage

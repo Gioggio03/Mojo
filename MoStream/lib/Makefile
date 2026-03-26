@@ -2,7 +2,7 @@
 CC      := gcc
 
 # Common flags
-CFLAGS  := -O2 -Wall -Wextra -fPIC -D_GNU_SOURCE
+CFLAGS  := -O3 -Wall -Wextra -fPIC -D_GNU_SOURCE
 LDFLAGS := -lpthread
 
 # Targets

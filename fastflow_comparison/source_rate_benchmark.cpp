@@ -1,10 +1,10 @@
 // Source-Rate Benchmark — FastFlow version
-//
+// 
 // Direct equivalent of the Mojo source_rate_benchmark.
 // Uses ff_pipeline for stage chaining and ff_farm for parallel stages.
-//
+// 
 // Pipeline: Source -> Grayscale -> GaussianBlur -> Sharpen -> Sink
-//
+// 
 // Phases:
 //   0: Source baseline — Source -> PassThrough -> Sink
 //   1: Sequential      — Source -> Gray(1) -> Blur(1) -> Sharp(1) -> Sink
@@ -135,9 +135,9 @@ static void print_row(const char* config, int threads, double ms, double tput, d
 // ============================================================================
 // Main
 // ============================================================================
+
 int main() {
     int n = NUM_IMAGES;
-
     std::printf("======================================================================\n");
     std::printf("  Source-Rate Benchmark (FastFlow)\n");
     std::printf("  Image: %dx%d | N=%d\n", W, H, n);

@@ -36,6 +36,7 @@ struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
 
     # copy constructor — deep copy of pixel data (O(W*H*3))
     fn __copyinit__(out self, existing: Self):
+        print("WARNING: PPMImage copy constructor called — this is an O(W*H) operation!")
         self.width = existing.width
         self.height = existing.height
         var num_bytes = self.width * self.height * 3

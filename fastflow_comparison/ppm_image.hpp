@@ -34,6 +34,7 @@ struct PPMImage {
 
     // Copy constructor — deep copy (O(W*H*3))
     PPMImage(const PPMImage& other) : width(other.width), height(other.height) {
+        printf("WARNING: PPMImage copy constructor called — this is an O(W*H) operation!\n");
         int num_bytes = width * height * 3;
         if (num_bytes > 0 && other.data) {
             data = new uint8_t[num_bytes];
