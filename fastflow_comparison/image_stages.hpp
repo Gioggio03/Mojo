@@ -162,7 +162,7 @@ struct ImageSink : ff_node_t<PPMImage> {
         if (count == 0)
             start_time = std::chrono::high_resolution_clock::now();
         count++;
-        checksum_total += input->checksum();
+        // checksum_total += input->checksum();
         delete input;
         return GO_ON;
     }

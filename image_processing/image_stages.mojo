@@ -248,8 +248,7 @@ struct PassThrough(StageTrait):
         pass
 
     fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
-        var res = Optional[PPMImage](input^)
-        return res
+        return input
 
     fn received_eos(mut self):
         pass
@@ -278,10 +277,9 @@ struct ImageSink(StageTrait):
         if self.count == 0:
             self.start_ns = perf_counter_ns()
         self.count += 1
-        self.checksum_total += input.checksum()
+        # self.checksum_total += input.checksum()
 
     fn received_eos(mut self):
-        pass
         var elapsed_ns = perf_counter_ns() - self.start_ns
         var elapsed_ms = Float64(Int(elapsed_ns)) / 1_000_000.0
         var throughput: Float64 = 0.0

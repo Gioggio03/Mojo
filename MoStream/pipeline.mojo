@@ -57,13 +57,12 @@ fn execute_source[Stage: StageTrait,
     var end_of_stream = False
     while (not end_of_stream):
         output = s.next_element()
-        output_1 = rebind[Optional[Out]](output)
-        if output_1 == None:
+        if output == None:
             end_of_stream = True
             outComm[].producer_finished()
             s.received_eos()
         else:
-            outComm[].push(MessageWrapper[Out](data = output_1.take(), eos = False))
+            outComm[].push(MessageWrapper[Out](data = rebind[Optional[Out]](output).take(), eos = False))
     # destroy the input communicator
     if (inComm[].check_isDestroyable()):
         inComm.destroy_pointee()
@@ -79,12 +78,11 @@ fn execute_sink[Stage: StageTrait,
     var end_of_stream = False
     while (not end_of_stream):
         input = inComm[].pop()
-        input_1 = rebind[MessageWrapper[Stage.InType]](input)
-        if input_1.eos:
+        if input.eos:
             end_of_stream = True
             s.received_eos()
         else:
-            s.consume_element(input_1.data.take())
+            s.consume_element(rebind[MessageWrapper[Stage.InType]](input).data.take())
     # destroy the output and input communicators
     outComm.destroy_pointee()
     outComm.free()
@@ -102,16 +100,14 @@ fn execute_transform[Stage: StageTrait,
     var end_of_stream = False
     while (not end_of_stream):
         input = inComm[].pop()
-        input_2 = rebind[MessageWrapper[Stage.InType]](input)
-        if input_2.eos:
+        if input.eos:
             end_of_stream = True
             outComm[].producer_finished()
             s.received_eos()
         else:
-            output = s.compute(input_2.data.take())
-            output_2 = rebind[Optional[Out]](output)
-            if (output_2 != None):
-                outComm[].push(MessageWrapper[Out](data = output_2.take(), eos = False))
+            output = s.compute(rebind[MessageWrapper[Stage.InType]](input).data.take())
+            if (output != None):
+                outComm[].push(MessageWrapper[Out](data = rebind[Optional[Out]](output).take(), eos = False))
     # destroy the input communicator
     if (inComm[].check_isDestroyable()):
         inComm.destroy_pointee()
@@ -128,13 +124,12 @@ fn execute_transform_many[Stage: StageTrait,
     var e = Emitter(outComm)
     while (not end_of_stream):
         input = inComm[].pop()
-        input_2 = rebind[MessageWrapper[Stage.InType]](input)
-        if input_2.eos:
+        if input.eos:
             end_of_stream = True
             outComm[].producer_finished()
             s.received_eos()
         else:
-            output = s.compute_many(input_2.data.take(), rebind[Emitter[Stage.OutType]](e))
+            output = s.compute_many(rebind[MessageWrapper[Stage.InType]](input).data.take(), rebind[Emitter[Stage.OutType]](e))
     # destroy the input communicator
     if (inComm[].check_isDestroyable()):
         inComm.destroy_pointee()

@@ -4,7 +4,7 @@ from MoStream import Pipeline, seq, parallel
 from image_stages import ImageSource, Grayscale, GaussianBlur, Sharpen, PassThrough, ImageSink
 from time import perf_counter_ns
 
-comptime NUM_IMAGES: Int = 1000
+comptime NUM_IMAGES: Int = 10000
 comptime W: Int = 512
 comptime H: Int = 512
 
@@ -47,7 +47,6 @@ fn run_source_baseline() raises -> Float64:
 # ============================================================================
 def main():
     var n = NUM_IMAGES
-
     print("=" * 70)
     print("  Source-Rate Benchmark")
     print("  Image: " + String(W) + "x" + String(H) + " | N=" + String(n))

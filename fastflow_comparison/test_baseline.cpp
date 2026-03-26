@@ -14,7 +14,7 @@
 
 using namespace ff;
 
-static constexpr int NUM_IMAGES = 1000;
+static constexpr int NUM_IMAGES = 10000;
 static constexpr int W = 512;
 static constexpr int H = 512;
 
