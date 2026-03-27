@@ -1,0 +1,93 @@
+nohup: ignoring input
+=== Building FastFlow benchmark ===
+
+=== Running FastFlow source_rate_benchmark (512x512) ===
+
+======================================================================
+  Source-Rate Benchmark (FastFlow Time-Based)
+  Image: 512x512 | Duration=60s
+  Pipeline: Source -> Gray -> Blur -> Sharp -> Sink
+  Note: each ff_farm adds emitter+collector threads
+  Goal: approach Source throughput by tuning parallelism
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 965554 | Checksum: 0 | Time: 59998.62 ms | Throughput: 16092.94 img/s
+[Warmup] done.
+
+PHASE 0: Source baseline (theoretical ceiling)
+  Config: Source(1) -> PassThrough(1) -> Sink(1)  [3 threads]
+  ------------------------------------------------------------------
+  [Sink] Images received: 958454 | Checksum: 0 | Time: 59998.90 ms | Throughput: 15974.53 img/s
+  Time: 60000.47 ms | Throughput: 15974.11 img/s  <-- TARGET
+
+  ==================================================================
+  Config                    | Threads | N images | Time (ms)  | Tput (img/s) | vs Source
+  ------------------------------------------------------------------
+  [Running] Gray(1) Blur(1) Sharp(1) [SEQ]...
+  [Sink] Images received: 12653 | Checksum: 0 | Time: 71468.15 ms | Throughput: 177.04 img/s
+  Gray(1) Blur(1) Sharp(1) [SEQ] | threads=5 | n=12653 | 71481.39 ms | 177.01 img/s | 1.1%
+  ------------------------------------------------------------------
+  [Running] Gray(2) Blur(2) Sharp(2)      ...
+  [Sink] Images received: 29236 | Checksum: 0 | Time: 83483.47 ms | Throughput: 350.20 img/s
+  Gray(2) Blur(2) Sharp(2)       | threads=8 | n=29236 | 83499.27 ms | 350.13 img/s | 2.2%
+  [Running] Gray(3) Blur(3) Sharp(3)      ...
+  [Sink] Images received: 42265 | Checksum: 0 | Time: 82189.54 ms | Throughput: 514.24 img/s
+  Gray(3) Blur(3) Sharp(3)       | threads=11 | n=42265 | 82202.72 ms | 514.16 img/s | 3.2%
+  [Running] Gray(4) Blur(4) Sharp(4)      ...
+  [Sink] Images received: 55603 | Checksum: 0 | Time: 80851.68 ms | Throughput: 687.72 img/s
+  Gray(4) Blur(4) Sharp(4)       | threads=14 | n=55603 | 80864.92 ms | 687.60 img/s | 4.3%
+  [Running] Gray(5) Blur(5) Sharp(5)      ...
+  [Sink] Images received: 69170 | Checksum: 0 | Time: 80656.01 ms | Throughput: 857.59 img/s
+  Gray(5) Blur(5) Sharp(5)       | threads=17 | n=69170 | 80670.62 ms | 857.44 img/s | 5.4%
+  [Running] Gray(6) Blur(6) Sharp(6)      ...
+  [Sink] Images received: 82044 | Checksum: 0 | Time: 80557.73 ms | Throughput: 1018.45 img/s
+  Gray(6) Blur(6) Sharp(6)       | threads=20 | n=82044 | 80720.12 ms | 1016.40 img/s | 6.4%
+  [Running] Gray(7) Blur(7) Sharp(7) [max]...
+  [Sink] Images received: 79525 | Checksum: 0 | Time: 89808.38 ms | Throughput: 885.50 img/s
+  Gray(7) Blur(7) Sharp(7) [max] | threads=23 | n=79525 | 89954.27 ms | 884.06 img/s | 5.5%
+  ------------------------------------------------------------------
+  [Running] G1 B2  S1  [smart]            ...
+  [Sink] Images received: 22480 | Checksum: 0 | Time: 87199.48 ms | Throughput: 257.80 img/s
+  G1 B2  S1  [smart]             | threads=6 | n=22480 | 87213.61 ms | 257.76 img/s | 1.6%
+  [Running] G1 B4  S2  [smart]            ...
+  [Sink] Images received: 43601 | Checksum: 0 | Time: 86766.82 ms | Throughput: 502.51 img/s
+  G1 B4  S2  [smart]             | threads=9 | n=43601 | 86780.86 ms | 502.43 img/s | 3.1%
+  [Running] G2 B8  S4  [smart]            ...
+  [Sink] Images received: 87871 | Checksum: 0 | Time: 88613.12 ms | Throughput: 991.63 img/s
+  G2 B8  S4  [smart]             | threads=16 | n=87871 | 88628.93 ms | 991.45 img/s | 6.2%
+  [Running] G2 B14 S6  [smart, max=24]    ...
+  [Sink] Images received: 58006 | Checksum: 0 | Time: 67684.09 ms | Throughput: 857.01 img/s
+  G2 B14 S6  [smart, max=24]     | threads=24 | n=58006 | 67709.70 ms | 856.69 img/s | 5.4%
+
+======================================================================
+  SUMMARY
+  Source ceiling:   15974.11 img/s  (target)
+  Sequential:       177.01 img/s  (1.1%)  [12653 images]
+  Best uniform P=7: 884.06 img/s  (5.5%)  [23 threads, 79525 images]
+  Best smart:       856.69 img/s  (5.4%)  [24 threads, 58006 images]
+======================================================================
+
+CSV_START
+config,gray_p,blur_p,sharp_p,total_threads,num_images,time_ms,throughput,efficiency_pct
+source_baseline,0,0,0,3,958454,60000.472282,15974.107595,100.0
+seq,1,1,1,5,12653,71481.390001,177.011107,1.108113
+uniform_p2,2,2,2,8,29236,83499.265994,350.134814,2.191890
+uniform_p3,3,3,3,11,42265,82202.719745,514.155738,3.218682
+uniform_p4,4,4,4,14,55603,80864.920310,687.603472,4.304488
+uniform_p5,5,5,5,17,69170,80670.621203,857.437305,5.367670
+uniform_p6,6,6,6,20,82044,80720.120795,1016.400858,6.362802
+uniform_p7,7,7,7,23,79525,89954.268677,884.060325,5.534333
+smart_g1_b2_s1,1,2,1,6,22480,87213.611090,257.757932,1.613598
+smart_g1_b4_s2,1,4,2,9,43601,86780.857581,502.426471,3.145255
+smart_g2_b8_s4,2,8,4,16,87871,88628.929476,991.448284,6.206596
+smart_g2_b14_s6,2,14,6,24,58006,67709.699498,856.686714,5.362971
+CSV_END
+
+Done. Results: results/source_rate_512.txt
+
+=== Generating comparison plots ===
+Traceback (most recent call last):
+  File "/disc1/homes/gcappello/Mojo/fastflow_comparison_2/compare_results.py", line 17, in <module>
+    import pandas as pd
+ModuleNotFoundError: No module named 'pandas'

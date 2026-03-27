@@ -1,0 +1,82 @@
+Configurazione Gray(1) Blur(1) Sharp(1) [SEQ]:
+Tempo totale test: ~83.1 secondi.
+- Grayscale compute: ~5.3 s (media per thread)
+- Blur compute: ~83.1 s (media per thread)
+- Sharpen compute: ~50.4 s (media per thread)
+-> COLPA: Il collo di bottiglia è BLUR, lavora ininterrottamente per 83.1s su 83.1s totali!
+
+Configurazione Gray(2) Blur(2) Sharp(2):
+Tempo totale test: ~71.6 secondi.
+- Grayscale compute: ~4.2 s (media per thread)
+- Blur compute: ~71.6 s (media per thread)
+- Sharpen compute: ~43.9 s (media per thread)
+-> COLPA: Il collo di bottiglia è BLUR, lavora ininterrottamente per 71.6s su 71.6s totali!
+
+Configurazione Gray(3) Blur(3) Sharp(3):
+Tempo totale test: ~67.7 secondi.
+- Grayscale compute: ~3.9 s (media per thread)
+- Blur compute: ~67.7 s (media per thread)
+- Sharpen compute: ~41.5 s (media per thread)
+-> COLPA: Il collo di bottiglia è BLUR, lavora ininterrottamente per 67.7s su 67.7s totali!
+
+Configurazione Gray(4) Blur(4) Sharp(4):
+Tempo totale test: ~65.8 secondi.
+- Grayscale compute: ~3.7 s (media per thread)
+- Blur compute: ~65.8 s (media per thread)
+- Sharpen compute: ~42.3 s (media per thread)
+-> COLPA: Il collo di bottiglia è BLUR, lavora ininterrottamente per 65.8s su 65.8s totali!
+
+Configurazione Gray(5) Blur(5) Sharp(5):
+Tempo totale test: ~64.7 secondi.
+- Grayscale compute: ~4.0 s (media per thread)
+- Blur compute: ~64.7 s (media per thread)
+- Sharpen compute: ~40.6 s (media per thread)
+-> COLPA: Il collo di bottiglia è BLUR, lavora ininterrottamente per 64.7s su 64.7s totali!
+
+Configurazione Gray(6) Blur(6) Sharp(6):
+Tempo totale test: ~63.9 secondi.
+- Grayscale compute: ~4.1 s (media per thread)
+- Blur compute: ~63.9 s (media per thread)
+- Sharpen compute: ~39.8 s (media per thread)
+-> COLPA: Il collo di bottiglia è BLUR, lavora ininterrottamente per 63.9s su 63.9s totali!
+
+Configurazione Gray(7) Blur(7) Sharp(7) [max]:
+Tempo totale test: ~63.3 secondi.
+- Grayscale compute: ~3.9 s (media per thread)
+- Blur compute: ~63.3 s (media per thread)
+- Sharpen compute: ~39.3 s (media per thread)
+-> COLPA: Il collo di bottiglia è BLUR, lavora ininterrottamente per 63.3s su 63.3s totali!
+
+Configurazione G1 B2  S1  [smart]:
+Tempo totale test: ~81.4 secondi.
+- Grayscale compute: ~7.6 s (media per thread)
+- Blur compute: ~65.7 s (media per thread)
+- Sharpen compute: ~81.4 s (media per thread)
+-> COLPA: Il collo di bottiglia è SHARPEN, lavora ininterrottamente per 81.4s su 81.4s totali! (Blur ora è riuscito a smaltire).
+
+Configurazione G1 B4  S2  [smart]:
+Tempo totale test: ~70.7 secondi.
+- Grayscale compute: ~12.2 s (media per thread)
+- Blur compute: ~57.1 s (media per thread)
+- Sharpen compute: ~70.7 s (media per thread)
+-> COLPA: Il collo di bottiglia è SHARPEN, lavora ininterrottamente per 70.7s su 70.7s totali! (Blur ora è riuscito a smaltire).
+
+Configurazione G2 B8  S4  [smart]:
+Tempo totale test: ~65.4 secondi.
+- Grayscale compute: ~11.8 s (media per thread)
+- Blur compute: ~52.0 s (media per thread)
+- Sharpen compute: ~65.4 s (media per thread)
+-> COLPA: Il collo di bottiglia è SHARPEN, lavora ininterrottamente per 65.4s su 65.4s totali! (Blur ora è riuscito a smaltire).
+
+Configurazione G2 B14 S6  [smart, max=24]:
+Tempo totale test: ~63.7 secondi.
+- Grayscale compute: ~17.3 s (media per thread)
+- Blur compute: ~43.8 s (media per thread)
+- Sharpen compute: ~63.7 s (media per thread)
+-> COLPA: Il collo di bottiglia è SHARPEN, lavora ininterrottamente per 63.7s su 63.7s totali! (Blur ora è riuscito a smaltire).
+
+---------------------------------------------------
+CONCLUSIONI SUI NUOI RISULTATI (VERSIONE SENZA CHECKSUM)
+---------------------------------------------------
+
+Nota: La rimozione del checksum nel Sink ha pareggiato la baseline con FastFlow (~14k vs ~15k img/s), ma il collo di bottiglia nelle fasi di calcolo rimane invariato (Blur per configurazioni uniformi, Sharpen per quelle smart sbilanciate).
