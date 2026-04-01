@@ -11,14 +11,17 @@ RESULTS_DIR="results"
 mkdir -p "$RESULTS_DIR/plots"
 
 SIZE=${1:-512}
-OUTPUT="$RESULTS_DIR/source_rate_${SIZE}.txt"
+OUTPUT="$RESULTS_DIR/test_spot_${SIZE}.txt"
 
-echo "=== Running source_rate_benchmark (${SIZE}x${SIZE}) ==="
-mojo -I .. source_rate_benchmark.mojo | tee "$OUTPUT"
+echo "=== Compiling test_spot ==="
+mojo build -O3 -I .. test_spot.mojo -o test_spot
+
+echo "=== Running test_spot (${SIZE}x${SIZE}, sequential only, ${DURATION:-60}s) ==="
+./test_spot | tee "$OUTPUT"
 
 echo ""
 echo "=== Generating plots ==="
-"$PYTHON" plot_source_rate.py
+"$PYTHON" plot_test_spot.py
 
 echo ""
 echo "Done. Results: $OUTPUT"

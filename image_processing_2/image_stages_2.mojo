@@ -99,17 +99,19 @@ struct Grayscale(StageTrait):
 
     fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
-        var w = input.width
-        var h = input.height
-        var out = PPMImage(w, h)
-        for y in range(h):
-            for x in range(w):
-                var r = input.get_r(x, y).cast[DType.uint32]()
-                var g = input.get_g(x, y).cast[DType.uint32]()
-                var b = input.get_b(x, y).cast[DType.uint32]()
-                # Fixed-point approximation: (77*R + 150*G + 29*B) >> 8
-                var gray = UInt8(((r * 77 + g * 150 + b * 29) >> 8).cast[DType.uint8]())
-                out.set_pixel(x, y, gray, gray, gray)
+        var n_pixels = input.width * input.height
+        var out = PPMImage(input.width, input.height)
+        var in_ptr  = input.data_ptr
+        var out_ptr = out.data_ptr
+        for i in range(n_pixels):
+            var base = i * 3
+            var r = Int((in_ptr + base    ).load())
+            var g = Int((in_ptr + base + 1).load())
+            var b = Int((in_ptr + base + 2).load())
+            var gray = UInt8((r * 77 + g * 150 + b * 29) >> 8)
+            (out_ptr + base    ).store(gray)
+            (out_ptr + base + 1).store(gray)
+            (out_ptr + base + 2).store(gray)
         self.compute_time_ns += perf_counter_ns() - t0
         return out
 
@@ -331,59 +333,79 @@ struct Sharpen(StageTrait):
     fn __init__(out self):
         self.compute_time_ns = 0
 
+    @always_inline
+    fn clamp255(self, v: Int) -> UInt8:
+        if v < 0:   return 0
+        if v > 255: return 255
+        return UInt8(v)
+
+    @always_inline
+    fn load_px(self, ptr: UnsafePointer[UInt8, MutExternalOrigin], i: Int) -> Int:
+        return Int((ptr + i).load())
+
     fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
         var w = input.width
         var h = input.height
         var out = PPMImage(w, h)
+        var in_ptr  = input.data_ptr
+        var out_ptr = out.data_ptr
+
+        # Fast interior path: y in [1, h-2], x in [1, w-2] — no clamp needed
+        for y in range(1, h - 1):
+            for x in range(1, w - 1):
+                var c  = (y * w + x) * 3
+                var up = ((y - 1) * w + x) * 3
+                var dn = ((y + 1) * w + x) * 3
+                var lt = (y * w + (x - 1)) * 3
+                var rt = (y * w + (x + 1)) * 3
+                for ch in range(3):
+                    var v = self.load_px(in_ptr, c  + ch) * 5 \
+                          - self.load_px(in_ptr, up + ch) \
+                          - self.load_px(in_ptr, dn + ch) \
+                          - self.load_px(in_ptr, lt + ch) \
+                          - self.load_px(in_ptr, rt + ch)
+                    (out_ptr + c + ch).store(self.clamp255(v))
+
+        # Border path: pixels on the 4 edges — with clamp on neighbors
         for y in range(h):
             for x in range(w):
-                var sum_r: Int32 = 0
-                var sum_g: Int32 = 0
-                var sum_b: Int32 = 0
-                # Apply sharpening kernel
-                # Center pixel * 5
-                sum_r += input.get_r(x, y).cast[DType.int32]() * 5
-                sum_g += input.get_g(x, y).cast[DType.int32]() * 5
-                sum_b += input.get_b(x, y).cast[DType.int32]() * 5
-                # 4-connected neighbors * -1
-                for i in range(4):
-                    var nx = x
-                    var ny = y
-                    if i == 0:
-                        ny = y - 1
-                    elif i == 1:
-                        ny = y + 1
-                    elif i == 2:
-                        nx = x - 1
-                    else:
-                        nx = x + 1
-                    # clamp
-                    if nx < 0:
-                        nx = 0
-                    if nx >= w:
-                        nx = w - 1
-                    if ny < 0:
-                        ny = 0
-                    if ny >= h:
-                        ny = h - 1
-                    sum_r -= input.get_r(nx, ny).cast[DType.int32]()
-                    sum_g -= input.get_g(nx, ny).cast[DType.int32]()
-                    sum_b -= input.get_b(nx, ny).cast[DType.int32]()
-                # Clamp to 0-255
-                if sum_r < 0:
-                    sum_r = 0
-                if sum_r > 255:
-                    sum_r = 255
-                if sum_g < 0:
-                    sum_g = 0
-                if sum_g > 255:
-                    sum_g = 255
-                if sum_b < 0:
-                    sum_b = 0
-                if sum_b > 255:
-                    sum_b = 255
-                out.set_pixel(x, y, sum_r.cast[DType.uint8](), sum_g.cast[DType.uint8](), sum_b.cast[DType.uint8]())
+                if x != 0 and x != w - 1 and y != 0 and y != h - 1:
+                    continue
+                var sum_r = self.load_px(in_ptr, (y * w + x) * 3    ) * 5
+                var sum_g = self.load_px(in_ptr, (y * w + x) * 3 + 1) * 5
+                var sum_b = self.load_px(in_ptr, (y * w + x) * 3 + 2) * 5
+                var ny: Int
+                var nx: Int
+                # up
+                ny = y - 1
+                if ny < 0: ny = 0
+                sum_r -= self.load_px(in_ptr, (ny * w + x) * 3    )
+                sum_g -= self.load_px(in_ptr, (ny * w + x) * 3 + 1)
+                sum_b -= self.load_px(in_ptr, (ny * w + x) * 3 + 2)
+                # down
+                ny = y + 1
+                if ny >= h: ny = h - 1
+                sum_r -= self.load_px(in_ptr, (ny * w + x) * 3    )
+                sum_g -= self.load_px(in_ptr, (ny * w + x) * 3 + 1)
+                sum_b -= self.load_px(in_ptr, (ny * w + x) * 3 + 2)
+                # left
+                nx = x - 1
+                if nx < 0: nx = 0
+                sum_r -= self.load_px(in_ptr, (y * w + nx) * 3    )
+                sum_g -= self.load_px(in_ptr, (y * w + nx) * 3 + 1)
+                sum_b -= self.load_px(in_ptr, (y * w + nx) * 3 + 2)
+                # right
+                nx = x + 1
+                if nx >= w: nx = w - 1
+                sum_r -= self.load_px(in_ptr, (y * w + nx) * 3    )
+                sum_g -= self.load_px(in_ptr, (y * w + nx) * 3 + 1)
+                sum_b -= self.load_px(in_ptr, (y * w + nx) * 3 + 2)
+                var base = (y * w + x) * 3
+                (out_ptr + base    ).store(self.clamp255(sum_r))
+                (out_ptr + base + 1).store(self.clamp255(sum_g))
+                (out_ptr + base + 2).store(self.clamp255(sum_b))
+
         self.compute_time_ns += perf_counter_ns() - t0
         return out
 

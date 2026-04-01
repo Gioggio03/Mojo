@@ -1,3 +1,6 @@
+# Progress log locale (non pushare)
+PROGRESS.md
+
 image_processing/.venv/
 benchmarks/.venv/
 benchmarks/__pycache__/

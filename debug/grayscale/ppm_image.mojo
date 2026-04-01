@@ -2,7 +2,7 @@
 # Satisfies MessageTrait (= ImplicitlyCopyable & Writable) required by MoStream communicators.
 # Data is heap-allocated via UnsafePointer for efficient move semantics.
 
-from memory import memcpy
+from memory import memcpy, memset
 
 # PPMImage struct
 struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
@@ -22,8 +22,9 @@ struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
         self.height = height
         var num_bytes = width * height * 3
         self.data_ptr = alloc[UInt8](num_bytes)
-        for i in range(num_bytes):
-            (self.data_ptr + i).init_pointee_move(UInt8(0))
+        memset(self.data_ptr, UInt8(0), num_bytes)
+        #for i in range(num_bytes):
+        #    (self.data_ptr + i).init_pointee_move(UInt8(0))
 
     # constructor with dimensions and fill value
     fn __init__(out self, width: Int, height: Int, fill: UInt8):
@@ -31,8 +32,9 @@ struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
         self.height = height
         var num_bytes = width * height * 3
         self.data_ptr = alloc[UInt8](num_bytes)
-        for i in range(num_bytes):
-            (self.data_ptr + i).init_pointee_move(fill)
+        memset(self.data_ptr, fill, num_bytes)
+        #for i in range(num_bytes):
+        #    (self.data_ptr + i).init_pointee_move(fill)
 
     # copy constructor — deep copy of pixel data (O(W*H*3))
     fn __copyinit__(out self, existing: Self):
@@ -56,23 +58,28 @@ struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
         if self.data_ptr:
             self.data_ptr.free()
 
+    @always_inline
     # total number of bytes in the pixel buffer
     fn num_bytes(self) -> Int:
         return self.width * self.height * 3
 
+    @always_inline
     # get pixel value at (x, y) — returns (R, G, B)
     fn get_r(self, x: Int, y: Int) -> UInt8:
         var idx = (y * self.width + x) * 3
         return (self.data_ptr + idx)[]
 
+    @always_inline
     fn get_g(self, x: Int, y: Int) -> UInt8:
         var idx = (y * self.width + x) * 3 + 1
         return (self.data_ptr + idx)[]
 
+    @always_inline
     fn get_b(self, x: Int, y: Int) -> UInt8:
         var idx = (y * self.width + x) * 3 + 2
         return (self.data_ptr + idx)[]
 
+    @always_inline
     # set pixel value at (x, y)
     fn set_pixel(mut self, x: Int, y: Int, r: UInt8, g: UInt8, b: UInt8):
         var idx = (y * self.width + x) * 3
@@ -80,14 +87,17 @@ struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
         (self.data_ptr + idx + 1)[] = g
         (self.data_ptr + idx + 2)[] = b
 
+    @always_inline
     # set raw byte at a given index
     fn set_byte(mut self, index: Int, value: UInt8):
         (self.data_ptr + index)[] = value
 
+    @always_inline
     # get raw byte at a given index
     fn get_byte(self, index: Int) -> UInt8:
         return (self.data_ptr + index)[]
 
+    @always_inline
     # compute a simple checksum (sum of all bytes) for validation
     fn checksum(self) -> UInt64:
         var total: UInt64 = 0

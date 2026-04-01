@@ -46,6 +46,8 @@ def parse_csv_results(filepath, framework):
                 continue
             if in_csv and line and not line.startswith('config,'):
                 parts = [p.strip() for p in line.split(',')]
+                
+                # Case 1: Full 9-column format (FastFlow or old Mojo)
                 if len(parts) >= 9:
                     rows.append({
                         'framework':     framework,
@@ -59,6 +61,33 @@ def parse_csv_results(filepath, framework):
                         'throughput':    float(parts[7]),
                         'efficiency':    float(parts[8]),
                     })
+                # Case 2: Simplified 5-column format (New Mojo test_spot)
+                elif len(parts) >= 5:
+                    config_name = parts[0]
+                    # Infer threads for visualization
+                    threads = 1
+                    if 'seq' in config_name: threads = 5
+                    elif 'uniform_p' in config_name:
+                        p = int(config_name.split('_p')[1])
+                        threads = p * 3 + 2
+                    elif 'g1_b2_s1' in config_name: threads = 6
+                    elif 'g1_b4_s2' in config_name: threads = 9
+                    elif 'g2_b8_s4' in config_name: threads = 16
+                    elif 'g2_b14_s6' in config_name: threads = 24
+                    elif 'source_baseline' in config_name: threads = 3
+                    
+                    rows.append({
+                        'framework':     framework,
+                        'config':        config_name,
+                        'gray_p':        0, # ignored
+                        'blur_p':        0, # ignored
+                        'sharp_p':       0, # ignored
+                        'total_threads': threads,
+                        'num_images':    int(parts[1]),
+                        'time_ms':       float(parts[2]),
+                        'throughput':    float(parts[3]),
+                        'efficiency':    float(parts[4]),
+                    })
     return rows
 
 
@@ -67,7 +96,7 @@ def load_results():
     all_rows = []
 
     # Mojo results
-    mojo_file = os.path.join(MOJO_RESULTS_DIR, 'source_rate_512.txt')
+    mojo_file = os.path.join(MOJO_RESULTS_DIR, 'test_spot_512.txt')
     if os.path.exists(mojo_file):
         all_rows.extend(parse_csv_results(mojo_file, 'Mojo'))
         print(f"Loaded Mojo results: {mojo_file}")
