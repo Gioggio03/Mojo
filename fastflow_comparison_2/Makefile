@@ -1,57 +1,53 @@
 # Makefile for FastFlow image processing benchmark
-# 
-# FastFlow is header-only. Set FF_HOME to the root of your FastFlow installation.
-# Example: make FF_HOME=/path/to/fastflow
-# 
-# If FastFlow is not installed, clone it:
-#   git clone https://github.com/fastflow/fastflow.git
+#
+# Uso:
+#   make                        -> compila con -O3 (default)
+#   make OPT=O2                 -> compila con -O2
+#   make run_test_spot          -> compila -O3, esegui, genera grafici
+#   make run_test_spot OPT=O2   -> compila -O2, esegui, genera grafici
 
 FF_HOME ?= ../fastflow
+OPT     ?= O3
 
 CXX      = g++
-CXXFLAGS = -std=c++17 -O3 -DNDEBUG -I$(FF_HOME) -DFF_BOUNDED_BUFFER -DDEFAULT_BUFFER_CAPACITY=1024
+CXXFLAGS = -std=c++17 -$(OPT) -DNDEBUG -I$(FF_HOME) -DFF_BOUNDED_BUFFER -DDEFAULT_BUFFER_CAPACITY=1024
 LDFLAGS  = -pthread
 
-# Optional: enable native arch optimizations (same machine compilation)
-# CXXFLAGS += -march=native
+RESULTS = results
+PYTHON  ?= /disc1/homes/gcappello/Mojo/benchmarks/.venv/bin/python3
 
-SRCS     = source_rate_benchmark.cpp
-TARGET   = source_rate_benchmark
-RESULTS  = results
+.PHONY: all clean run_test_spot check_ff help
 
-.PHONY: all clean run help
+all: check_ff test_spot
 
-all: check_ff $(TARGET)
-
-$(TARGET): $(SRCS) ppm_image.hpp image_stages.hpp
-	$(CXX) $(CXXFLAGS) -o $@ $(SRCS) $(LDFLAGS)
+test_spot: test_spot.cpp ppm_image.hpp image_stages.hpp
+	$(CXX) $(CXXFLAGS) -o test_spot test_spot.cpp $(LDFLAGS)
+	@echo "Built with -$(OPT)"
 
 check_ff:
 	@if [ ! -d "$(FF_HOME)/ff" ]; then \
 		echo "ERROR: FastFlow not found at $(FF_HOME)"; \
-		echo ""; \
-		echo "Options:"; \
-		echo "  1. Clone FastFlow:  git clone https://github.com/fastflow/fastflow.git"; \
-		echo "  2. Set FF_HOME:     make FF_HOME=/path/to/fastflow"; \
-		echo ""; \
 		exit 1; \
 	fi
 
-run: $(TARGET)
+run_test_spot: test_spot
 	@mkdir -p $(RESULTS)/plots
-	./$(TARGET) | tee $(RESULTS)/source_rate_512.txt
+	./test_spot | tee $(RESULTS)/test_spot_512_$(OPT).txt
+	$(PYTHON) compare_results.py --ff-file $(RESULTS)/test_spot_512_$(OPT).txt
 
 clean:
-	rm -f $(TARGET)
+	rm -f test_spot
 
 help:
 	@echo "Targets:"
-	@echo "  all     - Build the benchmark (default)"
-	@echo "  run     - Build and run, saving results to results/"
-	@echo "  clean   - Remove compiled binary"
+	@echo "  all              - Compila con OPT (default O3)"
+	@echo "  run_test_spot    - Compila, esegui, genera grafici"
+	@echo "  clean            - Rimuovi binario"
 	@echo ""
-	@echo "Variables:"
-	@echo "  FF_HOME - Path to FastFlow root (default: ../fastflow)"
+	@echo "Variabili:"
+	@echo "  OPT=O2 o OPT=O3  (default: O3)"
+	@echo "  FF_HOME          (default: ../fastflow)"
 	@echo ""
-	@echo "Example:"
-	@echo "  make FF_HOME=/usr/local/include run"
+	@echo "Esempi:"
+	@echo "  make run_test_spot"
+	@echo "  make run_test_spot OPT=O2"

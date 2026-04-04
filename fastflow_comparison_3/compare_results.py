@@ -1,11 +1,14 @@
 """
-Comparison plot: Mojo (MoStream) vs FastFlow image processing benchmark.
+Comparison plot: Mojo V3 (SIMD stages) vs FastFlow -O3.
 
 Reads CSV results from both frameworks and generates:
   1. Side-by-side throughput bar chart
   2. Speedup ratio (FastFlow / Mojo) per configuration
   3. Efficiency comparison (% of source ceiling)
   4. Latency comparison (ms per image)
+
+Mojo results:    ../image_processing_3/results/test_spot_512.txt
+FastFlow results: ../fastflow_comparison_2/results/test_spot_512.txt  (unchanged)
 
 Run:
     python3 compare_results.py
@@ -31,7 +34,7 @@ _args = _parser.parse_args()
 
 # Paths
 FF_RESULTS_DIR  = 'results'
-MOJO_RESULTS_DIR = os.path.join('..', 'image_processing_2', 'results')
+MOJO_RESULTS_DIR = os.path.join('..', 'image_processing_3', 'results')
 PLOTS_DIR = _args.plots_dir or os.path.join(FF_RESULTS_DIR, 'plots')
 os.makedirs(PLOTS_DIR, exist_ok=True)
 
@@ -79,6 +82,7 @@ def parse_csv_results(filepath, framework):
                         p = int(config_name.split('_p')[1])
                         threads = p * 3 + 2
                     elif 'optimal_g2b7s10' in config_name: threads = 21
+                    elif 'optimal_g3b8s8'  in config_name: threads = 21
                     elif 'source_baseline' in config_name: threads = 3
                     
                     rows.append({
@@ -109,7 +113,7 @@ def load_results():
         print(f"WARNING: Mojo results not found: {mojo_file}")
 
     # FastFlow results
-    ff_file = _args.ff_file or os.path.join(FF_RESULTS_DIR, 'test_spot_512.txt')
+    ff_file = _args.ff_file or os.path.join('..', 'fastflow_comparison_2', 'results', 'test_spot_512.txt')
     if os.path.exists(ff_file):
         all_rows.extend(parse_csv_results(ff_file, 'FastFlow'))
         print(f"Loaded FastFlow results: {ff_file}")
@@ -128,7 +132,8 @@ CONFIGS = [
     ('uniform_p5',       'P5\nG5 B5 S5'),
     ('uniform_p6',       'P6\nG6 B6 S6'),
     ('uniform_p7',       'P7\nG7 B7 S7'),
-    ('optimal_g2b7s10',  'Optimal\nG2 B7 S10'),
+    ('optimal_g3b8s8',   'Mojo Opt\nG3 B8 S8'),
+    ('optimal_g2b7s10',  'FF Opt\nG2 B7 S10'),
 ]
 
 MOJO_COLOR = '#FF6F00'    # Orange
