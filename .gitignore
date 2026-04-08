@@ -16,3 +16,13 @@ benchmark_pipe_*_pinning
 # Fastflow comparison binaries
 fastflow_comparison/source_rate_benchmark
 
+# Compiled binaries (V3/V4)
+image_processing_3/.venv/
+image_processing_3/test_spot
+image_processing_3/tune_v3
+image_processing_4/test_spot
+fastflow_comparison_4/test_spot
+fastflow_comparison_2/test_spot
+image_processing_2/test_spot
+image_processing_2/bottleneck_tuned_benchmark
+

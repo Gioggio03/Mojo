@@ -1,0 +1,159 @@
+======================================================================
+  Test Spot Benchmark (FastFlow — V4 planar layout)
+  Image: 512x512 | Duration=60s
+  Pipeline: Source -> Gray -> Blur -> Sharp -> Sink
+======================================================================
+
+[Warmup]...
+[Warmup] done.
+
+PHASE 0: Source baseline
+  Throughput: 3040.0524079159 img/s  <-- TARGET
+
+  Config              | Threads | N images | Time (ms)  | Tput (img/s) | vs Source
+  ------------------------------------------------------------------
+  [Running] SEQ G1 B1 S1...
+    [Grayscale] compute time: 30463.146035 ms
+    [GaussianBlur] compute time: 19816.367547 ms
+    [Sharpen] compute time: 65528.555407 ms
+  SEQ  G1  B1  S1  | threads=5 | n=36185 | 65629.593168 ms | 551.3518864481 img/s | 18.1363%
+  [Running] Uniform P=2...
+    [Grayscale] compute time: 29286.329430 ms
+    [Grayscale] compute time: 29328.613745 ms
+    [GaussianBlur] compute time: 22170.400972 ms
+    [GaussianBlur] compute time: 21907.116880 ms
+    [Sharpen] compute time: 71802.752942 ms
+    [Sharpen] compute time: 71791.164110 ms
+  Uniform P=2      | threads=8 | n=80037 | 72099.473213 ms | 1110.0913284560 img/s | 36.5155%
+  [Running] Uniform P=3...
+    [Grayscale] compute time: 41833.539730 ms
+    [Grayscale] compute time: 41878.980801 ms
+    [Grayscale] compute time: 42074.846254 ms
+    [GaussianBlur] compute time: 37614.846818 ms
+    [GaussianBlur] compute time: 37559.980225 ms
+    [GaussianBlur] compute time: 36398.985281 ms
+    [Sharpen] compute time: 72485.076721 ms
+    [Sharpen] compute time: 72471.035955 ms
+    [Sharpen] compute time: 73702.772022 ms
+  Uniform P=3      | threads=11 | n=108089 | 74419.103894 ms | 1452.4361937220 img/s | 47.7767%
+  [Running] Uniform P=4...
+    [Grayscale] compute time: 18601.906311 ms
+    [Grayscale] compute time: 18387.333937 ms
+    [Grayscale] compute time: 18455.498336 ms
+    [Grayscale] compute time: 18444.882044 ms
+    [GaussianBlur] compute time: 24271.183011 ms
+    [GaussianBlur] compute time: 24555.033399 ms
+    [GaussianBlur] compute time: 24789.041291 ms
+    [GaussianBlur] compute time: 24738.004746 ms
+    [Sharpen] compute time: 82804.918653 ms
+    [Sharpen] compute time: 82741.605078 ms
+    [Sharpen] compute time: 82828.563769 ms
+    [Sharpen] compute time: 83100.034063 ms
+  Uniform P=4      | threads=14 | n=84803 | 84495.453647 ms | 1003.6397976427 img/s | 33.0139%
+  [Running] Uniform P=5...
+    [Grayscale] compute time: 27373.173353 ms
+    [Grayscale] compute time: 23641.258914 ms
+    [Grayscale] compute time: 27816.663162 ms
+    [Grayscale] compute time: 27602.298045 ms
+    [Grayscale] compute time: 27383.146276 ms
+    [GaussianBlur] compute time: 18016.239219 ms
+    [GaussianBlur] compute time: 18425.709155 ms
+    [GaussianBlur] compute time: 18335.238622 ms
+    [GaussianBlur] compute time: 17834.136465 ms
+    [GaussianBlur] compute time: 18534.254449 ms
+    [Sharpen] compute time: 81114.106015 ms
+    [Sharpen] compute time: 81157.692889 ms
+    [Sharpen] compute time: 81049.602142 ms
+    [Sharpen] compute time: 81209.245171 ms
+    [Sharpen] compute time: 81144.478406 ms
+  Uniform P=5      | threads=17 | n=92372 | 82730.168021 ms | 1116.5455384613 img/s | 36.7278%
+  [Running] Uniform P=6...
+    [Grayscale] compute time: 40955.026922 ms
+    [Grayscale] compute time: 37172.180264 ms
+    [Grayscale] compute time: 37188.736638 ms
+    [Grayscale] compute time: 37341.429778 ms
+    [Grayscale] compute time: 36799.035188 ms
+    [Grayscale] compute time: 25017.643161 ms
+    [GaussianBlur] compute time: 30454.201305 ms
+    [GaussianBlur] compute time: 30639.034218 ms
+    [GaussianBlur] compute time: 28224.059657 ms
+    [GaussianBlur] compute time: 31328.482741 ms
+    [GaussianBlur] compute time: 31220.061270 ms
+    [GaussianBlur] compute time: 30496.754677 ms
+    [Sharpen] compute time: 74728.187468 ms
+    [Sharpen] compute time: 74758.716513 ms
+    [Sharpen] compute time: 74753.045993 ms
+    [Sharpen] compute time: 74747.149376 ms
+    [Sharpen] compute time: 74739.277159 ms
+    [Sharpen] compute time: 75181.236102 ms
+  Uniform P=6      | threads=20 | n=161541 | 76731.657214 ms | 2105.2718768926 img/s | 69.2512%
+  [Running] Uniform P=7...
+    [Grayscale] compute time: 33621.414515 ms
+    [Grayscale] compute time: 33298.710459 ms
+    [Grayscale] compute time: 33776.864490 ms
+    [Grayscale] compute time: 33156.048248 ms
+    [Grayscale] compute time: 33370.129057 ms
+    [Grayscale] compute time: 33344.840345 ms
+    [Grayscale] compute time: 33319.317818 ms
+    [GaussianBlur] compute time: 16967.229455 ms
+    [GaussianBlur] compute time: 20014.435904 ms
+    [GaussianBlur] compute time: 21818.851593 ms
+    [GaussianBlur] compute time: 16924.774130 ms
+    [GaussianBlur] compute time: 17121.751449 ms
+    [GaussianBlur] compute time: 16871.594658 ms
+    [GaussianBlur] compute time: 22196.193715 ms
+    [Sharpen] compute time: 72478.156239 ms
+    [Sharpen] compute time: 72490.436620 ms
+    [Sharpen] compute time: 72670.203432 ms
+    [Sharpen] compute time: 72438.638102 ms
+    [Sharpen] compute time: 72487.953342 ms
+    [Sharpen] compute time: 72508.772090 ms
+    [Sharpen] compute time: 72467.038284 ms
+  Uniform P=7      | threads=23 | n=130851 | 74349.064078 ms | 1759.9549049161 img/s | 57.8923%
+  [Running] OPT G2 B7 S10...
+    [Grayscale] compute time: 61015.537276 ms
+    [Grayscale] compute time: 61263.267025 ms
+    [GaussianBlur] compute time: 13684.558804 ms
+    [GaussianBlur] compute time: 11405.233209 ms
+    [GaussianBlur] compute time: 13544.306371 ms
+    [GaussianBlur] compute time: 13453.056269 ms
+    [GaussianBlur] compute time: 14252.181709 ms
+    [GaussianBlur] compute time: 13378.595379 ms
+    [GaussianBlur] compute time: 13631.154419 ms
+    [Sharpen] compute time: 26853.290476 ms
+    [Sharpen] compute time: 26841.904976 ms
+    [Sharpen] compute time: 27666.259095 ms
+    [Sharpen] compute time: 26656.621896 ms
+    [Sharpen] compute time: 27408.409573 ms
+    [Sharpen] compute time: 36692.367022 ms
+    [Sharpen] compute time: 27616.190560 ms
+    [Sharpen] compute time: 27559.460289 ms
+    [Sharpen] compute time: 27593.185852 ms
+    [Sharpen] compute time: 27589.539938 ms
+  OPT  G2  B7  S10 | threads=21 | n=149664 | 61373.833030 ms | 2438.5636778925 img/s | 80.2145%
+
+======================================================================
+  SUMMARY
+  Source ceiling: 3040.05 img/s
+  Sequential:     551.35 img/s  (18.14%)
+  Uniform P=2:    1110.09 img/s  (36.52%)
+  Uniform P=3:    1452.44 img/s  (47.78%)
+  Uniform P=4:    1003.64 img/s  (33.01%)
+  Uniform P=5:    1116.55 img/s  (36.73%)
+  Uniform P=6:    2105.27 img/s  (69.25%)
+  Uniform P=7:    1759.95 img/s  (57.89%)
+  Optimal G2B7S10:2438.56 img/s  (80.21%)
+  Speedup vs seq: 4.42x
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,30405,10001.472317,3040.0524079159,100.0
+seq,36185,65629.593168,551.3518864481,18.136263
+uniform_p2,80037,72099.473213,1110.0913284560,36.515533
+uniform_p3,108089,74419.103894,1452.4361937220,47.776683
+uniform_p4,84803,84495.453647,1003.6397976427,33.013898
+uniform_p5,92372,82730.168021,1116.5455384613,36.727838
+uniform_p6,161541,76731.657214,2105.2718768926,69.251171
+uniform_p7,130851,74349.064078,1759.9549049161,57.892255
+optimal_g2b7s10,149664,61373.833030,2438.5636778925,80.214528
+CSV_END
