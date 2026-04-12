@@ -4,8 +4,7 @@ Comparison plot: Mojo (MoStream) vs FastFlow image processing benchmark.
 Reads CSV results from both frameworks and generates:
   1. Side-by-side throughput bar chart
   2. Speedup ratio (FastFlow / Mojo) per configuration
-  3. Efficiency comparison (% of source ceiling)
-  4. Latency comparison (ms per image)
+  3. Latency comparison (ms per image)
 
 Run:
     python3 compare_results.py
@@ -238,53 +237,7 @@ def plot_speedup_ratio(df):
     print('  -> Plot 2: Speedup ratio saved.')
 
 # ============================================================================
-# Plot 3: Efficiency comparison (% of own source ceiling)
-# ============================================================================
-
-def plot_efficiency_comparison(df):
-    fig, ax = plt.subplots(figsize=(14, 6))
-
-    for fw, color, marker, ls in [
-        ('Mojo', MOJO_COLOR, 'o', '-'),
-        ('FastFlow', FF_COLOR, 's', '--')
-    ]:
-        df_fw = df[df['framework'] == fw]
-        src = df_fw[df_fw['config'] == 'source_baseline']
-        if src.empty:
-            continue
-        src_tput = src.iloc[0]['throughput']
-
-        threads_list, eff_list = [], []
-        for cfg, _ in CONFIGS:
-            row = df_fw[df_fw['config'] == cfg]
-            if not row.empty:
-                threads_list.append(row.iloc[0]['total_threads'])
-                eff_list.append(row.iloc[0]['throughput'] / src_tput * 100.0)
-
-        if threads_list:
-            ax.plot(threads_list, eff_list, marker=marker, color=color,
-                   linewidth=2, markersize=7, linestyle=ls, label=fw)
-            for t, e in zip(threads_list, eff_list):
-                ax.annotate(f'{e:.0f}%', (t, e), textcoords='offset points',
-                           xytext=(0, 8), ha='center', fontsize=7, color=color)
-
-    ax.axhline(y=100.0, color='#4CAF50', linestyle=':', linewidth=1.5,
-              label='Source ceiling (100%)')
-    ax.set_title('Efficiency vs Threads: Mojo vs FastFlow\n'
-                '(% of each framework\'s own source ceiling)',
-                fontsize=13, fontweight='bold')
-    ax.set_xlabel('Total Threads (workers)', fontsize=11)
-    ax.set_ylabel('Efficiency (%)', fontsize=11)
-    ax.set_ylim(0, 115)
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=9)
-    plt.tight_layout()
-    plt.savefig(os.path.join(PLOTS_DIR, 'compare_3_efficiency.png'))
-    plt.close()
-    print('  -> Plot 3: Efficiency comparison saved.')
-
-# ============================================================================
-# Plot 4: Latency per image (ms/image)
+# Plot 3: Latency per image (ms/image)
 # ============================================================================
 
 def plot_latency_comparison(df):
@@ -328,9 +281,9 @@ def plot_latency_comparison(df):
     ax.grid(axis='y', alpha=0.3)
     ax.legend(fontsize=9)
     plt.tight_layout()
-    plt.savefig(os.path.join(PLOTS_DIR, 'compare_4_latency.png'))
+    plt.savefig(os.path.join(PLOTS_DIR, 'compare_3_latency.png'))
     plt.close()
-    print('  -> Plot 4: Latency comparison saved.')
+    print('  -> Plot 3: Latency comparison saved.')
 
 # ============================================================================
 # Summary table
@@ -374,7 +327,6 @@ if __name__ == '__main__':
 
     plot_throughput_comparison(df)
     plot_speedup_ratio(df)
-    plot_efficiency_comparison(df)
     plot_latency_comparison(df)
     print_summary_table(df)
 

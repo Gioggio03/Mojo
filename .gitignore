@@ -1,6 +1,9 @@
 # Progress log locale (non pushare)
 PROGRESS.md
 NOTES.md
+ANALYSIS_MOJO_VS_CPP.md
+ANALYSIS_MOJO_VS_CPP.pdf
+generate_analysis_pdf.py
 
 image_processing/.venv/
 benchmarks/.venv/

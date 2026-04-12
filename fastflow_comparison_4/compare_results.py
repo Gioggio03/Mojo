@@ -4,8 +4,7 @@ Comparison plot: Mojo V4 (planar SIMD) vs FastFlow V4 (planar, -O3).
 Reads CSV results from both frameworks and generates:
   1. Side-by-side throughput bar chart
   2. Speedup ratio (FastFlow / Mojo) per configuration
-  3. Efficiency comparison (% of source ceiling)
-  4. Latency comparison (ms per image)
+  3. Latency comparison (ms per image)
 
 Mojo results:     ../image_processing_4/results/test_spot_512.txt
 FastFlow results: results/test_spot_512_O3.txt  (or --ff-file)
@@ -175,38 +174,6 @@ def plot_speedup_ratio(df):
     plt.close()
     print('  -> Plot 2: Speedup ratio saved.')
 
-def plot_efficiency_comparison(df):
-    fig, ax = plt.subplots(figsize=(14, 6))
-    for fw, color, marker, ls in [('Mojo', MOJO_COLOR, 'o', '-'), ('FastFlow', FF_COLOR, 's', '--')]:
-        df_fw = df[df['framework'] == fw]
-        src = df_fw[df_fw['config'] == 'source_baseline']
-        if src.empty: continue
-        src_tput = src.iloc[0]['throughput']
-        threads_list, eff_list = [], []
-        for cfg, _ in CONFIGS:
-            row = df_fw[df_fw['config'] == cfg]
-            if not row.empty:
-                threads_list.append(row.iloc[0]['total_threads'])
-                eff_list.append(row.iloc[0]['throughput'] / src_tput * 100.0)
-        if threads_list:
-            ax.plot(threads_list, eff_list, marker=marker, color=color,
-                    linewidth=2, markersize=7, linestyle=ls, label=fw)
-            for t, e in zip(threads_list, eff_list):
-                ax.annotate(f'{e:.0f}%', (t, e), textcoords='offset points',
-                            xytext=(0, 8), ha='center', fontsize=7, color=color)
-    ax.axhline(y=100.0, color='#4CAF50', linestyle=':', linewidth=1.5, label='Source ceiling (100%)')
-    ax.set_title("Efficiency vs Threads — V4 Planar Layout\n(% of each framework's own source ceiling)",
-                 fontsize=13, fontweight='bold')
-    ax.set_xlabel('Total Threads', fontsize=11)
-    ax.set_ylabel('Efficiency (%)', fontsize=11)
-    ax.set_ylim(0, 115)
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=9)
-    plt.tight_layout()
-    plt.savefig(os.path.join(PLOTS_DIR, 'compare_3_efficiency.png'))
-    plt.close()
-    print('  -> Plot 3: Efficiency comparison saved.')
-
 def plot_latency_comparison(df):
     if len(df['framework'].unique()) < 2:
         print("  Skipping latency comparison (need both frameworks)"); return
@@ -235,9 +202,9 @@ def plot_latency_comparison(df):
     ax.grid(axis='y', alpha=0.3)
     ax.legend(fontsize=9)
     plt.tight_layout()
-    plt.savefig(os.path.join(PLOTS_DIR, 'compare_4_latency.png'))
+    plt.savefig(os.path.join(PLOTS_DIR, 'compare_3_latency.png'))
     plt.close()
-    print('  -> Plot 4: Latency comparison saved.')
+    print('  -> Plot 3: Latency comparison saved.')
 
 def print_summary_table(df):
     if len(df['framework'].unique()) < 2: return
@@ -263,7 +230,6 @@ if __name__ == '__main__':
     print(f"Frameworks: {list(df['framework'].unique())}, records: {len(df)}")
     plot_throughput_comparison(df)
     plot_speedup_ratio(df)
-    plot_efficiency_comparison(df)
     plot_latency_comparison(df)
     print_summary_table(df)
     print(f"\nAll plots saved to '{PLOTS_DIR}'.")
