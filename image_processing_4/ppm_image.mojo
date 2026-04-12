@@ -14,7 +14,7 @@
 # stride-3 gathers. This enables full auto-vectorization in C++ and more efficient
 # SIMD in Mojo compared to the interleaved layout used in V2/V3.
 
-from memory import memcpy, memset
+from std.memory import memcpy, memset
 
 struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
     var width: Int
@@ -26,20 +26,21 @@ struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
         self.height = 0
         self.data_ptr = UnsafePointer[UInt8, MutExternalOrigin]()
 
-    fn __init__(out self, width: Int, height: Int):
+    def __init__(out self, width: Int, height: Int):
         self.width = width
         self.height = height
         var num_bytes = width * height * 3
         self.data_ptr = alloc[UInt8](num_bytes)
         memset(self.data_ptr, UInt8(0), num_bytes)
 
-    fn __init__(out self, width: Int, height: Int, fill: UInt8):
+    def __init__(out self, width: Int, height: Int, fill: UInt8):
         self.width = width
         self.height = height
         var num_bytes = width * height * 3
         self.data_ptr = alloc[UInt8](num_bytes)
         memset(self.data_ptr, fill, num_bytes)
 
+    # Copy constructor — deep copy of pixel data
     fn __copyinit__(out self, existing: Self):
         self.width = existing.width
         self.height = existing.height
@@ -50,6 +51,7 @@ struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
         else:
             self.data_ptr = UnsafePointer[UInt8, MutExternalOrigin]()
 
+    # Move constructor — steal pointer O(1)
     fn __moveinit__(out self, deinit existing: Self):
         self.width = existing.width
         self.height = existing.height
@@ -60,58 +62,58 @@ struct PPMImage(ImplicitlyCopyable, Writable, Defaultable):
             self.data_ptr.free()
 
     @always_inline
-    fn num_bytes(self) -> Int:
+    def num_bytes(self) -> Int:
         return self.width * self.height * 3
 
     @always_inline
-    fn plane_size(self) -> Int:
+    def plane_size(self) -> Int:
         return self.width * self.height
 
     # Planar channel pointers
     @always_inline
-    fn r_ptr(self) -> UnsafePointer[UInt8, MutExternalOrigin]:
+    def r_ptr(self) -> UnsafePointer[UInt8, MutExternalOrigin]:
         return self.data_ptr
 
     @always_inline
-    fn g_ptr(self) -> UnsafePointer[UInt8, MutExternalOrigin]:
+    def g_ptr(self) -> UnsafePointer[UInt8, MutExternalOrigin]:
         return self.data_ptr + self.width * self.height
 
     @always_inline
-    fn b_ptr(self) -> UnsafePointer[UInt8, MutExternalOrigin]:
+    def b_ptr(self) -> UnsafePointer[UInt8, MutExternalOrigin]:
         return self.data_ptr + 2 * self.width * self.height
 
     @always_inline
-    fn get_r(self, x: Int, y: Int) -> UInt8:
+    def get_r(self, x: Int, y: Int) -> UInt8:
         return (self.r_ptr() + y * self.width + x).load()
 
     @always_inline
-    fn get_g(self, x: Int, y: Int) -> UInt8:
+    def get_g(self, x: Int, y: Int) -> UInt8:
         return (self.g_ptr() + y * self.width + x).load()
 
     @always_inline
-    fn get_b(self, x: Int, y: Int) -> UInt8:
+    def get_b(self, x: Int, y: Int) -> UInt8:
         return (self.b_ptr() + y * self.width + x).load()
 
     @always_inline
-    fn set_pixel(mut self, x: Int, y: Int, r: UInt8, g: UInt8, b: UInt8):
+    def set_pixel(mut self, x: Int, y: Int, r: UInt8, g: UInt8, b: UInt8):
         var idx = y * self.width + x
         (self.r_ptr() + idx).store(r)
         (self.g_ptr() + idx).store(g)
         (self.b_ptr() + idx).store(b)
 
     @always_inline
-    fn checksum(self) -> UInt64:
+    def checksum(self) -> UInt64:
         var total: UInt64 = 0
         var n = self.num_bytes()
         for i in range(n):
             total += (self.data_ptr + i)[].cast[DType.uint64]()
         return total
 
-    fn write_to[W: Writer](self, mut writer: W):
+    def write_to[W: Writer](self, mut writer: W):
         writer.write("PPMImage[", self.width, "x", self.height, "] (planar)")
 
     @staticmethod
-    fn create_gradient(width: Int, height: Int) -> PPMImage:
+    def create_gradient(width: Int, height: Int) -> PPMImage:
         var img = PPMImage(width, height)
         for y in range(height):
             for x in range(width):

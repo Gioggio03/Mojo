@@ -19,7 +19,6 @@
 #   GaussianBlur: 8 pixels per step, 9 vector loads per channel (3 rows × 3 offsets)
 #   Sharpen:      8 pixels per step, 5 vector loads per channel
 
-from collections import Optional
 from MoStream.communicator import MessageTrait
 from MoStream.stage import StageKind, StageTrait
 from ppm_image import PPMImage
@@ -38,13 +37,13 @@ struct TimedImageSource[ImgW: Int, ImgH: Int, DurationSec: Int = 60](StageTrait)
     var start_ns: UInt
     var started: Bool
 
-    fn __init__(out self):
+    def __init__(out self):
         self.count = 0
         self.pool = PPMImage.create_gradient(Self.ImgW, Self.ImgH)
         self.start_ns = 0
         self.started = False
 
-    fn next_element(mut self) raises -> Optional[PPMImage]:
+    def next_element(mut self) -> Optional[PPMImage]:
         if not self.started:
             self.start_ns = perf_counter_ns()
             self.started = True
@@ -53,7 +52,7 @@ struct TimedImageSource[ImgW: Int, ImgH: Int, DurationSec: Int = 60](StageTrait)
         self.count += 1
         return self.pool
 
-    fn received_eos(mut self):
+    def received_eos(mut self):
         pass
 
 # ============================================================================
@@ -67,17 +66,17 @@ struct ImageSource[ImgW: Int, ImgH: Int, NumMessages: Int](StageTrait):
     var count: Int
     var pool: PPMImage
 
-    fn __init__(out self):
+    def __init__(out self):
         self.count = 0
         self.pool = PPMImage.create_gradient(Self.ImgW, Self.ImgH)
 
-    fn next_element(mut self) raises -> Optional[PPMImage]:
+    def next_element(mut self) -> Optional[PPMImage]:
         if self.count >= Self.NumMessages:
             return None
         self.count += 1
         return self.pool
 
-    fn received_eos(mut self):
+    def received_eos(mut self):
         pass
 
 # ============================================================================
@@ -91,10 +90,10 @@ struct Grayscale(StageTrait):
     comptime name = "Grayscale"
     var compute_time_ns: UInt
 
-    fn __init__(out self):
+    def __init__(out self):
         self.compute_time_ns = 0
 
-    fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
+    def compute(mut self, var input: PPMImage) -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
         comptime CHUNK = 8
         var n = input.width * input.height
@@ -108,8 +107,7 @@ struct Grayscale(StageTrait):
             var rv = (in_r + i).load[width=CHUNK]().cast[DType.uint16]()
             var gv = (in_g + i).load[width=CHUNK]().cast[DType.uint16]()
             var bv = (in_b + i).load[width=CHUNK]().cast[DType.uint16]()
-            var gray = (rv * 77 + gv * 150 + bv * 29) >> 8
-            var gray8 = gray.cast[DType.uint8]()
+            var gray8 = ((rv * 77 + gv * 150 + bv * 29) >> 8).cast[DType.uint8]()
             (out_r + i).store(gray8)
             (out_g + i).store(gray8)
             (out_b + i).store(gray8)
@@ -123,7 +121,7 @@ struct Grayscale(StageTrait):
         self.compute_time_ns += perf_counter_ns() - t0
         return out
 
-    fn received_eos(mut self):
+    def received_eos(mut self):
         print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
 
 # ============================================================================
@@ -141,18 +139,18 @@ struct GaussianBlur(StageTrait):
     comptime name = "GaussianBlur"
     var compute_time_ns: UInt
 
-    fn __init__(out self):
+    def __init__(out self):
         self.compute_time_ns = 0
 
     @always_inline
-    fn clamp_coord(self, v: Int, lo: Int, hi: Int) -> Int:
+    def clamp_coord(self, v: Int, lo: Int, hi: Int) -> Int:
         if v < lo: return lo
         if v > hi: return hi
         return v
 
     @always_inline
-    fn border_pixel(self, ch: UnsafePointer[UInt8, MutExternalOrigin],
-                    x: Int, y: Int, w: Int, h: Int) -> UInt8:
+    def border_pixel(self, ch: UnsafePointer[UInt8, MutExternalOrigin],
+                     x: Int, y: Int, w: Int, h: Int) -> UInt8:
         var s: Int = 0
         for ky in range(-1, 2):
             var yy = self.clamp_coord(y + ky, 0, h - 1)
@@ -164,7 +162,7 @@ struct GaussianBlur(StageTrait):
                 s += wt * Int((ch + yy * w + xx).load())
         return UInt8(s >> 4)
 
-    fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
+    def compute(mut self, var input: PPMImage) -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
         comptime CHUNK = 8
         var w = input.width; var h = input.height
@@ -182,7 +180,6 @@ struct GaussianBlur(StageTrait):
             return out
 
         # Process each channel separately — stride-1, 9 vector loads per pixel group
-        @parameter
         for ch in range(3):
             var ch_in  = input.r_ptr() if ch == 0 else (input.g_ptr() if ch == 1 else input.b_ptr())
             var ch_out = out.r_ptr()   if ch == 0 else (out.g_ptr()   if ch == 1 else out.b_ptr())
@@ -232,7 +229,7 @@ struct GaussianBlur(StageTrait):
         self.compute_time_ns += perf_counter_ns() - t0
         return out
 
-    fn received_eos(mut self):
+    def received_eos(mut self):
         print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
 
 # ============================================================================
@@ -248,22 +245,21 @@ struct Sharpen(StageTrait):
     comptime name = "Sharpen"
     var compute_time_ns: UInt
 
-    fn __init__(out self):
+    def __init__(out self):
         self.compute_time_ns = 0
 
     @always_inline
-    fn clamp255(self, v: Int) -> UInt8:
+    def clamp255(self, v: Int) -> UInt8:
         if v < 0: return 0
         if v > 255: return 255
         return UInt8(v)
 
-    fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
+    def compute(mut self, var input: PPMImage) -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
         comptime CHUNK = 8
         var w = input.width; var h = input.height
         var out = PPMImage(w, h)
 
-        @parameter
         for ch in range(3):
             var ch_in  = input.r_ptr() if ch == 0 else (input.g_ptr() if ch == 1 else input.b_ptr())
             var ch_out = out.r_ptr()   if ch == 0 else (out.g_ptr()   if ch == 1 else out.b_ptr())
@@ -284,8 +280,7 @@ struct Sharpen(StageTrait):
                     var trt = (r0 + x + 1).load[width=CHUNK]().cast[DType.int16]()
 
                     var res = tc * 5 - tup - tdn - tlt - trt
-                    var clamped = max(min(res, SIMD[DType.int16, CHUNK](255)), SIMD[DType.int16, CHUNK](0))
-                    (dst + x).store(clamped.cast[DType.uint8]())
+                    (dst + x).store(res.clamp(0, 255).cast[DType.uint8]())
                     x += CHUNK
 
                 while x < w - 1:
@@ -318,7 +313,7 @@ struct Sharpen(StageTrait):
         self.compute_time_ns += perf_counter_ns() - t0
         return out
 
-    fn received_eos(mut self):
+    def received_eos(mut self):
         print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
 
 # ============================================================================
@@ -329,9 +324,9 @@ struct PassThrough(StageTrait):
     comptime InType = PPMImage
     comptime OutType = PPMImage
     comptime name = "PassThrough"
-    fn __init__(out self): pass
-    fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]: return input
-    fn received_eos(mut self): pass
+    def __init__(out self): pass
+    def compute(mut self, var input: PPMImage) -> Optional[PPMImage]: return input
+    def received_eos(mut self): pass
 
 # ============================================================================
 # ImageSink
@@ -346,7 +341,7 @@ struct ImageSink(StageTrait):
     var start_ns: UInt
     var count_ptr: UnsafePointer[Int, MutExternalOrigin]
 
-    fn __init__(out self):
+    def __init__(out self):
         self.count = 0
         self.checksum_total = 0
         self.start_ns = 0
@@ -355,12 +350,12 @@ struct ImageSink(StageTrait):
 
     fn __del__(deinit self): pass
 
-    fn consume_element(mut self, var input: PPMImage) raises:
+    def consume_element(mut self, var input: PPMImage):
         if self.count == 0: self.start_ns = perf_counter_ns()
         self.count += 1
         self.count_ptr[] = self.count
 
-    fn received_eos(mut self):
+    def received_eos(mut self):
         var elapsed_ns = perf_counter_ns() - self.start_ns
         var elapsed_ms = Float64(Int(elapsed_ns)) / 1_000_000.0
         var throughput: Float64 = 0.0
