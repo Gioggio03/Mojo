@@ -29,3 +29,6 @@ fastflow_comparison_2/test_spot
 image_processing_2/test_spot
 image_processing_2/bottleneck_tuned_benchmark
 
+
+# Script confronto stage
+generate_stages_comparison.py
