@@ -1,0 +1,41 @@
+======================================================================
+  Test Spot (FastFlow V4 — planar layout) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=5 B=5 S=5 | threads=17
+======================================================================
+
+[Warmup]...
+[Warmup] done.
+
+Source baseline: 15955.02 img/s
+
+[Running] G=5 B=5 S=5...
+    [Grayscale] compute time: 28007.475546 ms
+    [Grayscale] compute time: 31061.488851 ms
+    [Grayscale] compute time: 31045.345431 ms
+    [Grayscale] compute time: 31093.493682 ms
+    [Grayscale] compute time: 30890.986497 ms
+    [GaussianBlur] compute time: 25376.178287 ms
+    [GaussianBlur] compute time: 25391.409970 ms
+    [GaussianBlur] compute time: 25492.698191 ms
+    [GaussianBlur] compute time: 24464.045092 ms
+    [GaussianBlur] compute time: 25503.001435 ms
+    [Sharpen] compute time: 70046.194193 ms
+    [Sharpen] compute time: 70056.014860 ms
+    [Sharpen] compute time: 70187.250011 ms
+    [Sharpen] compute time: 70191.075126 ms
+    [Sharpen] compute time: 70177.092756 ms
+
+Risultato:
+  Config  : G=5 B=5 S=5
+  Threads : 17
+  N images: 192035
+  Time    : 70750.012123 ms
+  Tput    : 2714.2752 img/s
+  vs Src  : 17.0120%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159557,10000.428174,15955.0168476616,100.0
+g5b5s5,192035,70750.012123,2714.2751532840,17.012048
+CSV_END
