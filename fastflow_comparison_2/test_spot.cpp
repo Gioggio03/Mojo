@@ -1,13 +1,16 @@
-// Test Spot Benchmark — FastFlow V2 stages
+// Test Spot — FastFlow V2 stages, configurazione singola da linea di comando
 //
-// Struttura speculare a image_processing_2/test_spot.mojo:
-//   Phase 0: Source baseline  — Source -> PassThrough -> Sink
-//   Phase 1: Sequential       — Gray(1) -> Blur(1) -> Sharp(1)
-//   Phase 2: Uniform sweep    — P=2..7
-//   Phase 3: Optimal config   — G=2 B=7 S=10
+// Uso:
+//   ./test_spot <G> <B> <S>
 //
-// Stage V2: stesso algoritmo ottimizzato di Mojo (interior/border path,
-// direct pointer, no accessor overhead). Timing per-stage via svc_end().
+// Esempio:
+//   ./test_spot 2 7 10
+//
+// Esegue una sola pipeline per 60 secondi con G worker per Grayscale,
+// B worker per GaussianBlur, S worker per Sharpen, e stampa il throughput.
+//
+// Per il benchmark completo (sweep P=2..7 + configurazione ottimale)
+// usare benchmark_full.
 
 #include <ff/ff.hpp>
 #include <ff/pipeline.hpp>
@@ -22,25 +25,10 @@
 
 using namespace ff;
 
-static constexpr double DURATION_S  = 60.0;
-static constexpr double BASELINE_S  = 10.0;   // source baseline duration
-static constexpr int    W           = 512;
-static constexpr int    H           = 512;
-
-// ============================================================================
-// Pipeline helpers
-// ============================================================================
-
-static ff_farm* make_farm(std::function<ff_node*()> factory, int n) {
-    auto* farm = new ff_farm();
-    std::vector<ff_node*> workers;
-    for (int i = 0; i < n; i++) workers.push_back(factory());
-    farm->add_workers(workers);
-    farm->add_collector(nullptr);
-    return farm;
-}
-
-struct BenchResult { double time_ms; int images; };
+static constexpr double DURATION_S = 60.0;
+static constexpr double BASELINE_S = 10.0;
+static constexpr int    W          = 512;
+static constexpr int    H          = 512;
 
 static ff_node* make_stage(std::function<ff_node*()> factory, int p) {
     if (p == 1) return factory();
@@ -51,6 +39,8 @@ static ff_node* make_stage(std::function<ff_node*()> factory, int p) {
     farm->add_collector(nullptr);
     return farm;
 }
+
+struct BenchResult { double time_ms; int images; };
 
 static BenchResult run_pipeline(int gray_p, int blur_p, int sharp_p) {
     auto* sink = new ImageSink();
@@ -72,8 +62,8 @@ static BenchResult run_pipeline(int gray_p, int blur_p, int sharp_p) {
 }
 
 static BenchResult run_source_baseline() {
-    ff_pipeline pipe;
     auto* sink = new ImageSink();
+    ff_pipeline pipe;
     pipe.add_stage(new ImageSource(W, H, BASELINE_S));
     pipe.add_stage(new PassThroughWorker());
     pipe.add_stage(sink);
@@ -84,88 +74,62 @@ static BenchResult run_source_baseline() {
     return {ms, sink->get_count()};
 }
 
-static double throughput(int n, double ms) {
-    return (ms > 0) ? n / (ms / 1000.0) : 0.0;
-}
+static double throughput(int n, double ms) { return ms > 0 ? n / (ms/1000.0) : 0.0; }
 
-static void print_row(const char* config, int threads, int n, double ms,
-                      double tput, double src_tput) {
-    std::printf("  %s | threads=%d | n=%d | %.6f ms | %.10f img/s | %.4f%%\n",
-                config, threads, n, ms, tput, tput / src_tput * 100.0);
-    std::fflush(stdout);
-}
+int main(int argc, char* argv[]) {
+    if (argc != 4) {
+        std::fprintf(stderr, "Uso: %s <G> <B> <S>\n", argv[0]);
+        std::fprintf(stderr, "  G = parallelismo Grayscale\n");
+        std::fprintf(stderr, "  B = parallelismo GaussianBlur\n");
+        std::fprintf(stderr, "  S = parallelismo Sharpen\n");
+        std::fprintf(stderr, "Esempio: %s 2 7 10\n", argv[0]);
+        return 1;
+    }
 
-// ============================================================================
-// Main
-// ============================================================================
-int main() {
+    int g = std::atoi(argv[1]);
+    int b = std::atoi(argv[2]);
+    int s = std::atoi(argv[3]);
+    int threads = g + b + s + 2;
+
+    if (g < 1 || b < 1 || s < 1) {
+        std::fprintf(stderr, "Errore: G, B, S devono essere >= 1\n");
+        return 1;
+    }
+
     std::printf("======================================================================\n");
-    std::printf("  Test Spot Benchmark (FastFlow — V2 stages)\n");
+    std::printf("  Test Spot (FastFlow V2) — configurazione singola\n");
     std::printf("  Image: %dx%d | Duration=%.0fs\n", W, H, DURATION_S);
-    std::printf("  Pipeline: Source -> Gray -> Blur -> Sharp -> Sink\n");
+    std::printf("  Config: G=%d B=%d S=%d | threads=%d\n", g, b, s, threads);
     std::printf("======================================================================\n\n");
     std::fflush(stdout);
 
-    // Warmup
     std::printf("[Warmup]...\n"); std::fflush(stdout);
     run_source_baseline();
     std::printf("[Warmup] done.\n\n"); std::fflush(stdout);
 
-    // Phase 0: Source baseline
-    std::printf("PHASE 0: Source baseline\n");
     auto res0 = run_source_baseline();
     double tput_source = throughput(res0.images, res0.time_ms);
-    std::printf("  Throughput: %.10f img/s  <-- TARGET\n\n", tput_source);
+    std::printf("Source baseline: %.2f img/s\n\n", tput_source);
     std::fflush(stdout);
 
-    std::printf("  Config              | Threads | N images | Time (ms)  | Tput (img/s) | vs Source\n");
-    std::printf("  ------------------------------------------------------------------\n");
+    std::printf("[Running] G=%d B=%d S=%d...\n", g, b, s); std::fflush(stdout);
+    auto res = run_pipeline(g, b, s);
+    double tput = throughput(res.images, res.time_ms);
+    double eff  = tput / tput_source * 100.0;
 
-    // Phase 1: Sequential
-    std::printf("  [Running] SEQ G1 B1 S1...\n"); std::fflush(stdout);
-    auto res_seq = run_pipeline(1, 1, 1);
-    double tput_seq = throughput(res_seq.images, res_seq.time_ms);
-    print_row("SEQ  G1  B1  S1 ", 5, res_seq.images, res_seq.time_ms, tput_seq, tput_source);
-
-    // Phase 2: Uniform sweep P=2..7
-    BenchResult res_p[8] = {};
-    for (int p = 2; p <= 7; p++) {
-        std::printf("  [Running] Uniform P=%d...\n", p); std::fflush(stdout);
-        res_p[p] = run_pipeline(p, p, p);
-        char label[32]; std::snprintf(label, sizeof(label), "Uniform P=%d     ", p);
-        print_row(label, p*3+2, res_p[p].images, res_p[p].time_ms,
-                  throughput(res_p[p].images, res_p[p].time_ms), tput_source);
-    }
-
-    // Phase 3: Optimal G=2 B=7 S=10
-    std::printf("  [Running] OPT G2 B7 S10...\n"); std::fflush(stdout);
-    auto res_opt = run_pipeline(2, 7, 10);
-    double tput_opt = throughput(res_opt.images, res_opt.time_ms);
-    print_row("OPT  G2  B7  S10", 21, res_opt.images, res_opt.time_ms, tput_opt, tput_source);
-
-    // Summary
-    std::printf("\n======================================================================\n");
-    std::printf("  SUMMARY\n");
-    std::printf("  Source ceiling: %.2f img/s\n", tput_source);
-    std::printf("  Sequential:     %.2f img/s  (%.2f%%)\n", tput_seq, tput_seq / tput_source * 100.0);
-    for (int p = 2; p <= 7; p++)
-        std::printf("  Uniform P=%d:    %.2f img/s  (%.2f%%)\n", p,
-                    throughput(res_p[p].images, res_p[p].time_ms),
-                    throughput(res_p[p].images, res_p[p].time_ms) / tput_source * 100.0);
-    std::printf("  Optimal G2B7S10:%.2f img/s  (%.2f%%)\n", tput_opt, tput_opt / tput_source * 100.0);
-    std::printf("  Speedup vs seq: %.2fx\n", tput_opt / tput_seq);
+    std::printf("\nRisultato:\n");
+    std::printf("  Config  : G=%d B=%d S=%d\n", g, b, s);
+    std::printf("  Threads : %d\n", threads);
+    std::printf("  N images: %d\n", res.images);
+    std::printf("  Time    : %.6f ms\n", res.time_ms);
+    std::printf("  Tput    : %.4f img/s\n", tput);
+    std::printf("  vs Src  : %.4f%%\n", eff);
     std::printf("======================================================================\n");
 
-    // CSV
     std::printf("CSV_START\n");
     std::printf("config,num_images,time_ms,throughput_img_s,efficiency_pct\n");
     std::printf("source_baseline,%d,%.6f,%.10f,100.0\n", res0.images, res0.time_ms, tput_source);
-    std::printf("seq,%d,%.6f,%.10f,%.6f\n", res_seq.images, res_seq.time_ms, tput_seq, tput_seq / tput_source * 100.0);
-    for (int p = 2; p <= 7; p++) {
-        double t = throughput(res_p[p].images, res_p[p].time_ms);
-        std::printf("uniform_p%d,%d,%.6f,%.10f,%.6f\n", p, res_p[p].images, res_p[p].time_ms, t, t / tput_source * 100.0);
-    }
-    std::printf("optimal_g2b7s10,%d,%.6f,%.10f,%.6f\n", res_opt.images, res_opt.time_ms, tput_opt, tput_opt / tput_source * 100.0);
+    std::printf("g%db%ds%d,%d,%.6f,%.10f,%.6f\n", g, b, s, res.images, res.time_ms, tput, eff);
     std::printf("CSV_END\n");
 
     return 0;
