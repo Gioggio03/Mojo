@@ -61,8 +61,8 @@ struct GrayscaleWorker : ff_node_t<PPMImage> {
 
         int n_pixels = input->width * input->height;
         auto* out = new PPMImage(input->width, input->height);
-        const uint8_t* in_ptr  = input->data;
-              uint8_t* out_ptr = out->data;
+        const uint8_t* __restrict__ in_ptr  = input->data;
+              uint8_t* __restrict__ out_ptr = out->data;
 
         for (int i = 0; i < n_pixels; i++) {
             int base = i * 3;

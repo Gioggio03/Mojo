@@ -68,18 +68,20 @@ struct GrayscaleWorker : ff_node_t<PPMImage> {
         int n = input->plane_size();
         auto* out = new PPMImage(input->width, input->height);
 
-        const uint8_t* in_r = input->r_plane();
-        const uint8_t* in_g = input->g_plane();
-        const uint8_t* in_b = input->b_plane();
-        uint8_t* out_r = out->r_plane();
-        uint8_t* out_g = out->g_plane();
-        uint8_t* out_b = out->b_plane();
+        const uint8_t* __restrict__ in_r = input->r_plane();
+        const uint8_t* __restrict__ in_g = input->g_plane();
+        const uint8_t* __restrict__ in_b = input->b_plane();
+        uint8_t* __restrict__ out_r = out->r_plane();
+        uint8_t* __restrict__ out_g = out->g_plane();
+        uint8_t* __restrict__ out_b = out->b_plane();
 
-        // Stride-1 access per channel — GCC auto-vectorizes at -O2
+        // Stride-1 access per channel — uint16_t intermediate + __restrict__ + ivdep → GCC vectorizza
+        // Max value: 255*(77+150+29) = 255*256 = 65280 < 65535 → uint16_t sufficiente
+        #pragma GCC ivdep
         for (int i = 0; i < n; i++) {
-            uint8_t gray = (uint8_t)(((uint32_t)in_r[i] * 77
-                                    + (uint32_t)in_g[i] * 150
-                                    + (uint32_t)in_b[i] * 29) >> 8);
+            uint8_t gray = (uint8_t)(((uint16_t)in_r[i] * 77u
+                                    + (uint16_t)in_g[i] * 150u
+                                    + (uint16_t)in_b[i] * 29u) >> 8);
             out_r[i] = gray;
             out_g[i] = gray;
             out_b[i] = gray;

@@ -100,11 +100,34 @@ struct Grayscale(StageTrait):
 
     fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
+        comptime CHUNK = 8
         var n_pixels = input.width * input.height
         var out = PPMImage(input.width, input.height)
         var in_ptr  = input.data_ptr
         var out_ptr = out.data_ptr
-        for i in range(n_pixels):
+
+        # SIMD path: gather CHUNK pixels (stride-3) per channel, compute gray vector
+        var i = 0
+        while i + CHUNK <= n_pixels:
+            var base = i * 3
+            var rv = SIMD[DType.uint16, CHUNK](0)
+            var gv = SIMD[DType.uint16, CHUNK](0)
+            var bv = SIMD[DType.uint16, CHUNK](0)
+            @parameter
+            for j in range(CHUNK):
+                rv[j] = (in_ptr + base + j*3    ).load().cast[DType.uint16]()
+                gv[j] = (in_ptr + base + j*3 + 1).load().cast[DType.uint16]()
+                bv[j] = (in_ptr + base + j*3 + 2).load().cast[DType.uint16]()
+            var gray = ((rv * 77 + gv * 150 + bv * 29) >> 8).cast[DType.uint8]()
+            @parameter
+            for j in range(CHUNK):
+                (out_ptr + base + j*3    ).store(gray[j])
+                (out_ptr + base + j*3 + 1).store(gray[j])
+                (out_ptr + base + j*3 + 2).store(gray[j])
+            i += CHUNK
+
+        # Scalar remainder
+        while i < n_pixels:
             var base = i * 3
             var r = Int((in_ptr + base    ).load())
             var g = Int((in_ptr + base + 1).load())
@@ -113,6 +136,8 @@ struct Grayscale(StageTrait):
             (out_ptr + base    ).store(gray)
             (out_ptr + base + 1).store(gray)
             (out_ptr + base + 2).store(gray)
+            i += 1
+
         self.compute_time_ns += perf_counter_ns() - t0
         return out
 
