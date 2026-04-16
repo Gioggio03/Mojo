@@ -23,7 +23,7 @@ struct Cell[T: Movable & Copyable & Defaultable](Movable):
         self.data = existing.data^
 
 # MPMC queue implementation based the algorithm by Dmitry Vyukov
-#    (https://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue)
+#   (https://www.1024cores.net/home/lock-free-algorithms/queues/bounded-mpmc-queue)
 struct MPMCQueue[T: Movable & Copyable & Defaultable](Movable):
     comptime CellPointer = UnsafePointer[Cell[Self.T], MutExternalOrigin]
     comptime BACKOFF_MAX = 1024
@@ -85,7 +85,7 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable](Movable):
                 return False
 
     # pop method for consumers, returns an Optional containing the item if popped successfully,
-    #    or None if the queue is empty
+    #   or None if the queue is empty
     fn pop(mut self) -> Optional[Self.T]:
         var pr: UInt64
         var seq: UInt64

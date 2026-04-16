@@ -1,7 +1,7 @@
 # Second trivial test of a pipeline with 3 stages:
-#   - FirstStage: source, generates numbers from 1 to 1000
-#   - SecondStage: transform_many, produces two strings for each input number: "Valore <number+1>" and "Valore <(number+1)*2>"
-#   - ThirdStage: sink, prints the input string
+#   - FirstStage: source generating numbers from 1 to 1000
+#   - SecondStage: stage producing two strings for each input number: "Valore <number+1>" and "Valore <(number+1)*2>"
+#   - ThirdStage: sink printing each input string received
 
 from collections import Optional
 from MoStream.communicator import MessageTrait

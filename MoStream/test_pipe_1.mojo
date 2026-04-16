@@ -1,7 +1,7 @@
 # Trivial test of a pipeline with 3 stages:
-#   - FirstStage: source, generates numbers from 1 to 1000
-#   - SecondStage: transform, increments each input and converts it to a string
-#   - ThirdStage: sink, prints the input string
+#   - FirstStage: source generating numbers from 1 to 1000
+#   - SecondStage: stage incrementing each input and converts it to a string
+#   - ThirdStage: sink printing each input string received
 
 from collections import Optional
 from MoStream.communicator import MessageTrait

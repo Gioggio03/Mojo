@@ -131,19 +131,19 @@ struct GaussianBlurWorker : ff_node_t<PPMImage> {
         auto* out = new PPMImage(w, h);
 
         // Process each channel independently — stride-1, auto-vectorizable
-        const uint8_t* channels_in[3]  = { input->r_plane(), input->g_plane(), input->b_plane() };
-              uint8_t* channels_out[3] = { out->r_plane(),   out->g_plane(),   out->b_plane()   };
+        const uint8_t __restrict__ * channels_in[3]  = { input->r_plane(), input->g_plane(), input->b_plane() };
+              uint8_t __restrict__ * channels_out[3] = { out->r_plane(),   out->g_plane(),   out->b_plane()   };
 
         for (int ch = 0; ch < 3; ch++) {
-            const uint8_t* src = channels_in[ch];
-                  uint8_t* dst = channels_out[ch];
+            const uint8_t __restrict__ * src = channels_in[ch];
+                  uint8_t __restrict__ * dst = channels_out[ch];
 
             // Interior: stride-1 inner loop, GCC vectorizes this at -O2
             for (int y = 1; y < h-1; y++) {
-                const uint8_t* rm1 = src + (y-1) * w;
-                const uint8_t* r0  = src +  y    * w;
-                const uint8_t* rp1 = src + (y+1) * w;
-                      uint8_t* out_row = dst + y * w;
+                const uint8_t __restrict__ * rm1 = src + (y-1) * w;
+                const uint8_t __restrict__ * r0  = src +  y    * w;
+                const uint8_t __restrict__ * rp1 = src + (y+1) * w;
+                      uint8_t __restrict__ * out_row = dst + y * w;
 
                 for (int x = 1; x < w-1; x++) {
                     uint32_t v = rm1[x-1] + 2u*rm1[x] + rm1[x+1]

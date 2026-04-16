@@ -76,7 +76,7 @@ struct ImageSource[ImgW: Int, ImgH: Int, NumMessages: Int](StageTrait):
         self.count += 1
         return self.pool
 
-    def received_eos(mut self):
+    fn received_eos(mut self):
         pass
 
 # ============================================================================
@@ -121,7 +121,7 @@ struct Grayscale(StageTrait):
         self.compute_time_ns += perf_counter_ns() - t0
         return out
 
-    def received_eos(mut self):
+    fn received_eos(mut self):
         print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
 
 # ============================================================================
@@ -229,7 +229,7 @@ struct GaussianBlur(StageTrait):
         self.compute_time_ns += perf_counter_ns() - t0
         return out
 
-    def received_eos(mut self):
+    fn received_eos(mut self):
         print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
 
 # ============================================================================
@@ -313,7 +313,7 @@ struct Sharpen(StageTrait):
         self.compute_time_ns += perf_counter_ns() - t0
         return out
 
-    def received_eos(mut self):
+    fn received_eos(mut self):
         print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
 
 # ============================================================================
@@ -355,7 +355,7 @@ struct ImageSink(StageTrait):
         self.count += 1
         self.count_ptr[] = self.count
 
-    def received_eos(mut self):
+    fn received_eos(mut self):
         var elapsed_ns = perf_counter_ns() - self.start_ns
         var elapsed_ms = Float64(Int(elapsed_ns)) / 1_000_000.0
         var throughput: Float64 = 0.0

@@ -34,7 +34,7 @@ struct MPMCQueue[T: Movable & Copyable & Defaultable](Movable):
         return False
 
     # pop method for consumers, returns an Optional containing the item if popped successfully,
-    #    or None if the queue is empty
+    #   or None if the queue is empty
     fn pop(mut self) -> Optional[Self.T]:
         with BlockingScopedLock(self.lock):
             if len(self.queue) > 0:

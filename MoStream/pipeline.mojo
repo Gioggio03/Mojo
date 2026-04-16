@@ -12,7 +12,7 @@ from sys.ffi import OwnedDLHandle, c_int
 from python import Python
 
 # Executor_task, the function that will be run by each task of the pipeline
-#    it executes the logic of a stage and communicates with the other stages through the Communicators
+#   it executes the logic of a stage and communicates with the other stages through the Communicators
 async
 fn executor_task[NodeT: NodeTrait,
                  In: MessageTrait,

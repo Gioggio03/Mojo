@@ -77,7 +77,7 @@ struct ImageSource[ImgW: Int, ImgH: Int, NumMessages: Int](StageTrait):
         self.count += 1
         # return a copy of the pooled image
         return self.pool
-    
+
     fn received_eos(mut self):
         pass
 
@@ -311,7 +311,6 @@ struct GaussianBlur(StageTrait):
 
         self.compute_time_ns += perf_counter_ns() - t0
         return out
-
 
     fn received_eos(mut self):
         print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")

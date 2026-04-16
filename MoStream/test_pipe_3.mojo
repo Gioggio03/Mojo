@@ -1,8 +1,8 @@
 # Third trivial test of a pipeline with 4 stages:
-#   - FirstStage: source, generates numbers from 1 to 1000
-#   - SecondStage: forward the received number
-#   - ThirdStage: forward the received number
-#   - FourthStage: sink, couting the total sum of all received inputs
+#   - FirstStage: source generating numbers from 1 to 1000
+#   - SecondStage: parallel stage forwarding the received number
+#   - ThirdStage: parallel stage forwarding the received number
+#   - FourthStage: sink counting the total sum of all received inputs
 
 from collections import Optional
 from MoStream.communicator import MessageTrait
