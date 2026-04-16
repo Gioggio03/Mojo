@@ -55,10 +55,11 @@ struct ImageSource : ff_node_t<PPMImage> {
 // ============================================================================
 struct GrayscaleWorker : ff_node_t<PPMImage> {
     uint64_t compute_time_ns = 0;
+    uint64_t count = 0;
 
     PPMImage* svc(PPMImage* input) override {
         auto t0 = std::chrono::high_resolution_clock::now();
-
+        count++;
         int n_pixels = input->width * input->height;
         auto* out = new PPMImage(input->width, input->height);
         const uint8_t* __restrict__ in_ptr  = input->data;
@@ -82,8 +83,8 @@ struct GrayscaleWorker : ff_node_t<PPMImage> {
     }
 
     void svc_end() override {
-        std::printf("    [Grayscale] compute time: %.6f ms\n",
-                    compute_time_ns / 1'000'000.0);
+        std::printf("    [Grayscale] compute time per image: %.6f ms\n",
+                    compute_time_ns / 1'000'000.0 / count);
     }
 };
 
@@ -93,6 +94,7 @@ struct GrayscaleWorker : ff_node_t<PPMImage> {
 // ============================================================================
 struct GaussianBlurWorker : ff_node_t<PPMImage> {
     uint64_t compute_time_ns = 0;
+    uint16_t count = 0;
 
     inline int clamp_idx(int v, int lo, int hi) const {
         if (v < lo) return lo;
@@ -102,12 +104,12 @@ struct GaussianBlurWorker : ff_node_t<PPMImage> {
 
     PPMImage* svc(PPMImage* input) override {
         auto t0 = std::chrono::high_resolution_clock::now();
-
+        count++;
         int w = input->width;
         int h = input->height;
         auto* out = new PPMImage(w, h);
-        const uint8_t* in_ptr  = input->data;
-              uint8_t* out_ptr = out->data;
+        const uint8_t __restrict__  * in_ptr  = input->data;
+              uint8_t __restrict__ * out_ptr = out->data;
 
         // Interior path — no clamp needed
         for (int y = 1; y < h - 1; y++) {
@@ -188,8 +190,8 @@ struct GaussianBlurWorker : ff_node_t<PPMImage> {
     }
 
     void svc_end() override {
-        std::printf("    [GaussianBlur] compute time: %.6f ms\n",
-                    compute_time_ns / 1'000'000.0);
+        std::printf("    [GaussianBlur] compute time per image: %.6f ms\n",
+                    compute_time_ns / 1'000'000.0 / count);
     }
 };
 
@@ -199,6 +201,7 @@ struct GaussianBlurWorker : ff_node_t<PPMImage> {
 // ============================================================================
 struct SharpenWorker : ff_node_t<PPMImage> {
     uint64_t compute_time_ns = 0;
+    uint16_t count = 0;
 
     inline uint8_t clamp255(int v) const {
         if (v < 0)   return 0;
@@ -208,12 +211,12 @@ struct SharpenWorker : ff_node_t<PPMImage> {
 
     PPMImage* svc(PPMImage* input) override {
         auto t0 = std::chrono::high_resolution_clock::now();
-
+        count++;
         int w = input->width;
         int h = input->height;
         auto* out = new PPMImage(w, h);
-        const uint8_t* in_ptr  = input->data;
-              uint8_t* out_ptr = out->data;
+        const uint8_t __restrict__ * in_ptr  = input->data;
+              uint8_t __restrict__ * out_ptr = out->data;
 
         // Interior path — no clamp needed
         for (int y = 1; y < h - 1; y++) {
@@ -258,8 +261,8 @@ struct SharpenWorker : ff_node_t<PPMImage> {
     }
 
     void svc_end() override {
-        std::printf("    [Sharpen] compute time: %.6f ms\n",
-                    compute_time_ns / 1'000'000.0);
+        std::printf("    [Sharpen] compute time per image: %.6f ms\n",
+                    compute_time_ns / 1'000'000.0 / count);
     }
 };
 

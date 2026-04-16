@@ -61,10 +61,11 @@ struct ImageSource : ff_node_t<PPMImage> {
 // ============================================================================
 struct GrayscaleWorker : ff_node_t<PPMImage> {
     uint64_t compute_time_ns = 0;
+    uint64_t count = 0;
 
     PPMImage* svc(PPMImage* input) override {
         auto t0 = std::chrono::high_resolution_clock::now();
-
+        count++;
         int n = input->plane_size();
         auto* out = new PPMImage(input->width, input->height);
 
@@ -94,8 +95,8 @@ struct GrayscaleWorker : ff_node_t<PPMImage> {
     }
 
     void svc_end() override {
-        std::printf("    [Grayscale] compute time: %.6f ms\n",
-                    compute_time_ns / 1'000'000.0);
+        std::printf("    [Grayscale] compute time per image: %.6f ms\n",
+                    compute_time_ns / 1'000'000.0 / count);
     }
 };
 
@@ -105,13 +106,14 @@ struct GrayscaleWorker : ff_node_t<PPMImage> {
 // ============================================================================
 struct GaussianBlurWorker : ff_node_t<PPMImage> {
     uint64_t compute_time_ns = 0;
+    uint16_t count = 0;
 
     inline int clamp_coord(int v, int lo, int hi) const {
         return v < lo ? lo : v > hi ? hi : v;
     }
 
     // Border pixel (scalar, called only for edge pixels)
-    inline uint8_t border_pixel(const uint8_t* ch, int x, int y, int w, int h) const {
+    inline uint8_t border_pixel(const uint8_t __restrict__* ch, int x, int y, int w, int h) const {
         uint32_t s = 0;
         for (int ky = -1; ky <= 1; ky++) {
             int yy = clamp_coord(y + ky, 0, h-1);
@@ -126,6 +128,7 @@ struct GaussianBlurWorker : ff_node_t<PPMImage> {
 
     PPMImage* svc(PPMImage* input) override {
         auto t0 = std::chrono::high_resolution_clock::now();
+        count++;
 
         int w = input->width, h = input->height;
         auto* out = new PPMImage(w, h);
@@ -171,8 +174,8 @@ struct GaussianBlurWorker : ff_node_t<PPMImage> {
     }
 
     void svc_end() override {
-        std::printf("    [GaussianBlur] compute time: %.6f ms\n",
-                    compute_time_ns / 1'000'000.0);
+        std::printf("    [GaussianBlur] compute time per image: %.6f ms\n",
+                    compute_time_ns / 1'000'000.0 / count);
     }
 };
 
@@ -182,12 +185,13 @@ struct GaussianBlurWorker : ff_node_t<PPMImage> {
 // ============================================================================
 struct SharpenWorker : ff_node_t<PPMImage> {
     uint64_t compute_time_ns = 0;
-
+    uint16_t count = 0;
+    
     inline uint8_t clamp255(int v) const {
         return v < 0 ? 0 : v > 255 ? 255 : (uint8_t)v;
     }
 
-    inline uint8_t border_pixel(const uint8_t* ch, int x, int y, int w, int h) const {
+    inline uint8_t border_pixel(const uint8_t __restrict__* ch, int x, int y, int w, int h) const {
         auto clamp = [](int v, int lo, int hi){ return v<lo?lo:v>hi?hi:v; };
         int v = ch[y*w + x] * 5;
         v -= ch[clamp(y-1,0,h-1)*w + x];
@@ -199,25 +203,26 @@ struct SharpenWorker : ff_node_t<PPMImage> {
 
     PPMImage* svc(PPMImage* input) override {
         auto t0 = std::chrono::high_resolution_clock::now();
+        count++;
 
         int w = input->width, h = input->height;
         auto* out = new PPMImage(w, h);
 
-        const uint8_t* channels_in[3]  = { input->r_plane(), input->g_plane(), input->b_plane() };
-              uint8_t* channels_out[3] = { out->r_plane(),   out->g_plane(),   out->b_plane()   };
+        const uint8_t __restrict__ * channels_in[3]  = { input->r_plane(), input->g_plane(), input->b_plane() };
+              uint8_t __restrict__ * channels_out[3] = { out->r_plane(),   out->g_plane(),   out->b_plane()   };
 
         for (int ch = 0; ch < 3; ch++) {
-            const uint8_t* src = channels_in[ch];
-                  uint8_t* dst = channels_out[ch];
+            const uint8_t __restrict__ * src = channels_in[ch];
+                  uint8_t __restrict__ * dst = channels_out[ch];
 
             // Interior: int16_t arithmetic + std::clamp — GCC vectorizes at -O2
             // Using int16_t avoids int32 widening that prevents vectorization;
             // std::clamp on int16_t emits pmaxsw/pminsw (SSE2), branch-free.
             for (int y = 1; y < h-1; y++) {
-                const uint8_t* rm = src + (y-1) * w;
-                const uint8_t* r0 = src +  y    * w;
-                const uint8_t* rp = src + (y+1) * w;
-                      uint8_t* out_row = dst + y * w;
+                const uint8_t __restrict__ * rm = src + (y-1) * w;
+                const uint8_t __restrict__ * r0 = src +  y    * w;
+                const uint8_t __restrict__ * rp = src + (y+1) * w;
+                      uint8_t __restrict__ * out_row = dst + y * w;
 
                 for (int x = 1; x < w-1; x++) {
                     int16_t v = (int16_t)r0[x] * 5 - rm[x] - rp[x] - r0[x-1] - r0[x+1];
@@ -239,8 +244,8 @@ struct SharpenWorker : ff_node_t<PPMImage> {
     }
 
     void svc_end() override {
-        std::printf("    [Sharpen] compute time: %.6f ms\n",
-                    compute_time_ns / 1'000'000.0);
+        std::printf("    [Sharpen] compute time per image: %.6f ms\n",
+                    compute_time_ns / 1'000'000.0 / count);
     }
 };
 
@@ -256,14 +261,27 @@ struct PassThroughWorker : ff_node_t<PPMImage> {
 // ============================================================================
 struct ImageSink : ff_node_t<PPMImage> {
     int count = 0;
+    uint64_t checksum_total = 0;
+    std::chrono::high_resolution_clock::time_point start_time;
 
     PPMImage* svc(PPMImage* input) override {
+        if (count == 0)
+            start_time = std::chrono::high_resolution_clock::now();
         count++;
         delete input;
         return GO_ON;
     }
 
+    void svc_end() override {
+        auto end_time = std::chrono::high_resolution_clock::now();
+        double ms = std::chrono::duration<double, std::milli>(end_time - start_time).count();
+        double tput = (ms > 0) ? count / (ms / 1000.0) : 0;
+        std::printf("  [Sink] Images received: %d | Checksum: %lu | Time: %.6f ms | Throughput: %.10f img/s\n",
+                    count, checksum_total, ms, tput);
+    }
+
     int get_count() const { return count; }
+    uint64_t get_checksum() const { return checksum_total; }
 };
 
 #endif // IMAGE_STAGES_HPP
