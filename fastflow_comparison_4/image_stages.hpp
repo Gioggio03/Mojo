@@ -186,7 +186,7 @@ struct GaussianBlurWorker : ff_node_t<PPMImage> {
 struct SharpenWorker : ff_node_t<PPMImage> {
     uint64_t compute_time_ns = 0;
     uint16_t count = 0;
-    
+
     inline uint8_t clamp255(int v) const {
         return v < 0 ? 0 : v > 255 ? 255 : (uint8_t)v;
     }

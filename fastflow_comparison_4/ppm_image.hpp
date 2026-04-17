@@ -1,11 +1,17 @@
 // PPMImage — PLANAR layout (V4)
 //
-// Layout in memory: [R plane: W*H bytes | G plane: W*H bytes | B plane: W*H bytes]
-// (same total size as interleaved, different organization)
+// Layout: [R plane: W*H bytes | pad | G plane: W*H bytes | pad | B plane: W*H bytes]
 //
-// Benefit: consecutive pixels of the same channel are adjacent in memory.
-// This allows GCC to auto-vectorize convolution inner loops at -O2 (not just -O3),
-// because the access pattern is stride-1 (contiguous), not stride-3 (interleaved).
+// PLANE_PAD (128 bytes = 2 cache lines) is added between planes to break
+// cache-set aliasing.  On the Xeon E5-2695 v2 used for benchmarks:
+//   L1: 32 KB, 8-way, 64 B lines → aliasing every 4096 bytes
+//   L2: 256 KB, 8-way, 64 B lines → aliasing every 32768 bytes
+// For a 512×512 image, plane size = 262144 bytes = 64×4096 = 8×32768.
+// Without padding, R and G planes map to exactly the same L1 and L2 cache
+// sets: every access to the G (or B) plane evicts the R plane from both L1
+// and L2, causing thrashing across the 3 channel passes in each convolution.
+// Adding 128 bytes shifts the plane offset to 262272 ≡ 128 (mod 4096) and
+// 262272 ≡ 128 (mod 32768) — no aliasing in either cache level.
 
 #ifndef PPM_IMAGE_HPP
 #define PPM_IMAGE_HPP
@@ -16,18 +22,23 @@
 #include <algorithm>
 
 struct PPMImage {
+    static constexpr int PLANE_PAD = 128;  // bytes of padding between planes
+
     int width;
     int height;
-    uint8_t* data;  // W*H*3 bytes: [R plane | G plane | B plane]
+    uint8_t* data;  // [R plane | PAD | G plane | PAD | B plane]
+
+    int plane_stride() const { return width * height + PLANE_PAD; }
+    int alloc_size()   const { return width * height * 3 + 2 * PLANE_PAD; }
 
     PPMImage() : width(0), height(0), data(nullptr) {}
 
     PPMImage(int w, int h) : width(w), height(h) {
-        data = new uint8_t[w * h * 3]();
+        data = new uint8_t[w * h * 3 + 2 * PLANE_PAD]();
     }
 
     PPMImage(const PPMImage& o) : width(o.width), height(o.height) {
-        int n = width * height * 3;
+        int n = o.alloc_size();
         data = (n > 0 && o.data) ? new uint8_t[n] : nullptr;
         if (data) std::memcpy(data, o.data, n);
     }
@@ -36,7 +47,7 @@ struct PPMImage {
         if (this != &o) {
             delete[] data;
             width = o.width; height = o.height;
-            int n = width * height * 3;
+            int n = o.alloc_size();
             data = (n > 0 && o.data) ? new uint8_t[n] : nullptr;
             if (data) std::memcpy(data, o.data, n);
         }
@@ -61,13 +72,13 @@ struct PPMImage {
     int plane_size() const { return width * height; }
     int num_bytes()  const { return width * height * 3; }
 
-    // Planar channel accessors
+    // Planar channel accessors (stride = plane_size + PLANE_PAD)
     uint8_t*       r_plane()       { return data; }
     const uint8_t* r_plane() const { return data; }
-    uint8_t*       g_plane()       { return data + width * height; }
-    const uint8_t* g_plane() const { return data + width * height; }
-    uint8_t*       b_plane()       { return data + 2 * width * height; }
-    const uint8_t* b_plane() const { return data + 2 * width * height; }
+    uint8_t*       g_plane()       { return data + plane_stride(); }
+    const uint8_t* g_plane() const { return data + plane_stride(); }
+    uint8_t*       b_plane()       { return data + 2 * plane_stride(); }
+    const uint8_t* b_plane() const { return data + 2 * plane_stride(); }
 
     uint8_t get_r(int x, int y) const { return r_plane()[y * width + x]; }
     uint8_t get_g(int x, int y) const { return g_plane()[y * width + x]; }
