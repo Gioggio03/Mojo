@@ -93,9 +93,11 @@ struct Grayscale(StageTrait):
     comptime OutType = PPMImage
     comptime name = "Grayscale"
     var compute_time_ns: UInt
+    var count: Int
 
     fn __init__(out self):
         self.compute_time_ns = 0
+        self.count = 0
 
     fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
@@ -113,10 +115,13 @@ struct Grayscale(StageTrait):
             (out_ptr + base + 1).store(gray)
             (out_ptr + base + 2).store(gray)
         self.compute_time_ns += perf_counter_ns() - t0
+        self.count += 1
         return out
 
     fn received_eos(mut self):
-        print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
+        var total_ms = Float64(Int(self.compute_time_ns)) / 1_000_000.0
+        var avg_ms = total_ms / Float64(self.count) if self.count > 0 else 0.0
+        print("    [" + Self.name + "] total=" + String(total_ms) + " ms | n=" + String(self.count) + " | avg/img=" + String(avg_ms) + " ms")
 
 struct GaussianBlur(StageTrait):
     comptime kind = StageKind.TRANSFORM
@@ -124,9 +129,11 @@ struct GaussianBlur(StageTrait):
     comptime OutType = PPMImage
     comptime name = "GaussianBlur"
     var compute_time_ns: UInt
+    var count: Int
 
     fn __init__(out self):
         self.compute_time_ns = 0
+        self.count = 0
 
     @always_inline
     fn idx3(self, x: Int, y: Int, width: Int) -> Int:
@@ -310,10 +317,13 @@ struct GaussianBlur(StageTrait):
             )
 
         self.compute_time_ns += perf_counter_ns() - t0
+        self.count += 1
         return out
 
     fn received_eos(mut self):
-        print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
+        var total_ms = Float64(Int(self.compute_time_ns)) / 1_000_000.0
+        var avg_ms = total_ms / Float64(self.count) if self.count > 0 else 0.0
+        print("    [" + Self.name + "] total=" + String(total_ms) + " ms | n=" + String(self.count) + " | avg/img=" + String(avg_ms) + " ms")
 
 # ============================================================================
 # Sharpen — TRANSFORM stage
@@ -328,9 +338,11 @@ struct Sharpen(StageTrait):
     comptime OutType = PPMImage
     comptime name = "Sharpen"
     var compute_time_ns: UInt
+    var count: Int
 
     fn __init__(out self):
         self.compute_time_ns = 0
+        self.count = 0
 
     @always_inline
     fn clamp255(self, v: Int) -> UInt8:
@@ -406,10 +418,13 @@ struct Sharpen(StageTrait):
                 (out_ptr + base + 2).store(self.clamp255(sum_b))
 
         self.compute_time_ns += perf_counter_ns() - t0
+        self.count += 1
         return out
 
     fn received_eos(mut self):
-        print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
+        var total_ms = Float64(Int(self.compute_time_ns)) / 1_000_000.0
+        var avg_ms = total_ms / Float64(self.count) if self.count > 0 else 0.0
+        print("    [" + Self.name + "] total=" + String(total_ms) + " ms | n=" + String(self.count) + " | avg/img=" + String(avg_ms) + " ms")
 
 # ============================================================================
 # Brightness — TRANSFORM stage

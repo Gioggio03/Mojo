@@ -89,9 +89,11 @@ struct Grayscale(StageTrait):
     comptime OutType = PPMImage
     comptime name = "Grayscale"
     var compute_time_ns: UInt
+    var count: Int
 
     def __init__(out self):
         self.compute_time_ns = 0
+        self.count = 0
 
     def compute(mut self, var input: PPMImage) -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
@@ -119,10 +121,13 @@ struct Grayscale(StageTrait):
             i += 1
 
         self.compute_time_ns += perf_counter_ns() - t0
+        self.count += 1
         return out
 
     fn received_eos(mut self):
-        print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
+        var total_ms = Float64(Int(self.compute_time_ns)) / 1_000_000.0
+        var avg_ms = total_ms / Float64(self.count) if self.count > 0 else 0.0
+        print("    [" + Self.name + "] total=" + String(total_ms) + " ms | n=" + String(self.count) + " | avg/img=" + String(avg_ms) + " ms")
 
 # ============================================================================
 # GaussianBlur — V4: 9 true vector loads per channel
@@ -138,9 +143,11 @@ struct GaussianBlur(StageTrait):
     comptime OutType = PPMImage
     comptime name = "GaussianBlur"
     var compute_time_ns: UInt
+    var count: Int
 
     def __init__(out self):
         self.compute_time_ns = 0
+        self.count = 0
 
     @always_inline
     def clamp_coord(self, v: Int, lo: Int, hi: Int) -> Int:
@@ -177,6 +184,7 @@ struct GaussianBlur(StageTrait):
                     (out.g_ptr() + y*w + x).store(self.border_pixel(input.g_ptr(), x, y, w, h))
                     (out.b_ptr() + y*w + x).store(self.border_pixel(input.b_ptr(), x, y, w, h))
             self.compute_time_ns += perf_counter_ns() - t0
+            self.count += 1
             return out
 
         # Process each channel separately — stride-1, 9 vector loads per pixel group
@@ -227,10 +235,13 @@ struct GaussianBlur(StageTrait):
                 (ch_out + y*w + w-1).store(self.border_pixel(ch_in, w-1, y, w, h))
 
         self.compute_time_ns += perf_counter_ns() - t0
+        self.count += 1
         return out
 
     fn received_eos(mut self):
-        print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
+        var total_ms = Float64(Int(self.compute_time_ns)) / 1_000_000.0
+        var avg_ms = total_ms / Float64(self.count) if self.count > 0 else 0.0
+        print("    [" + Self.name + "] total=" + String(total_ms) + " ms | n=" + String(self.count) + " | avg/img=" + String(avg_ms) + " ms")
 
 # ============================================================================
 # Sharpen — V4: 5 true vector loads per channel
@@ -244,9 +255,11 @@ struct Sharpen(StageTrait):
     comptime OutType = PPMImage
     comptime name = "Sharpen"
     var compute_time_ns: UInt
+    var count: Int
 
     def __init__(out self):
         self.compute_time_ns = 0
+        self.count = 0
 
     @always_inline
     def clamp255(self, v: Int) -> UInt8:
@@ -311,10 +324,13 @@ struct Sharpen(StageTrait):
                     (ch_out + y*w + x).store(self.clamp255(v))
 
         self.compute_time_ns += perf_counter_ns() - t0
+        self.count += 1
         return out
 
     fn received_eos(mut self):
-        print("    [" + Self.name + "] compute time: " + String(Float64(Int(self.compute_time_ns))/1_000_000.0) + " ms")
+        var total_ms = Float64(Int(self.compute_time_ns)) / 1_000_000.0
+        var avg_ms = total_ms / Float64(self.count) if self.count > 0 else 0.0
+        print("    [" + Self.name + "] total=" + String(total_ms) + " ms | n=" + String(self.count) + " | avg/img=" + String(avg_ms) + " ms")
 
 # ============================================================================
 # PassThrough

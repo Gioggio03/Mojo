@@ -1,0 +1,73 @@
+================================================================
+  TEMPI MEDI PER IMMAGINE — STADI MOJO V2 / V3 / V4
+  Immagine: 512×512 px (RGB, formato PPM)
+  N misura: 500 immagini  |  Warm-up: 50 immagini
+  Pipeline: Source → Grayscale → GaussianBlur → Sharpen → Sink
+  Modalità: SEQUENZIALE (1 worker per stage)
+  Data: 2026-04-18
+================================================================
+
+------------------------------------------------------------------
+  TEMPI ASSOLUTI (avg ms per immagine)
+------------------------------------------------------------------
+  Stage           |    V2 (scalar) |  V3 (SIMD interleaved) |  V4 (SIMD planar)
+  ----------------+----------------+------------------------+------------------
+  Grayscale       |    0.731 ms    |         0.530 ms       |      0.351 ms
+  GaussianBlur    |    2.216 ms    |         1.718 ms       |      0.652 ms
+  Sharpen         |    2.851 ms    |         1.685 ms       |      1.506 ms
+  ----------------+----------------+------------------------+------------------
+  TOTALE          |    5.798 ms    |         3.933 ms       |      2.509 ms
+
+  Valori precisi (output diretto):
+    V2 — Gray: 0.7314 ms  |  Blur: 2.2156 ms  |  Sharp: 2.8508 ms
+    V3 — Gray: 0.5295 ms  |  Blur: 1.7183 ms  |  Sharp: 1.6845 ms
+    V4 — Gray: 0.3508 ms  |  Blur: 0.6517 ms  |  Sharp: 1.5063 ms
+
+------------------------------------------------------------------
+  SPEEDUP V3 vs V2  (SIMD interleaved vs. scalare)
+------------------------------------------------------------------
+  Grayscale    :  0.731 / 0.530 =  1.38×
+  GaussianBlur :  2.216 / 1.718 =  1.29×
+  Sharpen      :  2.851 / 1.685 =  1.69×
+  TOTALE       :  5.798 / 3.933 =  1.47×
+
+  Nota V3: la SIMD in Grayscale e Blur/Sharpen usa gather stride-3
+  (layout RGB interleaved). LLVM non fonde le 8 load scalari in
+  istruzioni vettoriali vere → il guadagno è reale ma parziale.
+
+------------------------------------------------------------------
+  SPEEDUP V4 vs V2  (SIMD planar vs. scalare)
+------------------------------------------------------------------
+  Grayscale    :  0.731 / 0.351 =  2.08×
+  GaussianBlur :  2.216 / 0.652 =  3.40×
+  Sharpen      :  2.851 / 1.506 =  1.89×
+  TOTALE       :  5.798 / 2.509 =  2.31×
+
+  Nota V4: layout planar (R|G|B separati) → load[width=8] su dati
+  contigui → singola istruzione vmovdqu/vpmovsxbw per 8 pixel.
+  Il GaussianBlur guadagna di più (+3.4×) perché passa da 9 gather
+  a 9 load contigue per canale.
+
+------------------------------------------------------------------
+  SPEEDUP V4 vs V3  (SIMD planar vs. SIMD interleaved)
+------------------------------------------------------------------
+  Grayscale    :  0.530 / 0.351 =  1.51×
+  GaussianBlur :  1.718 / 0.652 =  2.64×
+  Sharpen      :  1.685 / 1.506 =  1.12×
+  TOTALE       :  3.933 / 2.509 =  1.57×
+
+  Sharpen V4 migliora meno rispetto agli altri due stage: ha solo
+  5 tap (vs 9 di Blur) e il bottleneck è la pipeline di store,
+  non il numero di load.
+
+------------------------------------------------------------------
+  RIEPILOGO PROGRESSIONE
+------------------------------------------------------------------
+  Stage           |  V2→V3  |  V2→V4  |  V3→V4
+  ----------------+---------+---------+--------
+  Grayscale       |  1.38×  |  2.08×  |  1.51×
+  GaussianBlur    |  1.29×  |  3.40×  |  2.64×
+  Sharpen         |  1.69×  |  1.89×  |  1.12×
+  TOTALE pipeline |  1.47×  |  2.31×  |  1.57×
+
+================================================================
