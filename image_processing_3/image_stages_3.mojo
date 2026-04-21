@@ -395,6 +395,29 @@ struct Sharpen(StageTrait):
     fn load_px(self, ptr: UnsafePointer[UInt8, MutExternalOrigin], i: Int) -> Int:
         return Int((ptr + i).load())
 
+    @always_inline
+    fn sharpen_border_px(self, in_ptr: UnsafePointer[UInt8, MutExternalOrigin], out_ptr: UnsafePointer[UInt8, MutExternalOrigin], x: Int, y: Int, w: Int, h: Int):
+        var ny0 = y - 1
+        if ny0 < 0: ny0 = 0
+        var ny1 = y + 1
+        if ny1 >= h: ny1 = h - 1
+        var nx0 = x - 1
+        if nx0 < 0: nx0 = 0
+        var nx1 = x + 1
+        if nx1 >= w: nx1 = w - 1
+        var c  = (y   * w + x  ) * 3
+        var up = (ny0 * w + x  ) * 3
+        var dn = (ny1 * w + x  ) * 3
+        var lt = (y   * w + nx0) * 3
+        var rt = (y   * w + nx1) * 3
+        for ch in range(3):
+            var v = self.load_px(in_ptr, c  + ch) * 5 \
+                  - self.load_px(in_ptr, up + ch) \
+                  - self.load_px(in_ptr, dn + ch) \
+                  - self.load_px(in_ptr, lt + ch) \
+                  - self.load_px(in_ptr, rt + ch)
+            (out_ptr + c + ch).store(self.clamp255(v))
+
     fn compute(mut self, var input: PPMImage) raises -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
         comptime CHUNK = 8
@@ -488,40 +511,13 @@ struct Sharpen(StageTrait):
                     (out_ptr + c + ch).store(self.clamp255(v))
                 x += 1
 
-        # ── Border pixels ─────────────────────────────────────────────────────
-        for y in range(h):
-            for x in range(w):
-                if x != 0 and x != w - 1 and y != 0 and y != h - 1:
-                    continue
-                var sum_r = self.load_px(in_ptr, (y * w + x) * 3    ) * 5
-                var sum_g = self.load_px(in_ptr, (y * w + x) * 3 + 1) * 5
-                var sum_b = self.load_px(in_ptr, (y * w + x) * 3 + 2) * 5
-                var ny: Int
-                var nx: Int
-                ny = y - 1
-                if ny < 0: ny = 0
-                sum_r -= self.load_px(in_ptr, (ny * w + x) * 3    )
-                sum_g -= self.load_px(in_ptr, (ny * w + x) * 3 + 1)
-                sum_b -= self.load_px(in_ptr, (ny * w + x) * 3 + 2)
-                ny = y + 1
-                if ny >= h: ny = h - 1
-                sum_r -= self.load_px(in_ptr, (ny * w + x) * 3    )
-                sum_g -= self.load_px(in_ptr, (ny * w + x) * 3 + 1)
-                sum_b -= self.load_px(in_ptr, (ny * w + x) * 3 + 2)
-                nx = x - 1
-                if nx < 0: nx = 0
-                sum_r -= self.load_px(in_ptr, (y * w + nx) * 3    )
-                sum_g -= self.load_px(in_ptr, (y * w + nx) * 3 + 1)
-                sum_b -= self.load_px(in_ptr, (y * w + nx) * 3 + 2)
-                nx = x + 1
-                if nx >= w: nx = w - 1
-                sum_r -= self.load_px(in_ptr, (y * w + nx) * 3    )
-                sum_g -= self.load_px(in_ptr, (y * w + nx) * 3 + 1)
-                sum_b -= self.load_px(in_ptr, (y * w + nx) * 3 + 2)
-                var base = (y * w + x) * 3
-                (out_ptr + base    ).store(self.clamp255(sum_r))
-                (out_ptr + base + 1).store(self.clamp255(sum_g))
-                (out_ptr + base + 2).store(self.clamp255(sum_b))
+        # ── Border pixels — 4 explicit loops, no h*w scan ────────────────────
+        for x in range(w):
+            self.sharpen_border_px(in_ptr, out_ptr, x, 0,     w, h)
+            self.sharpen_border_px(in_ptr, out_ptr, x, h - 1, w, h)
+        for y in range(1, h - 1):
+            self.sharpen_border_px(in_ptr, out_ptr, 0,     y, w, h)
+            self.sharpen_border_px(in_ptr, out_ptr, w - 1, y, w, h)
 
         self.compute_time_ns += perf_counter_ns() - t0
         self.count += 1

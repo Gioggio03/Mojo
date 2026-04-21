@@ -1,0 +1,400 @@
+======================================================================
+  Spot Sweep Benchmark (FastFlow — V4 stages, planar layout)
+  Image: 512x512 | Duration=60s
+  Ogni config = processo separato (no thread accumulation)
+  Pipeline: Source -> Gray -> Blur -> Sharp -> Sink
+======================================================================
+
+----------------------------------------------------------------------
+  [Running] SEQ  G1  B1  S1 (G=1 B=1 S=1, threads=5)
+----------------------------------------------------------------------
+======================================================================
+  Test Spot (FastFlow V4 — planar layout) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=1 B=1 S=1 | threads=5
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 151034 | Checksum: 0 | Time: 9999.176586 ms | Throughput: 15104.6437375118 img/s
+[Warmup] done.
+
+  [Sink] Images received: 159291 | Checksum: 0 | Time: 9998.984118 ms | Throughput: 15930.7183730042 img/s
+Source baseline: 15928.45 img/s
+
+[Running] G=1 B=1 S=1...
+    [Grayscale] compute time per image: 0.182001 ms
+    [GaussianBlur] compute time per image: 1.129540 ms
+    [Sharpen] compute time per image: 0.718682 ms
+  [Sink] Images received: 119463 | Checksum: 0 | Time: 61065.449389 ms | Throughput: 1956.3108303518 img/s
+
+Risultato:
+  Config  : G=1 B=1 S=1
+  Threads : 5
+  N images: 119463
+  Time    : 61069.714432 ms
+  Tput    : 1956.1742 img/s
+  vs Src  : 12.2810%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159291,10000.407901,15928.4502769204,100.0
+g1b1s1,119463,61069.714432,1956.1742037130,12.281008
+CSV_END
+
+----------------------------------------------------------------------
+  [Running] Uniform P=2 (G=2 B=2 S=2, threads=8)
+----------------------------------------------------------------------
+======================================================================
+  Test Spot (FastFlow V4 — planar layout) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=2 B=2 S=2 | threads=8
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 162633 | Checksum: 0 | Time: 9999.139616 ms | Throughput: 16264.6993887119 img/s
+[Warmup] done.
+
+  [Sink] Images received: 159587 | Checksum: 0 | Time: 9999.337687 ms | Throughput: 15959.7570354561 img/s
+Source baseline: 15958.24 img/s
+
+[Running] G=2 B=2 S=2...
+    [Grayscale] compute time per image: 0.305826 ms
+    [Grayscale] compute time per image: 0.307058 ms
+    [GaussianBlur] compute time per image: 1.176340 ms
+    [GaussianBlur] compute time per image: 1.177084 ms
+    [Sharpen] compute time per image: 0.797010 ms
+    [Sharpen] compute time per image: 0.794672 ms
+  [Sink] Images received: 236446 | Checksum: 0 | Time: 62395.384862 ms | Throughput: 3789.4789898796 img/s
+
+Risultato:
+  Config  : G=2 B=2 S=2
+  Threads : 8
+  N images: 236446
+  Time    : 62399.941997 ms
+  Tput    : 3789.2022 img/s
+  vs Src  : 23.7445%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159587,10000.287932,15958.2405111893,100.0
+g2b2s2,236446,62399.941997,3789.2022401458,23.744486
+CSV_END
+
+----------------------------------------------------------------------
+  [Running] Uniform P=3 (G=3 B=3 S=3, threads=11)
+----------------------------------------------------------------------
+======================================================================
+  Test Spot (FastFlow V4 — planar layout) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=3 B=3 S=3 | threads=11
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 157287 | Checksum: 0 | Time: 9998.961775 ms | Throughput: 15730.3331625148 img/s
+[Warmup] done.
+
+  [Sink] Images received: 157091 | Checksum: 0 | Time: 9999.932314 ms | Throughput: 15709.2063293340 img/s
+Source baseline: 15708.67 img/s
+
+[Running] G=3 B=3 S=3...
+    [Grayscale] compute time per image: 0.331994 ms
+    [Grayscale] compute time per image: 0.330511 ms
+    [Grayscale] compute time per image: 0.326477 ms
+    [GaussianBlur] compute time per image: 1.282215 ms
+    [GaussianBlur] compute time per image: 1.290071 ms
+    [GaussianBlur] compute time per image: 1.259065 ms
+    [Sharpen] compute time per image: 0.838202 ms
+    [Sharpen] compute time per image: 0.814830 ms
+    [Sharpen] compute time per image: 0.816300 ms
+  [Sink] Images received: 341827 | Checksum: 0 | Time: 62293.375774 ms | Throughput: 5487.3731878032 img/s
+
+Risultato:
+  Config  : G=3 B=3 S=3
+  Threads : 11
+  N images: 341827
+  Time    : 62297.734233 ms
+  Tput    : 5486.9893 img/s
+  vs Src  : 34.9297%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,157091,10000.275735,15708.6668570744,100.0
+g3b3s3,341827,62297.734233,5486.9892815288,34.929694
+CSV_END
+
+----------------------------------------------------------------------
+  [Running] Uniform P=4 (G=4 B=4 S=4, threads=14)
+----------------------------------------------------------------------
+======================================================================
+  Test Spot (FastFlow V4 — planar layout) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=4 B=4 S=4 | threads=14
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 155492 | Checksum: 0 | Time: 9999.057539 ms | Throughput: 15550.6655895842 img/s
+[Warmup] done.
+
+  [Sink] Images received: 159668 | Checksum: 0 | Time: 9999.197310 ms | Throughput: 15968.0817419533 img/s
+Source baseline: 15966.30 img/s
+
+[Running] G=4 B=4 S=4...
+    [Grayscale] compute time per image: 0.357525 ms
+    [Grayscale] compute time per image: 0.358038 ms
+    [Grayscale] compute time per image: 0.356443 ms
+    [Grayscale] compute time per image: 0.355922 ms
+    [GaussianBlur] compute time per image: 1.466340 ms
+    [GaussianBlur] compute time per image: 1.419917 ms
+    [GaussianBlur] compute time per image: 1.436651 ms
+    [GaussianBlur] compute time per image: 1.429042 ms
+    [Sharpen] compute time per image: 0.863007 ms
+    [Sharpen] compute time per image: 0.861801 ms
+    [Sharpen] compute time per image: 0.893473 ms
+    [Sharpen] compute time per image: 0.900737 ms
+  [Sink] Images received: 433913 | Checksum: 0 | Time: 62349.307194 ms | Throughput: 6959.3876745074 img/s
+
+Risultato:
+  Config  : G=4 B=4 S=4
+  Threads : 14
+  N images: 433913
+  Time    : 62354.680322 ms
+  Tput    : 6958.7880 img/s
+  vs Src  : 43.5842%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159668,10000.311846,15966.3020972556,100.0
+g4b4s4,433913,62354.680322,6958.7879812593,43.584218
+CSV_END
+
+----------------------------------------------------------------------
+  [Running] Uniform P=5 (G=5 B=5 S=5, threads=17)
+----------------------------------------------------------------------
+======================================================================
+  Test Spot (FastFlow V4 — planar layout) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=5 B=5 S=5 | threads=17
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 160584 | Checksum: 0 | Time: 9998.775645 ms | Throughput: 16060.3663589853 img/s
+[Warmup] done.
+
+  [Sink] Images received: 159409 | Checksum: 0 | Time: 9998.997981 ms | Throughput: 15942.4974685371 img/s
+Source baseline: 15940.13 img/s
+
+[Running] G=5 B=5 S=5...
+    [Grayscale] compute time per image: 0.289519 ms
+    [Grayscale] compute time per image: 0.219558 ms
+    [Grayscale] compute time per image: 0.295050 ms
+    [Grayscale] compute time per image: 0.292339 ms
+    [Grayscale] compute time per image: 0.290624 ms
+    [GaussianBlur] compute time per image: 1.841055 ms
+    [GaussianBlur] compute time per image: 1.865882 ms
+    [GaussianBlur] compute time per image: 1.858509 ms
+    [GaussianBlur] compute time per image: 1.875194 ms
+    [GaussianBlur] compute time per image: 1.859892 ms
+    [Sharpen] compute time per image: 1.127204 ms
+    [Sharpen] compute time per image: 1.076382 ms
+    [Sharpen] compute time per image: 1.112233 ms
+    [Sharpen] compute time per image: 1.044000 ms
+    [Sharpen] compute time per image: 1.113716 ms
+  [Sink] Images received: 491623 | Checksum: 0 | Time: 61867.457781 ms | Throughput: 7946.3908431515 img/s
+
+Risultato:
+  Config  : G=5 B=5 S=5
+  Threads : 17
+  N images: 491623
+  Time    : 61871.363156 ms
+  Tput    : 7945.8893 img/s
+  vs Src  : 49.8483%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159409,10000.481943,15940.1317765071,100.0
+g5b5s5,491623,61871.363156,7945.8892599544,49.848329
+CSV_END
+
+----------------------------------------------------------------------
+  [Running] Uniform P=6 (G=6 B=6 S=6, threads=20)
+----------------------------------------------------------------------
+======================================================================
+  Test Spot (FastFlow V4 — planar layout) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=6 B=6 S=6 | threads=20
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 160713 | Checksum: 0 | Time: 9998.697494 ms | Throughput: 16073.3935691564 img/s
+[Warmup] done.
+
+  [Sink] Images received: 159936 | Checksum: 0 | Time: 9999.005118 ms | Throughput: 15995.1913327944 img/s
+Source baseline: 15993.00 img/s
+
+[Running] G=6 B=6 S=6...
+    [Grayscale] compute time per image: 0.291491 ms
+    [Grayscale] compute time per image: 0.195103 ms
+    [Grayscale] compute time per image: 0.295358 ms
+    [Grayscale] compute time per image: 0.293431 ms
+    [Grayscale] compute time per image: 0.192704 ms
+    [Grayscale] compute time per image: 0.297468 ms
+    [GaussianBlur] compute time per image: 0.686271 ms
+    [GaussianBlur] compute time per image: 0.705051 ms
+    [GaussianBlur] compute time per image: 0.683875 ms
+    [GaussianBlur] compute time per image: 0.678885 ms
+    [GaussianBlur] compute time per image: 0.732202 ms
+    [GaussianBlur] compute time per image: 0.627786 ms
+    [Sharpen] compute time per image: 0.355006 ms
+    [Sharpen] compute time per image: 0.355454 ms
+    [Sharpen] compute time per image: 0.388223 ms
+    [Sharpen] compute time per image: 0.387599 ms
+    [Sharpen] compute time per image: 0.386335 ms
+    [Sharpen] compute time per image: 0.360484 ms
+  [Sink] Images received: 367489 | Checksum: 0 | Time: 59998.731270 ms | Throughput: 6124.9461817162 img/s
+
+Risultato:
+  Config  : G=6 B=6 S=6
+  Threads : 20
+  N images: 367489
+  Time    : 60002.424712 ms
+  Tput    : 6124.5692 img/s
+  vs Src  : 38.2953%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159936,10000.378221,15992.9951113396,100.0
+g6b6s6,367489,60002.424712,6124.5691613943,38.295323
+CSV_END
+
+----------------------------------------------------------------------
+  [Running] Uniform P=7 (G=7 B=7 S=7, threads=23)
+----------------------------------------------------------------------
+======================================================================
+  Test Spot (FastFlow V4 — planar layout) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=7 B=7 S=7 | threads=23
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 160217 | Checksum: 0 | Time: 9999.259819 ms | Throughput: 16022.8859835770 img/s
+[Warmup] done.
+
+  [Sink] Images received: 159857 | Checksum: 0 | Time: 9999.368773 ms | Throughput: 15986.7091242440 img/s
+Source baseline: 15985.40 img/s
+
+[Running] G=7 B=7 S=7...
+    [Grayscale] compute time per image: 0.308263 ms
+    [Grayscale] compute time per image: 0.305814 ms
+    [Grayscale] compute time per image: 0.348367 ms
+    [Grayscale] compute time per image: 0.173326 ms
+    [Grayscale] compute time per image: 0.184582 ms
+    [Grayscale] compute time per image: 0.180724 ms
+    [Grayscale] compute time per image: 0.281428 ms
+    [GaussianBlur] compute time per image: 0.638880 ms
+    [GaussianBlur] compute time per image: 0.665367 ms
+    [GaussianBlur] compute time per image: 0.622131 ms
+    [GaussianBlur] compute time per image: 0.668343 ms
+    [GaussianBlur] compute time per image: 0.663165 ms
+    [GaussianBlur] compute time per image: 0.646887 ms
+    [GaussianBlur] compute time per image: 0.670948 ms
+    [Sharpen] compute time per image: 0.361791 ms
+    [Sharpen] compute time per image: 0.674180 ms
+    [Sharpen] compute time per image: 0.860533 ms
+    [Sharpen] compute time per image: 0.358384 ms
+    [Sharpen] compute time per image: 0.390736 ms
+    [Sharpen] compute time per image: 0.594101 ms
+    [Sharpen] compute time per image: 0.381103 ms
+  [Sink] Images received: 270680 | Checksum: 0 | Time: 59998.631500 ms | Throughput: 4511.4362316747 img/s
+
+Risultato:
+  Config  : G=7 B=7 S=7
+  Threads : 23
+  N images: 270680
+  Time    : 60002.474875 ms
+  Tput    : 4511.1473 img/s
+  vs Src  : 28.2204%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159857,10000.184963,15985.4043291659,100.0
+g7b7s7,270680,60002.474875,4511.1472579072,28.220414
+CSV_END
+
+----------------------------------------------------------------------
+  [Running] OPT  G2  B7  S10 (G=2 B=7 S=10, threads=21)
+----------------------------------------------------------------------
+======================================================================
+  Test Spot (FastFlow V4 — planar layout) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=2 B=7 S=10 | threads=21
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 162615 | Checksum: 0 | Time: 9999.307708 ms | Throughput: 16262.6258485774 img/s
+[Warmup] done.
+
+  [Sink] Images received: 159394 | Checksum: 0 | Time: 9999.938724 ms | Throughput: 15939.4976708659 img/s
+Source baseline: 15938.96 img/s
+
+[Running] G=2 B=7 S=10...
+    [Grayscale] compute time per image: 0.328082 ms
+    [Grayscale] compute time per image: 0.335842 ms
+    [GaussianBlur] compute time per image: 0.603082 ms
+    [GaussianBlur] compute time per image: 0.606722 ms
+    [GaussianBlur] compute time per image: 0.603119 ms
+    [GaussianBlur] compute time per image: 0.601390 ms
+    [GaussianBlur] compute time per image: 0.607034 ms
+    [GaussianBlur] compute time per image: 0.604731 ms
+    [GaussianBlur] compute time per image: 0.605114 ms
+    [Sharpen] compute time per image: 0.398664 ms
+    [Sharpen] compute time per image: 0.364258 ms
+    [Sharpen] compute time per image: 0.390406 ms
+    [Sharpen] compute time per image: 0.381254 ms
+    [Sharpen] compute time per image: 0.415720 ms
+    [Sharpen] compute time per image: 0.744029 ms
+    [Sharpen] compute time per image: 0.419891 ms
+    [Sharpen] compute time per image: 0.361540 ms
+    [Sharpen] compute time per image: 0.406667 ms
+    [Sharpen] compute time per image: 0.379640 ms
+  [Sink] Images received: 363037 | Checksum: 0 | Time: 60500.921405 ms | Throughput: 6000.5201833174 img/s
+
+Risultato:
+  Config  : G=2 B=7 S=10
+  Threads : 21
+  N images: 363037
+  Time    : 60504.767265 ms
+  Tput    : 6000.1388 img/s
+  vs Src  : 37.6445%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159394,10000.273397,15938.9642334995,100.0
+g2b7s10,363037,60504.767265,6000.1387727014,37.644471
+CSV_END
+
+
+======================================================================
+  SUMMARY
+  Config              | Threads | N images | Tput (img/s) | Source (img/s) | vs Src
+  ------------------------------------------------------------------
+  SEQ  G1  B1  S1     | 5       | 119463   | 1956.1742    | 15928.45       | :%
+  Uniform P=2         | 8       | 236446   | 3789.2022    | 15958.24       | :%
+  Uniform P=3         | 11      | 341827   | 5486.9893    | 15708.67       | :%
+  Uniform P=4         | 14      | 433913   | 6958.7880    | 15966.30       | :%
+  Uniform P=5         | 17      | 491623   | 7945.8893    | 15940.13       | :%
+  Uniform P=6         | 20      | 367489   | 6124.5692    | 15993.00       | :%
+  Uniform P=7         | 23      | 270680   | 4511.1473    | 15985.40       | :%
+  OPT  G2  B7  S10    | 21      | 363037   | 6000.1388    | 15938.96       | :%
+======================================================================
+
+CSV_START
+config,threads,num_images,throughput_img_s,source_img_s,efficiency_pct
+SEQ_G1_B1_S1,5,119463,1956.1742,15928.45,:
+Uniform_P=2,8,236446,3789.2022,15958.24,:
+Uniform_P=3,11,341827,5486.9893,15708.67,:
+Uniform_P=4,14,433913,6958.7880,15966.30,:
+Uniform_P=5,17,491623,7945.8893,15940.13,:
+Uniform_P=6,20,367489,6124.5692,15993.00,:
+Uniform_P=7,23,270680,4511.1473,15985.40,:
+OPT_G2_B7_S10,21,363037,6000.1388,15938.96,:
+CSV_END

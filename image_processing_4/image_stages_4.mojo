@@ -267,61 +267,81 @@ struct Sharpen(StageTrait):
         if v > 255: return 255
         return UInt8(v)
 
+    @always_inline
+    def border_pixel(
+        self,
+        ch_in: UnsafePointer[UInt8, MutExternalOrigin],
+        x: Int, y: Int, w: Int, h: Int
+    ) -> UInt8:
+        var xm1 = x - 1
+        if xm1 < 0: xm1 = 0
+        var xp1 = x + 1
+        if xp1 >= w: xp1 = w - 1
+        var ym1 = y - 1
+        if ym1 < 0: ym1 = 0
+        var yp1 = y + 1
+        if yp1 >= h: yp1 = h - 1
+        var v = Int((ch_in + y   * w + x  ).load()) * 5 \
+              - Int((ch_in + ym1 * w + x  ).load()) \
+              - Int((ch_in + yp1 * w + x  ).load()) \
+              - Int((ch_in + y   * w + xm1).load()) \
+              - Int((ch_in + y   * w + xp1).load())
+        return self.clamp255(v)
+
+    @always_inline
+    def sharpen_plane(
+        self,
+        ch_in:  UnsafePointer[UInt8, MutExternalOrigin],
+        ch_out: UnsafePointer[UInt8, MutExternalOrigin],
+        w: Int, h: Int
+    ):
+        comptime CHUNK = 8
+
+        # Interior
+        for y in range(1, h - 1):
+            var rm  = ch_in  + (y - 1) * w
+            var r0  = ch_in  +  y      * w
+            var rp  = ch_in  + (y + 1) * w
+            var dst = ch_out +  y      * w
+
+            var x = 1
+            while x + CHUNK <= w - 1:
+                var tc  = (r0 + x    ).load[width=CHUNK]().cast[DType.int16]()
+                var tup = (rm + x    ).load[width=CHUNK]().cast[DType.int16]()
+                var tdn = (rp + x    ).load[width=CHUNK]().cast[DType.int16]()
+                var tlt = (r0 + x - 1).load[width=CHUNK]().cast[DType.int16]()
+                var trt = (r0 + x + 1).load[width=CHUNK]().cast[DType.int16]()
+                var res = tc * 5 - tup - tdn - tlt - trt
+                (dst + x).store(res.clamp(0, 255).cast[DType.uint8]())
+                x += CHUNK
+
+            while x < w - 1:
+                var v = Int((r0 + x).load()) * 5 \
+                      - Int((rm + x).load()) \
+                      - Int((rp + x).load()) \
+                      - Int((r0 + x - 1).load()) \
+                      - Int((r0 + x + 1).load())
+                (dst + x).store(self.clamp255(v))
+                x += 1
+
+        # Borders — 4 explicit loops, no h*w scan
+        for x in range(w):
+            (ch_out + x).store(self.border_pixel(ch_in, x, 0, w, h))
+        var bottom = (h - 1) * w
+        for x in range(w):
+            (ch_out + bottom + x).store(self.border_pixel(ch_in, x, h - 1, w, h))
+        for y in range(1, h - 1):
+            (ch_out + y * w        ).store(self.border_pixel(ch_in, 0,     y, w, h))
+            (ch_out + y * w + w - 1).store(self.border_pixel(ch_in, w - 1, y, w, h))
+
     def compute(mut self, var input: PPMImage) -> Optional[PPMImage]:
         var t0 = perf_counter_ns()
-        comptime CHUNK = 8
         var w = input.width; var h = input.height
         var out = PPMImage(w, h)
 
-        for ch in range(3):
-            var ch_in  = input.r_ptr() if ch == 0 else (input.g_ptr() if ch == 1 else input.b_ptr())
-            var ch_out = out.r_ptr()   if ch == 0 else (out.g_ptr()   if ch == 1 else out.b_ptr())
-
-            for y in range(1, h - 1):
-                var rm = ch_in + (y - 1) * w
-                var r0 = ch_in +  y      * w
-                var rp = ch_in + (y + 1) * w
-                var dst = ch_out + y * w
-
-                var x = 1
-                while x + CHUNK <= w - 1:
-                    # 5 vector loads (stride-1) — center, up, down, left, right
-                    var tc  = (r0 + x    ).load[width=CHUNK]().cast[DType.int16]()
-                    var tup = (rm + x    ).load[width=CHUNK]().cast[DType.int16]()
-                    var tdn = (rp + x    ).load[width=CHUNK]().cast[DType.int16]()
-                    var tlt = (r0 + x - 1).load[width=CHUNK]().cast[DType.int16]()
-                    var trt = (r0 + x + 1).load[width=CHUNK]().cast[DType.int16]()
-
-                    var res = tc * 5 - tup - tdn - tlt - trt
-                    (dst + x).store(res.clamp(0, 255).cast[DType.uint8]())
-                    x += CHUNK
-
-                while x < w - 1:
-                    var v = Int((r0 + x).load()) * 5
-                          - Int((rm + x).load()) - Int((rp + x).load())
-                          - Int((r0 + x - 1).load()) - Int((r0 + x + 1).load())
-                    (dst + x).store(self.clamp255(v))
-                    x += 1
-
-            # Borders
-            for y in range(h):
-                for x in range(w):
-                    if x != 0 and x != w-1 and y != 0 and y != h-1: continue
-                    var r0b = ch_in + y * w
-                    var v = Int((r0b + x).load()) * 5
-                    var ny = y - 1
-                    if ny < 0: ny = 0
-                    v -= Int((ch_in + ny*w + x).load())
-                    ny = y + 1
-                    if ny >= h: ny = h - 1
-                    v -= Int((ch_in + ny*w + x).load())
-                    var nx = x - 1
-                    if nx < 0: nx = 0
-                    v -= Int((r0b + nx).load())
-                    nx = x + 1
-                    if nx >= w: nx = w - 1
-                    v -= Int((r0b + nx).load())
-                    (ch_out + y*w + x).store(self.clamp255(v))
+        self.sharpen_plane(input.r_ptr(), out.r_ptr(), w, h)
+        self.sharpen_plane(input.g_ptr(), out.g_ptr(), w, h)
+        self.sharpen_plane(input.b_ptr(), out.b_ptr(), w, h)
 
         self.compute_time_ns += perf_counter_ns() - t0
         self.count += 1

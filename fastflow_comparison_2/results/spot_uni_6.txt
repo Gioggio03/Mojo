@@ -1,0 +1,47 @@
+======================================================================
+  Test Spot (FastFlow V2) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=6 B=6 S=6 | threads=20
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 162769 | Checksum: 0 | Time: 9998.818998 ms | Throughput: 16278.8225321968 img/s
+[Warmup] done.
+
+  [Sink] Images received: 159473 | Checksum: 0 | Time: 9999.343684 ms | Throughput: 15948.3467155123 img/s
+Source baseline: 15946.64 img/s
+
+[Running] G=6 B=6 S=6...
+    [Grayscale] compute time per image: 0.770299 ms
+    [Grayscale] compute time per image: 0.768031 ms
+    [Grayscale] compute time per image: 0.674939 ms
+    [Grayscale] compute time per image: 0.668406 ms
+    [Grayscale] compute time per image: 0.766274 ms
+    [Grayscale] compute time per image: 0.767192 ms
+    [GaussianBlur] compute time per image: 33.015182 ms
+    [GaussianBlur] compute time per image: 33.191791 ms
+    [GaussianBlur] compute time per image: 32.943951 ms
+    [GaussianBlur] compute time per image: 32.748443 ms
+    [GaussianBlur] compute time per image: 32.825613 ms
+    [GaussianBlur] compute time per image: 33.725704 ms
+    [Sharpen] compute time per image: 31.342513 ms
+    [Sharpen] compute time per image: 30.911759 ms
+    [Sharpen] compute time per image: 29.397765 ms
+    [Sharpen] compute time per image: 29.263911 ms
+    [Sharpen] compute time per image: 31.208741 ms
+    [Sharpen] compute time per image: 29.071988 ms
+  [Sink] Images received: 402182 | Checksum: 0 | Time: 59998.185448 ms | Throughput: 6703.2360561732 img/s
+
+Risultato:
+  Config  : G=6 B=6 S=6
+  Threads : 20
+  N images: 402182
+  Time    : 60003.473791 ms
+  Tput    : 6702.6453 img/s
+  vs Src  : 42.0317%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159473,10000.413302,15946.6409221414,100.0
+g6b6s6,402182,60003.473791,6702.6452735195,42.031706
+CSV_END

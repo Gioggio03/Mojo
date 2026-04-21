@@ -230,11 +230,15 @@ struct SharpenWorker : ff_node_t<PPMImage> {
                 }
             }
 
-            // Borders (scalar)
-            for (int y = 0; y < h; y++)
-                for (int x = 0; x < w; x++)
-                    if (x == 0 || x == w-1 || y == 0 || y == h-1)
-                        dst[y*w + x] = border_pixel(src, x, y, w, h);
+            // Borders — 4 explicit loops, no h*w scan
+            for (int x = 0; x < w; x++) {
+                dst[x]           = border_pixel(src, x, 0,   w, h);
+                dst[(h-1)*w + x] = border_pixel(src, x, h-1, w, h);
+            }
+            for (int y = 1; y < h-1; y++) {
+                dst[y*w]       = border_pixel(src, 0,   y, w, h);
+                dst[y*w + w-1] = border_pixel(src, w-1, y, w, h);
+            }
         }
 
         compute_time_ns += std::chrono::duration_cast<std::chrono::nanoseconds>(

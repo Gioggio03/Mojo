@@ -1,0 +1,201 @@
+======================================================================
+  Test Spot Benchmark (V4 stages — Planar layout + SIMD)
+  Image: 512x512 | Duration=60s
+  Pipeline: Source -> Gray -> Blur -> Sharp -> Sink
+======================================================================
+
+[Warmup]...
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 5000 | Checksum: 0 | Time: 360.201695 ms | Throughput: 13881.111803207923 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+[Warmup] done.
+
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 5000 | Checksum: 0 | Time: 358.267321 ms | Throughput: 13956.05936384022 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+PHASE 0: Source baseline
+  Throughput: 13944.307945628141 img/s  <-- TARGET
+
+  Config             | Threads | N images | Time (ms)  | Tput (img/s) | vs Source
+  ------------------------------------------------------------------
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 5 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+    [Grayscale] total=20080.206388 ms | n=91123 | avg/img=0.22036375435400501 ms
+    [GaussianBlur] total=61399.281039 ms | n=91123 | avg/img=0.6738066244416887 ms
+    [Sharpen] total=32533.539863 ms | n=91123 | avg/img=0.357028849609868 ms
+  [Sink] Images received: 91123 | Checksum: 0 | Time: 61481.721114 ms | Throughput: 1482.1153075893703 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+  SEQ  G1  B1  S1  | threads=5 | n=91123 | 61485.703607 ms | 1482.0193094387207 img/s | 10.628130956498042%
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 8 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+    [Grayscale] total=20345.638536 ms | n=93163 | avg/img=0.21838754157766493 ms
+    [Grayscale] total=18647.978195 ms | n=85464 | avg/img=0.21819688049939157 ms
+    [GaussianBlur] total=60625.299871 ms | n=88536 | avg/img=0.6847530933292673 ms
+    [GaussianBlur] total=60627.164739 ms | n=90091 | avg/img=0.6729547317601092 ms
+    [Sharpen] total=32792.450409 ms | n=89361 | avg/img=0.3669660188337194 ms
+  [Sink] Images received: 178627 | Checksum: 0 | Time: 60705.90353 ms | Throughput: 2942.498004526447 img/s
+    [Sharpen] total=32840.162471 ms | n=89266 | avg/img=0.36789105001904426 ms
+[36m{MoStream} ...Pipeline terminated successfully![0m
+  Uniform P=2      | threads=8 | n=178627 | 60708.616575 ms | 2942.366505409039 img/s | 21.100842844850813%
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 11 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+    [Grayscale] total=18718.940113 ms | n=83559 | avg/img=0.22402063348053472 ms
+    [Grayscale] total=20474.185151 ms | n=90909 | avg/img=0.2252162618772619 ms
+    [Grayscale] total=20301.003921 ms | n=90189 | avg/img=0.2250940128064398 ms
+    [GaussianBlur] total=60382.699375 ms | n=86991 | avg/img=0.6941258219241071 ms
+    [GaussianBlur] total=60384.38228 ms | n=89047 | avg/img=0.6781180980830348 ms
+    [GaussianBlur] total=60381.87927 ms | n=88619 | avg/img=0.6813649360746566 ms
+    [Sharpen] total=32853.968088 ms | n=89736 | avg/img=0.3661180361059107 ms
+    [Sharpen] total=32983.072702 ms | n=89820 | avg/img=0.3672130116009797 ms
+  [Sink] Images received: 264657 | Checksum: 0 | Time: 60463.621603 ms | Throughput: 4377.127816420256 img/s
+    [Sharpen] total=32181.879824 ms | n=85101 | avg/img=0.3781610066156684 ms
+[36m{MoStream} ...Pipeline terminated successfully![0m
+  Uniform P=3      | threads=11 | n=264657 | 60465.613038 ms | 4376.9836557131175 img/s | 31.3890346712072%
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 14 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+    [Grayscale] total=23425.167038 ms | n=87395 | avg/img=0.2680378401281538 ms
+    [Grayscale] total=22136.408523 ms | n=82950 | avg/img=0.2668644788788427 ms
+    [Grayscale] total=22498.334359 ms | n=84321 | avg/img=0.266817689057293 ms
+    [Grayscale] total=21587.954921 ms | n=81346 | avg/img=0.2653843449093994 ms
+    [GaussianBlur] total=60257.954578 ms | n=84087 | avg/img=0.7166143943534672 ms
+    [GaussianBlur] total=60253.489284 ms | n=84190 | avg/img=0.7156846333768857 ms
+    [GaussianBlur] total=60252.630219 ms | n=84081 | avg/img=0.7166022076212224 ms
+    [GaussianBlur] total=60257.15582 ms | n=83654 | avg/img=0.7203141011786645 ms
+    [Sharpen] total=35133.364735 ms | n=87674 | avg/img=0.400727293553391 ms
+    [Sharpen] total=34936.619456 ms | n=87933 | avg/img=0.3973095363060512 ms
+    [Sharpen] total=35094.744557 ms | n=88059 | avg/img=0.39853671466857443 ms
+  [Sink] Images received: 336012 | Checksum: 0 | Time: 60361.896619 ms | Throughput: 5566.624291494415 img/s
+    [Sharpen] total=44960.5421 ms | n=72346 | avg/img=0.6214654866889668 ms
+[36m{MoStream} ...Pipeline terminated successfully![0m
+  Uniform P=4      | threads=14 | n=336012 | 60363.87869 ms | 5566.44150926081 img/s | 39.91909480890384%
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 17 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+    [Grayscale] total=26437.134963 ms | n=82803 | avg/img=0.31927750157602985 ms
+    [Grayscale] total=26164.424575 ms | n=81628 | avg/img=0.3205324713946195 ms
+    [Grayscale] total=23601.459724 ms | n=73475 | avg/img=0.3212175532357945 ms
+    [Grayscale] total=23253.509385 ms | n=72428 | avg/img=0.32105690320041974 ms
+    [Grayscale] total=26380.874842 ms | n=82331 | avg/img=0.3204245647690421 ms
+    [GaussianBlur] total=60048.927626 ms | n=79167 | avg/img=0.7585095762880998 ms
+    [GaussianBlur] total=60047.39029 ms | n=78349 | avg/img=0.7664091474045617 ms
+    [GaussianBlur] total=60050.049425 ms | n=78530 | avg/img=0.7646765494078696 ms
+    [GaussianBlur] total=60048.238567 ms | n=78713 | avg/img=0.7628757456455731 ms
+    [GaussianBlur] total=60046.02583 ms | n=77906 | avg/img=0.7707496961723102 ms
+    [Sharpen] total=41179.533561 ms | n=90345 | avg/img=0.4558031275776191 ms
+    [Sharpen] total=44522.971153 ms | n=75818 | avg/img=0.5872348407106491 ms
+    [Sharpen] total=44489.312814 ms | n=76037 | avg/img=0.5851008431947604 ms
+    [Sharpen] total=44326.896539 ms | n=75674 | avg/img=0.5857612461215213 ms
+    [Sharpen] total=44072.8919 ms | n=74791 | avg/img=0.5892806875158776 ms
+  [Sink] Images received: 392665 | Checksum: 0 | Time: 60172.599654 ms | Throughput: 6525.644599998555 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+  Uniform P=5      | threads=17 | n=392665 | 60174.853531 ms | 6525.400178958684 img/s | 46.79615657085761%
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 20 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+    [Grayscale] total=18672.403665 ms | n=65753 | avg/img=0.2839779730962846 ms
+    [Grayscale] total=17313.085478 ms | n=60733 | avg/img=0.2850688337147844 ms
+    [Grayscale] total=24888.543058 ms | n=87007 | avg/img=0.28605219186961967 ms
+    [Grayscale] total=16488.294658 ms | n=57944 | avg/img=0.28455568580008284 ms
+    [Grayscale] total=16192.441478 ms | n=57197 | avg/img=0.2830994890990786 ms
+    [Grayscale] total=24237.112692 ms | n=84531 | avg/img=0.28672454711289347 ms
+    [GaussianBlur] total=51286.743407 ms | n=70093 | avg/img=0.7316956530181331 ms
+    [GaussianBlur] total=51618.253863 ms | n=68888 | avg/img=0.7493069019713158 ms
+    [GaussianBlur] total=51545.03369 ms | n=68736 | avg/img=0.7498986512162477 ms
+    [GaussianBlur] total=51024.473358 ms | n=67933 | avg/img=0.7510999566926236 ms
+    [GaussianBlur] total=51243.642655 ms | n=68960 | avg/img=0.7430922658787703 ms
+    [Sharpen] total=32390.632434 ms | n=68769 | avg/img=0.4710063027526938 ms
+    [GaussianBlur] total=51345.014211 ms | n=68555 | avg/img=0.7489608957917001 ms
+    [Sharpen] total=32996.275486 ms | n=69842 | avg/img=0.47244173256779587 ms
+    [Sharpen] total=32439.97875 ms | n=68717 | avg/img=0.4720808351645153 ms
+    [Sharpen] total=32550.235542 ms | n=67957 | avg/img=0.478982820636579 ms
+    [Sharpen] total=33400.572636 ms | n=69679 | avg/img=0.47934919611360666 ms
+    [Sharpen] total=32329.072407 ms | n=68201 | avg/img=0.47402636921746016 ms
+  [Sink] Images received: 413165 | Checksum: 0 | Time: 59999.978507 ms | Throughput: 6886.085800044035 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+  Uniform P=6      | threads=20 | n=413165 | 60003.343823 ms | 6885.699590655628 img/s | 49.38000234579194%
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 23 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+    [Grayscale] total=17133.653875 ms | n=58932 | avg/img=0.2907359986934093 ms
+    [Grayscale] total=16049.808681 ms | n=55598 | avg/img=0.2886760077880499 ms
+    [Grayscale] total=16662.427556 ms | n=56886 | avg/img=0.2929091086734873 ms
+    [Grayscale] total=16244.982229 ms | n=55640 | avg/img=0.29196589196621137 ms
+    [Grayscale] total=16101.506689 ms | n=55433 | avg/img=0.2904678925730161 ms
+    [Grayscale] total=16903.778436 ms | n=58414 | avg/img=0.2893788892388811 ms
+    [Grayscale] total=16997.112759 ms | n=58368 | avg/img=0.29120601629317433 ms
+    [GaussianBlur] total=40511.971197 ms | n=55287 | avg/img=0.7327576319387921 ms
+    [GaussianBlur] total=43373.605918 ms | n=57299 | avg/img=0.7569696839037331 ms
+    [GaussianBlur] total=41705.644046 ms | n=56836 | avg/img=0.7337892189105497 ms
+    [GaussianBlur] total=43527.246904 ms | n=56794 | avg/img=0.7664057277881466 ms
+    [GaussianBlur] total=43465.918661 ms | n=57221 | avg/img=0.7596148033239546 ms
+    [GaussianBlur] total=43036.686818 ms | n=58744 | avg/img=0.7326141702641972 ms
+    [GaussianBlur] total=43865.452202 ms | n=57090 | avg/img=0.7683561429672447 ms
+    [Sharpen] total=24336.395869 ms | n=54224 | avg/img=0.4488122578378578 ms
+    [Sharpen] total=27362.343128 ms | n=61811 | avg/img=0.442677567552701 ms
+    [Sharpen] total=24675.116814 ms | n=55737 | avg/img=0.442706224124011 ms
+    [Sharpen] total=24229.660058 ms | n=54183 | avg/img=0.4471819585109721 ms
+    [Sharpen] total=24313.966532 ms | n=54888 | avg/img=0.4429741752659962 ms
+    [Sharpen] total=24634.605242 ms | n=55505 | avg/img=0.4438267767228178 ms
+  [Sink] Images received: 399271 | Checksum: 0 | Time: 59999.058736 ms | Throughput: 6654.621062587331 img/s
+    [Sharpen] total=27165.431442 ms | n=62923 | avg/img=0.4317249883508415 ms
+[36m{MoStream} ...Pipeline terminated successfully![0m
+  Uniform P=7      | threads=23 | n=399271 | 60002.023134 ms | 6654.292291250326 img/s | 47.72049152383069%
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 21 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+    [Grayscale] total=38886.519182 ms | n=137289 | avg/img=0.2832457020008886 ms
+    [Grayscale] total=38857.156008 ms | n=136965 | avg/img=0.2837013544190121 ms
+    [GaussianBlur] total=38791.453744 ms | n=50893 | avg/img=0.7622158989251959 ms
+    [GaussianBlur] total=39345.72621 ms | n=51429 | avg/img=0.7650494120049 ms
+    [Grayscale] total=37963.500277 ms | n=134726 | avg/img=0.2817830283464216 ms
+    [GaussianBlur] total=38451.328415 ms | n=50416 | avg/img=0.762681061865281 ms
+    [GaussianBlur] total=38796.048999 ms | n=50679 | avg/img=0.7655251484638608 ms
+    [GaussianBlur] total=39451.118389 ms | n=51849 | avg/img=0.7608848461686822 ms
+    [GaussianBlur] total=38908.857473 ms | n=50712 | avg/img=0.7672514882670768 ms
+    [GaussianBlur] total=39841.739301 ms | n=51989 | avg/img=0.7663494066244783 ms
+    [Sharpen] total=24878.046064 ms | n=51123 | avg/img=0.48663118486786766 ms
+    [Sharpen] total=24719.10744 ms | n=51193 | avg/img=0.4828610833512394 ms
+    [GaussianBlur] total=38949.666425 ms | n=51013 | avg/img=0.7635243256620862 ms
+    [Sharpen] total=25037.802062 ms | n=51365 | avg/img=0.4874486919497712 ms
+    [Sharpen] total=25135.847563 ms | n=51642 | avg/img=0.4867326510011231 ms
+    [Sharpen] total=24124.480923 ms | n=49964 | avg/img=0.48283726128812743 ms
+    [Sharpen] total=24617.129461 ms | n=51333 | avg/img=0.47955758402976645 ms
+    [Sharpen] total=25162.267372 ms | n=51253 | avg/img=0.4909423325854096 ms
+    [Sharpen] total=24629.229807 ms | n=51107 | avg/img=0.48191499808245447 ms
+  [Sink] Images received: 408980 | Checksum: 0 | Time: 59997.975458 ms | Throughput: 6816.563340312969 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+  OPT  G3  B8  S8  | threads=21 | n=408980 | 60002.282612 ms | 6816.074025793931 img/s | 48.88069061850377%
+
+======================================================================
+  SUMMARY
+  Source ceiling: 13944.307945628141 img/s
+  Sequential:     1482.0193094387207 img/s  (10.628130956498042%)
+  Uniform P=2:    2942.366505409039 img/s  (21.100842844850813%)
+  Uniform P=3:    4376.9836557131175 img/s  (31.3890346712072%)
+  Uniform P=4:    5566.44150926081 img/s  (39.91909480890384%)
+  Uniform P=5:    6525.400178958684 img/s  (46.79615657085761%)
+  Uniform P=6:    6885.699590655628 img/s  (49.38000234579194%)
+  Uniform P=7:    6654.292291250326 img/s  (47.72049152383069%)
+  Optimal:        6816.074025793931 img/s  (48.88069061850377%)
+  Speedup vs seq: 4.599180309179207x
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,5000,358.569247,13944.307945628141,100.0
+seq,91123,61485.703607,1482.0193094387207,10.628130956498042
+uniform_p2,178627,60708.616575,2942.366505409039,21.100842844850813
+uniform_p3,264657,60465.613038,4376.9836557131175,31.3890346712072
+uniform_p4,336012,60363.87869,5566.44150926081,39.91909480890384
+uniform_p5,392665,60174.853531,6525.400178958684,46.79615657085761
+uniform_p6,413165,60003.343823,6885.699590655628,49.38000234579194
+uniform_p7,399271,60002.023134,6654.292291250326,47.72049152383069
+optimal_g3b8s8,408980,60002.282612,6816.074025793931,48.88069061850377
+CSV_END

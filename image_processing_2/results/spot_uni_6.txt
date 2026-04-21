@@ -1,0 +1,57 @@
+======================================================================
+  Test Spot (V2 stages) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=6 B=6 S=6 | threads=20
+======================================================================
+
+[Warmup]...
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 5000 | Checksum: 0 | Time: 307.82011 ms | Throughput: 16243.253242941146 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+[Warmup] done.
+
+[36m{MoStream} Starting pipeline execution with 3 stages and total parallelism of 3 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+  [Sink] Images received: 5000 | Checksum: 0 | Time: 306.565933 ms | Throughput: 16309.7052274233 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+Source baseline: 16296.507788752931 img/s
+
+[36m{MoStream} Starting pipeline execution with 5 stages and total parallelism of 20 nodes...[0m
+[36m{MoStream} CPU pinning is enabled[0m
+[36m{MoStream} Pipeline starts...[0m
+    [Grayscale] total=13586.934715 ms | n=19931 | avg/img=0.6816985959058752 ms
+    [Grayscale] total=18601.080094 ms | n=27420 | avg/img=0.6783763710430343 ms
+    [Grayscale] total=18254.464945 ms | n=26908 | avg/img=0.6784028892894306 ms
+    [Grayscale] total=13663.590867 ms | n=20058 | avg/img=0.681204051600359 ms
+    [Grayscale] total=18179.796715 ms | n=26822 | avg/img=0.677794225449258 ms
+    [Grayscale] total=13373.794061 ms | n=19623 | avg/img=0.6815366692656577 ms
+    [GaussianBlur] total=53832.622657 ms | n=23487 | avg/img=2.2920178250521563 ms
+    [GaussianBlur] total=53932.160832 ms | n=23494 | avg/img=2.2955716707244402 ms
+    [GaussianBlur] total=53850.999176 ms | n=23490 | avg/img=2.292507414899957 ms
+    [GaussianBlur] total=53855.19678 ms | n=23522 | avg/img=2.2895670767791856 ms
+    [GaussianBlur] total=53903.349968 ms | n=23507 | avg/img=2.293076529033905 ms
+    [GaussianBlur] total=55996.9663 ms | n=23262 | avg/img=2.407229227925372 ms
+    [Sharpen] total=61372.275978 ms | n=23474 | avg/img=2.614478826701883 ms
+    [Sharpen] total=61372.449075 ms | n=23445 | avg/img=2.61772015674984 ms
+    [Sharpen] total=61372.561039 ms | n=23471 | avg/img=2.6148251475863833 ms
+    [Sharpen] total=61374.115292 ms | n=23455 | avg/img=2.616675135024515 ms
+    [Sharpen] total=61373.241869 ms | n=23469 | avg/img=2.6150769896033066 ms
+    [Sharpen] total=61373.991103 ms | n=23448 | avg/img=2.6174510023456157 ms
+  [Sink] Images received: 140762 | Checksum: 0 | Time: 61409.356782 ms | Throughput: 2292.191408219723 img/s
+[36m{MoStream} ...Pipeline terminated successfully![0m
+Risultato:
+  Config  : G=6 B=6 S=6
+  Threads : 20
+  N images: 140762
+  Time    : 61416.820403 ms
+  Tput    : 2291.9128518272214 img/s
+  vs Src  : 14.06382816206175%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,5000,306.8142,16296.507788752931,100.0
+g6b6s6,140762,61416.820403,2291.9128518272214,14.06382816206175
+CSV_END

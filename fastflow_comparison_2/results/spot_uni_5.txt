@@ -1,0 +1,44 @@
+======================================================================
+  Test Spot (FastFlow V2) — configurazione singola
+  Image: 512x512 | Duration=60s
+  Config: G=5 B=5 S=5 | threads=17
+======================================================================
+
+[Warmup]...
+  [Sink] Images received: 162679 | Checksum: 0 | Time: 9998.802297 ms | Throughput: 16269.8486446531 img/s
+[Warmup] done.
+
+  [Sink] Images received: 159687 | Checksum: 0 | Time: 9999.921093 ms | Throughput: 15968.8260052154 img/s
+Source baseline: 15967.95 img/s
+
+[Running] G=5 B=5 S=5...
+    [Grayscale] compute time per image: 0.653532 ms
+    [Grayscale] compute time per image: 0.781339 ms
+    [Grayscale] compute time per image: 0.781208 ms
+    [Grayscale] compute time per image: 0.784942 ms
+    [Grayscale] compute time per image: 0.784754 ms
+    [GaussianBlur] compute time per image: 3.348890 ms
+    [GaussianBlur] compute time per image: 3.928625 ms
+    [GaussianBlur] compute time per image: 3.917468 ms
+    [GaussianBlur] compute time per image: 3.773358 ms
+    [GaussianBlur] compute time per image: 3.528311 ms
+    [Sharpen] compute time per image: 3.470651 ms
+    [Sharpen] compute time per image: 3.774916 ms
+    [Sharpen] compute time per image: 3.768888 ms
+    [Sharpen] compute time per image: 3.735400 ms
+    [Sharpen] compute time per image: 3.524850 ms
+  [Sink] Images received: 402116 | Checksum: 0 | Time: 60994.498809 ms | Throughput: 6592.6601226645 img/s
+
+Risultato:
+  Config  : G=5 B=5 S=5
+  Threads : 17
+  N images: 402116
+  Time    : 60999.968874 ms
+  Tput    : 6592.0689 img/s
+  vs Src  : 41.2831%
+======================================================================
+CSV_START
+config,num_images,time_ms,throughput_img_s,efficiency_pct
+source_baseline,159687,10000.469547,15967.9502296874,100.0
+g5b5s5,402116,60999.968874,6592.0689374547,41.283126
+CSV_END

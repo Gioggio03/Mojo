@@ -237,21 +237,29 @@ struct SharpenWorker : ff_node_t<PPMImage> {
             }
         }
 
-        // Border path — only edge pixels
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
-                if (x != 0 && x != w-1 && y != 0 && y != h-1) continue;
-                int c = (y * w + x) * 3;
-                for (int ch = 0; ch < 3; ch++) {
-                    int v = in_ptr[c+ch] * 5;
-                    int ny, nx;
-                    ny = (y-1 < 0) ? 0 : y-1; v -= in_ptr[(ny*w+x)*3+ch];
-                    ny = (y+1 >= h) ? h-1 : y+1; v -= in_ptr[(ny*w+x)*3+ch];
-                    nx = (x-1 < 0) ? 0 : x-1; v -= in_ptr[(y*w+nx)*3+ch];
-                    nx = (x+1 >= w) ? w-1 : x+1; v -= in_ptr[(y*w+nx)*3+ch];
-                    out_ptr[c + ch] = clamp255(v);
-                }
+        // Borders — 4 explicit loops, no h*w scan
+        auto sharp_border = [&](int x, int y) {
+            int c   = (y * w + x) * 3;
+            int ny0 = (y - 1 < 0)  ? 0     : y - 1;
+            int ny1 = (y + 1 >= h) ? h - 1 : y + 1;
+            int nx0 = (x - 1 < 0)  ? 0     : x - 1;
+            int nx1 = (x + 1 >= w) ? w - 1 : x + 1;
+            for (int ch = 0; ch < 3; ch++) {
+                int v = in_ptr[c + ch] * 5
+                      - in_ptr[(ny0 * w + x ) * 3 + ch]
+                      - in_ptr[(ny1 * w + x ) * 3 + ch]
+                      - in_ptr[(y   * w + nx0) * 3 + ch]
+                      - in_ptr[(y   * w + nx1) * 3 + ch];
+                out_ptr[c + ch] = clamp255(v);
             }
+        };
+        for (int x = 0; x < w; x++) {
+            sharp_border(x, 0);
+            sharp_border(x, h - 1);
+        }
+        for (int y = 1; y < h - 1; y++) {
+            sharp_border(0,     y);
+            sharp_border(w - 1, y);
         }
 
         compute_time_ns += std::chrono::duration_cast<std::chrono::nanoseconds>(
